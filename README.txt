@@ -38,4 +38,9 @@ git-bash下载 ：https://git-scm.com/downloads/win
 
 四、知识点
 1. branch 和 tag的区别
+    https://blog.csdn.net/weixin_67727883/article/details/139315400
     branch是动态的，tag是静态。
+2. merge 和 rebase的区别
+   https://blog.csdn.net/2401_83915664/article/details/138009224?spm=1001.2101.3001.6650.1&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EOPENSEARCH%7EPaidSort-1-138009224-blog-87279684.235%5Ev43%5Epc_blog_bottom_relevance_base6&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EOPENSEARCH%7EPaidSort-1-138009224-blog-87279684.235%5Ev43%5Epc_blog_bottom_relevance_base6&utm_relevant_index=2
+   https://blog.csdn.net/qq_30614345/article/details/130736404
+   都是合并分支
