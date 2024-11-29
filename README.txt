@@ -3,8 +3,8 @@
 使用GIT 进行项目文档管理
 1.初始化仓库
 创建一个目录（任意名称 ，比如，git_bnyc）， git init
-2.添加远程项目地址
-git remote add origin https://github.com/shileinba/demo.git
+2.添加远程项目地址 [https://github.com/shileinba/bnyc.git]
+git remote add origin https://github.com/shileinba/bnyc.git
 3.克隆复制到本地
 git clone https://github.com/shileinba/demo.git
 
