@@ -35,3 +35,7 @@ https://blog.csdn.net/u014303349/article/details/133833184
 
 三、资源
 git-bash下载 ：https://git-scm.com/downloads/win
+
+四、知识点
+1. branch 和 tag的区别
+    branch是动态的，tag是静态。
