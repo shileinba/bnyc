@@ -26,4 +26,10 @@ git pull https://github.com/shileinba/demo.git
 
 2. idea中commit push提示用户认证错误
 1） 需要设置 github的token
+如何获取user token
+https://blog.csdn.net/u014303349/article/details/133833184
+-- 点击用户头像，settings
+-- developer settings
+-- personal access token
+-- generate new token
 
