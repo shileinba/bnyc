@@ -23,6 +23,7 @@ git pull https://github.com/shileinba/demo.git
 1. 无法clone 报443端口连接失败的问题：
 1）github中，必须设置为 public ,不能设置为private
 2) 本地不能提交空文件夹，必须要有具体的文件，比如readme，才能commit ，并且push成功
+3）有时候是网络的问题，连接github不太稳定；
 
 2. idea中commit push提示用户认证错误
 1） 需要设置 github的token
