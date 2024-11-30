@@ -47,13 +47,19 @@ https://blog.csdn.net/u014303349/article/details/133833184
    https://blog.csdn.net/2401_83915664/article/details/138009224?spm=1001.2101.3001.6650.1&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EOPENSEARCH%7EPaidSort-1-138009224-blog-87279684.235%5Ev43%5Epc_blog_bottom_relevance_base6&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EOPENSEARCH%7EPaidSort-1-138009224-blog-87279684.235%5Ev43%5Epc_blog_bottom_relevance_base6&utm_relevant_index=2
    https://blog.csdn.net/qq_30614345/article/details/130736404
    都是合并分支
-3.
+3.git fetch 命令
+   用于从远程存储库中获取最新的更改，但并不会直接更新您的本地分支。它只是将远程存储库中的内容下载到本地 Git 仓库中，您可以通过合并操作将其合并到本地分支中。
+4.git pull 命令相当于执行了 git fetch 和 git merge 命令的组合操作。
+    https://cloud.tencent.com/developer/article/2283593
+5. Git中Update和Pull的区别
+    pull 包含了 update命令
+    https://blog.csdn.net/weixin_42704604/article/details/142918341
 
 
-4. 查询MYSQL数据库版本
+21. 查询MYSQL数据库版本
 SELECT VERSION();
 
-5. maven install 和 package的区别
+31. maven install 和 package的区别
 https://blog.csdn.net/u013452335/article/details/83415237/
 package是把jar打到本项目的target下，而install时把target下的jar安装到本地仓库，供其他项目使用.
 
