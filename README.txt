@@ -56,3 +56,5 @@ SELECT VERSION();
 5. maven install 和 package的区别
 https://blog.csdn.net/u013452335/article/details/83415237/
 package是把jar打到本项目的target下，而install时把target下的jar安装到本地仓库，供其他项目使用.
+
+6.
