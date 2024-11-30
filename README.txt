@@ -39,7 +39,7 @@ https://blog.csdn.net/u014303349/article/details/133833184
 1. git-bash下载 ：https://git-scm.com/downloads/win
 2.
 
-四、知识点
+四、GIT知识点
 1. branch 和 tag的区别
     https://blog.csdn.net/weixin_67727883/article/details/139315400
     branch是动态的，tag是静态。
@@ -48,3 +48,7 @@ https://blog.csdn.net/u014303349/article/details/133833184
    https://blog.csdn.net/qq_30614345/article/details/130736404
    都是合并分支
 3.
+
+
+4. 查询MYSQL数据库版本
+SELECT VERSION();
