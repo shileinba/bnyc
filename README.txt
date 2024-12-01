@@ -54,7 +54,9 @@ https://blog.csdn.net/u014303349/article/details/133833184
 5. Git中Update和Pull的区别
     pull 包含了 update命令
     https://blog.csdn.net/weixin_42704604/article/details/142918341
-
+6. git remote add origin ，origin的含义
+    origin 是指代码库的链接。 比如：[https://github.com/shileinba/bnyc.git]
+    https://www.php.cn/faq/487235.html
 
 21. 查询MYSQL数据库版本
 SELECT VERSION();
