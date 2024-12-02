@@ -1,4 +1,4 @@
-package com.yonyou;
+package com.yonyou.test.data_center;
 
 public class TestDataCenter {
     public static void main(String[] args){
