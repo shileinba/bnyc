@@ -1,16 +1,11 @@
 package com.yonyou;
 
-/**
- *
-
- */
 public class TestDataCenter {
-
     public static void main(String[] args){
 
         TestDataCenter tc = new TestDataCenter();
-        //tc.generateHQ();
-        tc.generateBO();
+//        tc.generate0102HQ();
+        tc.generate0102BO();
     }
 
     static String converterZ(int i ){
@@ -33,8 +28,11 @@ public class TestDataCenter {
         return indexCode;
     }
 
-
-    String generateHQ(){
+    /**
+     * 资产负债表的汇总合并
+     * @return
+     */
+    String generate0102HQ(){
         String sqlStrResult = "";
 
         String srcTableName = "data_center.yzb0102__zyzb0102 a \n";
@@ -70,8 +68,9 @@ public class TestDataCenter {
                     " left join " +
                     " ( select * from " + refTable + " where index_code = '" + getDestIndexCode(i)
                     + "') c on 1 = 1 \n"
-                    + "  where a.org in ('GY2F00')"
-                    + " group by b.org_code,b.org_name,c.index_name,c.index_code,a.month;"
+                    + "  where a.org in ('GY2F00') \n"
+                    + " and ucode like ('%_r') \n"
+                    + " group by b.org_code,b.org_name,c.index_name,c.index_code,a.per,a.month;"
                     + "\n";
             // System.out.println(sqlStr);
             sqlStrResult += sqlStr;
@@ -80,7 +79,11 @@ public class TestDataCenter {
         return sqlStrResult;
     }
 
-    String generateBO(){
+    /**
+     * 资产负债表的各厂矿
+     * @return
+     */
+    String generate0102BO(){
         String sqlStrResult = "";
 
         String srcTableName = "data_center.yzb0102__zyzb0102 a \n";
@@ -117,7 +120,8 @@ public class TestDataCenter {
                     " ( select * from " + refTable + " where index_code = '" + getDestIndexCode(i)
                     + "') c on 1 = 1 \n"
                     + "  where a.org not in ('GY2F00')"
-                    + " group by b.org_code,b.org_name,c.index_name,c.index_code,a.month;"
+                    + " and ucode like ('%_r') \n"
+                    + " group by b.org_code,b.org_name,c.index_name,c.index_code,a.per,a.month;"
                     + "\n";
             // System.out.println(sqlStr);
             sqlStrResult += sqlStr;
