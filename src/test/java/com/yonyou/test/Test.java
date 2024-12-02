@@ -15,7 +15,7 @@ import java.util.List;
 public class Test {
     public static void main(String[] args) throws IOException {
         // 定义资源文件名
-        String resource = "Mybatis-conf.xml";
+        String resource = "mybatis_conf.xml";
 
         // 通过Resources类获取资源文件的输入流
         InputStream inputStream = Resources.getResourceAsStream(resource);

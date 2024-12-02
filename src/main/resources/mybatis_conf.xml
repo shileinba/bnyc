@@ -14,6 +14,6 @@
         </environment>
     </environments>
     <mappers>
-        <mapper resource="com/Mapper/userMapper"/>
+        <mapper resource="com/yonyou/mapper/UserMapper.xml"/>
     </mappers>
 </configuration>
