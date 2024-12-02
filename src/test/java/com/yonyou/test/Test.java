@@ -27,13 +27,13 @@ public class Test {
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
         // 获取userMapper接口的实现类对象
-        UserMapper users = sqlSession.getMapper(UserMapper.class);
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
 
         // 调用login方法查询名为"id=1"的用户信息
-        User login = users.selectlogin();
+        List<User> users = userMapper.selectall();
 
         // 将查询结果转换为字符串
-        String s = login.toString();
+        String s = users.toString();
 
         // 打印查询结果
         System.out.println(s);

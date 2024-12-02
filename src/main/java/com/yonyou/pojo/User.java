@@ -1,24 +1,24 @@
 package com.yonyou.pojo;
 
 public class User {
-    private int id;
+    private String id;
     private String account;
-    private int password;
+    private String password;
 
     public User() {
     }
 
-    public User(int id, String account, int password) {
+    public User(String id, String account, String password) {
         this.id = id;
         this.account = account;
         this.password = password;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -30,6 +30,13 @@ public class User {
         this.account = account;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public String toString() {
         return "User{id = " + id + ", account = " + account + ", password = " + password + "}";

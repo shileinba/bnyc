@@ -5,11 +5,13 @@
         <environment id="development">
             <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
-                <!-- 笔记本的数据库链接信息 -->
                 <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
-                <property name="url" value="jdbc:mysql://localhost:3306/zentao2"/>
+                <!-- 笔记本的数据库链接信息 -->
+<!--                <property name="url" value="jdbc:mysql://localhost:3306/zentao2"/>-->
+                <!-- 包能台式机笔记本的数据库链接信息 -->
+                <property name="url" value="jdbc:mysql://localhost:3306/zentao"/>
                 <property name="username" value="root"/>
-                <property name="password" value="123456"/>
+                <property name="password" value="0hwJPx>k4IO"/>
             </dataSource>
         </environment>
     </environments>
