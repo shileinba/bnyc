@@ -7,7 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-import javax.annotation.Resources;
+//import javax.annotation.Resources;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -27,7 +27,7 @@ public class Test {
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
         // 获取userMapper接口的实现类对象
-        userMapper users = sqlSession.getMapper(userMapper.class);
+        UserMapper users = sqlSession.getMapper(UserMapper.class);
 
         // 调用login方法查询名为"id=1"的用户信息
         User login = users.selectlogin();
