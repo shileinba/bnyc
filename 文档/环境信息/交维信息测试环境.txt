@@ -1,0 +1,91 @@
+GCPszr#_#831
+安装器admin/G52r9!F@D#fw
+10.26.40.71   /dev/mapper/vgdata-lvdata
+10.26.40.72   /dev/mapper/vgdata-lvdata
+10.26.40.73   /dev/mapper/vgdata-lvdata
+10.26.40.74   /dev/mapper/vgdata-lvdata
+10.26.40.75   /dev/mapper/vgdata-lvdata
+10.26.40.76   /dev/mapper/vgdata-lvdata
+10.26.40.77   /dev/mapper/vgdata-lvdata
+10.26.40.78   /dev/mapper/vgdata-lvdata
+10.26.40.79   /dev/mapper/vgdata-lvdata
+10.26.40.80   /dev/mapper/vgdata-lvdata
+10.26.40.81   /dev/mapper/vgdata-lvdata
+10.26.40.82   /dev/mapper/vgdata-lvdata
+10.26.40.83   /dev/mapper/vgdata-lvdata
+
+
+
+10.26.40.71|install|root|GCPszr#_#831|22
+10.26.40.72|db|root|GCPszr#_#831|22
+10.26.40.73|iuap|root|GCPszr#_#831|22
+10.26.40.74|bip1|root|GCPszr#_#831|22
+10.26.40.75|epm1|root|GCPszr#_#831|22
+10.26.40.76|epm2|root|GCPszr#_#831|22
+10.26.40.77|zyc1|root|GCPszr#_#831|22
+10.26.40.78|zyc2|root|GCPszr#_#831|22
+10.26.40.79|zyc3|root|GCPszr#_#831|22
+10.26.40.80|bip2|root|GCPszr#_#831|22
+10.26.40.81|bip3|root|GCPszr#_#831|22
+10.26.40.82|mdd|root|GCPszr#_#831|22
+10.26.40.83|bip4|root|GCPszr#_#831|22
+
+
+
+
+
+
+
+
+ 数据库初始化安装成功
+ 数据库启动成功
+ 请设置数据库密码 root:[默认:Root*qwer1234]
+ 请设置数据库应用账号:[默认:oper_dc]
+ 请设置数据库应用账号密码(注意:技术中台不支持含有除*外其他特殊字符密码):[默认:operzADF2020qwer]
+ 请设置数据库只读账号:[默认:read_dc]
+ 请设置数据库只读账号密码:[默认:readzADF%2022qwer]
+ 数据库root密码为:   Root*qwer1234
+ 数据库连接方式为:  mysql -uroot -pRoot*qwer1234 -hlocalhost -P3306 -S /data/mysqldata/3306/mysql/mysql.sock
+ 数据库启停命令:   systemctl restart mysqld3306
+ 数据库应用账号为:   oper_dc
+ 数据库应用账号密码为:   operzADF2020qwer
+ 数据库连接方式为:  mysql -uoper_dc -poperzADF2020qwer -h10.26.40.72 -P3306
+ 数据库只读账号为:   read_dc
+ 数据库只读账号密码为:   readzADF%2022qwer
+ 数据库连接方式为:  mysql -uread_dc -preadzADF%2022qwer -h10.26.40.72 -P3306
+
+
+
+YKS-Harbor
+密码q7JDVkP@!1^G   端口81
+
+elasticsearch
+elastic/BIPaS#c5Xm5J
+
+
+kibana
+elastic/BIPaS#c5Xm5J
+
+minio
+minio/Tv9uxm#OALGo
+
+redis
+BIPaS#c5Xm5J
+
+YMS
+admin/c91D@b9eB9!41d
+
+技术中台
+isvadmin/7Y@dUNbZdE!e
+
+业务中台
+yhtmanager/manager@2020
+
+
+licenseserver
+http://10.26.40.71:30001/iuap-licenseserver/login
+admin/^QJC89zgPEXu2$3r
+
+域名：
+技术中台https://biptesttech.btnycw.com
+业务中台https://biptest.btnycw.com
