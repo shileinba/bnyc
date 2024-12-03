@@ -2970,39 +2970,174 @@
     manage_fee decimal(15, 2) comment '本年管理费用',
     sales_fee decimal(15, 2) comment '本年销售费用',
     other_biz_cost decimal(15, 2) comment '本年其他业务成本',
-    cip_project decimal(15, 2) comment '本年在建工程'
-
+    cip_project decimal(15, 2) comment '本年在建工程',
+    version_code varchar(64) comment '版本号',
+    amount decimal(15, 2) comment '预算数'
   ) COMMENT='折旧与摊销ads';
   ***/
+
+/** 2024-12-03 折旧与摊销预算，来自贺占军老师的线下表 
+  drop table data_center.ods_budget_dep_and_amo;
+  CREATE TABLE data_center.ods_budget_dep_and_amo (
+    org_code varchar(64) comment '单位编码',
+    org_name varchar(64) comment '单位名称',
+    date varchar(64) comment '日期',
+    year varchar(64) comment '年份',
+    index_name varchar(64) comment '指标名称', 
+    index_code varchar(64) comment '指标编码',
+    budget_amount decimal(15, 2) comment '本年预算数',
+    budget_amount_sy decimal(15, 2) comment '本年预算-损益部分',
+    act_amount decimal(15, 2) comment '本年实际',
+    act_amount_sy decimal(15, 2) comment '本年实际-损益部分'
+  ) COMMENT='折旧与摊销预算表-hzj';
+INSERT INTO `data_center`.`ods_budget_dep_and_amo`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `budget_amount`, `budget_amount_sy`, `act_amount`, `act_amount_sy`) VALUES ('GY2F00', '包头能源', '2024-10', '2024', '无形资产摊销', '3', 7563.71, 7557.71, NULL, NULL);
+INSERT INTO `data_center`.`ods_budget_dep_and_amo`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `budget_amount`, `budget_amount_sy`, `act_amount`, `act_amount_sy`) VALUES ('2F02', '万利一矿', '2024-10', '2024', '无形资产摊销', '3', 3054.00, 3054.00, NULL, NULL);
+INSERT INTO `data_center`.`ods_budget_dep_and_amo`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `budget_amount`, `budget_amount_sy`, `act_amount`, `act_amount_sy`) VALUES ('2F08', '神山露天矿', '2024-10', '2024', '无形资产摊销', '3', 85.00, 85.00, NULL, NULL);
+INSERT INTO `data_center`.`ods_budget_dep_and_amo`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `budget_amount`, `budget_amount_sy`, `act_amount`, `act_amount_sy`) VALUES ('2F04', '水泉矿', '2024-10', '2024', '无形资产摊销', '3', 2.00, 2.00, NULL, NULL);
+INSERT INTO `data_center`.`ods_budget_dep_and_amo`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `budget_amount`, `budget_amount_sy`, `act_amount`, `act_amount_sy`) VALUES ('2F06', '李家壕', '2024-10', '2024', '无形资产摊销', '3', 1910.00, 1910.00, NULL, NULL);
+INSERT INTO `data_center`.`ods_budget_dep_and_amo`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `budget_amount`, `budget_amount_sy`, `act_amount`, `act_amount_sy`) VALUES ('2F00', '能源本部', '2024-10', '2024', '无形资产摊销', '3', NULL, NULL, NULL, NULL);
+INSERT INTO `data_center`.`ods_budget_dep_and_amo`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `budget_amount`, `budget_amount_sy`, `act_amount`, `act_amount_sy`) VALUES ('2F01', '运销公司', '2024-10', '2024', '无形资产摊销', '3', NULL, NULL, NULL, NULL);
+INSERT INTO `data_center`.`ods_budget_dep_and_amo`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `budget_amount`, `budget_amount_sy`, `act_amount`, `act_amount_sy`) VALUES ('2F05', '水泉选煤厂', '2024-10', '2024', '无形资产摊销', '3', 9.00, 9.00, NULL, NULL);
+INSERT INTO `data_center`.`ods_budget_dep_and_amo`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `budget_amount`, `budget_amount_sy`, `act_amount`, `act_amount_sy`) VALUES ('002305', '集装站', '2024-10', '2024', '无形资产摊销', '3', 78.46, 78.46, NULL, NULL);
+INSERT INTO `data_center`.`ods_budget_dep_and_amo`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `budget_amount`, `budget_amount_sy`, `act_amount`, `act_amount_sy`) VALUES ('2F09', '洗选公司', '2024-10', '2024', '无形资产摊销', '3', 90.00, 90.00, NULL, NULL);
+INSERT INTO `data_center`.`ods_budget_dep_and_amo`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `budget_amount`, `budget_amount_sy`, `act_amount`, `act_amount_sy`) VALUES ('002303', '公路', '2024-10', '2024', '无形资产摊销', '3', 2329.25, 2329.25, NULL, NULL);
+INSERT INTO `data_center`.`ods_budget_dep_and_amo`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `budget_amount`, `budget_amount_sy`, `act_amount`, `act_amount_sy`) VALUES ('002302', '蒙格沁', '2024-10', '2024', '无形资产摊销', '3', 6.00, NULL, NULL, NULL);
+INSERT INTO `data_center`.`ods_budget_dep_and_amo`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `budget_amount`, `budget_amount_sy`, `act_amount`, `act_amount_sy`) VALUES ('GY2F00', '包头能源', '2024-10', '2024', '固定资产折旧', '2', 31556.80, 31536.80, NULL, NULL);
+INSERT INTO `data_center`.`ods_budget_dep_and_amo`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `budget_amount`, `budget_amount_sy`, `act_amount`, `act_amount_sy`) VALUES ('2F02', '万利一矿', '2024-10', '2024', '固定资产折旧', '2', 7856.80, 7856.80, NULL, NULL);
+INSERT INTO `data_center`.`ods_budget_dep_and_amo`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `budget_amount`, `budget_amount_sy`, `act_amount`, `act_amount_sy`) VALUES ('2F08', '神山露天矿', '2024-10', '2024', '固定资产折旧', '2', 774.36, 774.36, NULL, NULL);
+INSERT INTO `data_center`.`ods_budget_dep_and_amo`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `budget_amount`, `budget_amount_sy`, `act_amount`, `act_amount_sy`) VALUES ('2F04', '水泉矿', '2024-10', '2024', '固定资产折旧', '2', 290.00, 290.00, NULL, NULL);
+INSERT INTO `data_center`.`ods_budget_dep_and_amo`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `budget_amount`, `budget_amount_sy`, `act_amount`, `act_amount_sy`) VALUES ('2F06', '李家壕', '2024-10', '2024', '固定资产折旧', '2', 16306.00, 16306.00, NULL, NULL);
+INSERT INTO `data_center`.`ods_budget_dep_and_amo`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `budget_amount`, `budget_amount_sy`, `act_amount`, `act_amount_sy`) VALUES ('2F00', '能源本部', '2024-10', '2024', '固定资产折旧', '2', 253.64, 253.64, NULL, NULL);
+INSERT INTO `data_center`.`ods_budget_dep_and_amo`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `budget_amount`, `budget_amount_sy`, `act_amount`, `act_amount_sy`) VALUES ('2F01', '运销公司', '2024-10', '2024', '固定资产折旧', '2', 38.00, 38.00, NULL, NULL);
+INSERT INTO `data_center`.`ods_budget_dep_and_amo`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `budget_amount`, `budget_amount_sy`, `act_amount`, `act_amount_sy`) VALUES ('2F05', '水泉选煤厂', '2024-10', '2024', '固定资产折旧', '2', 10.00, 10.00, NULL, NULL);
+INSERT INTO `data_center`.`ods_budget_dep_and_amo`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `budget_amount`, `budget_amount_sy`, `act_amount`, `act_amount_sy`) VALUES ('002305', '集装站', '2024-10', '2024', '固定资产折旧', '2', 176.00, 176.00, NULL, NULL);
+INSERT INTO `data_center`.`ods_budget_dep_and_amo`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `budget_amount`, `budget_amount_sy`, `act_amount`, `act_amount_sy`) VALUES ('2F09', '洗选公司', '2024-10', '2024', '固定资产折旧', '2', 5580.00, 5580.00, NULL, NULL);
+INSERT INTO `data_center`.`ods_budget_dep_and_amo`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `budget_amount`, `budget_amount_sy`, `act_amount`, `act_amount_sy`) VALUES ('002303', '公路', '2024-10', '2024', '固定资产折旧', '2', 252.00, 252.00, NULL, NULL);
+INSERT INTO `data_center`.`ods_budget_dep_and_amo`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `budget_amount`, `budget_amount_sy`, `act_amount`, `act_amount_sy`) VALUES ('002302', '蒙格沁', '2024-10', '2024', '固定资产折旧', '2', 20.00, NULL, NULL, NULL);
+
+
+  ***/
   truncate table data_center.ads_dep_and_amo;
-  insert into data_center.ads_dep_and_amo
-  with ods_dep_and_amo as (
-    select * from data_center.ods_dep_and_amo_hq
-    union all
-    select * from data_center.ods_dep_and_amo_bo
-  ) 
+  -- 20241203 : 下面关联的是预算模块
+--   insert into data_center.ads_dep_and_amo
+--   with ods_dep_and_amo as (
+--       select * from data_center.ods_dep_and_amo_hq
+--       union all
+--       select * from data_center.ods_dep_and_amo_bo
+--   )
+--   select
+--       a.org_code,
+--       a.org_name,
+--       c.level_code,
+--       date,
+--       a.index_name,
+--       a.index_code,
+--       a.total_amount_lastyear,
+--       a.main_biz_cost_lastyear,
+--       a.manage_fee_lastyear,
+--       a.sales_fee_lastyear,
+--       a.other_biz_cost_lastyear,
+--       a.cip_project_lastyear,
+--       a.total_amount,
+--       a.main_biz_cost,
+--       a.manage_fee,
+--       a.sales_fee,
+--       a.other_biz_cost,
+--       a.cip_project,
+--       v.version_code,
+--       bud.amount
+--   from ods_dep_and_amo a
+--       left join data_center.ads_orgnization c
+--   on a.org_code = c.org_code
+--       left join ads_ys_version_info v
+--       on v.year = substr(a.date,1,4)
+--       left join ods_budget_operating_value bud
+--       on bud.entity = a.org_code
+--       and bud.years = substr(a.date,1,4)
+--       and bud.version = v.version_code
+--       and bud.scenario = 'NCYSS'
+--       and bud.SYNTHESIS = 'ZE'
+--       and bud.account = 'DJMCB04'   -- 固定资产折旧
+--   where a.index_code = '2';
+
+-- insert into data_center.ads_dep_and_amo
+--   with ods_dep_and_amo as (
+--       select * from data_center.ods_dep_and_amo_hq
+--       union all
+--       select * from data_center.ods_dep_and_amo_bo
+--   )
+--   select
+--       a.org_code,
+--       a.org_name,
+--       c.level_code,
+--       date,
+--       a.index_name,
+--       a.index_code,
+--       a.total_amount_lastyear,
+--       a.main_biz_cost_lastyear,
+--       a.manage_fee_lastyear,
+--       a.sales_fee_lastyear,
+--       a.other_biz_cost_lastyear,
+--       a.cip_project_lastyear,
+--       a.total_amount,
+--       a.main_biz_cost,
+--       a.manage_fee,
+--       a.sales_fee,
+--       a.other_biz_cost,
+--       a.cip_project,
+--       v.version_code,
+--       bud.amount
+--   from ods_dep_and_amo a
+--       left join data_center.ads_orgnization c
+--   on a.org_code = c.org_code
+--       left join ads_ys_version_info v
+--       on v.year = substr(a.date,1,4)
+--       left join ods_budget_operating_value bud
+--       on bud.entity = a.org_code
+--       and bud.years = substr(a.date,1,4)
+--       and bud.version = v.version_code
+--       and bud.scenario = 'NCYSS'
+--       and bud.SYNTHESIS = 'ZE'
+--       and bud.account = 'DJMCB09'   -- 无形资产摊销
+--   where a.index_code = '3';
+
+truncate table data_center.ads_dep_and_amo;
+insert into data_center.ads_dep_and_amo
+with ods_dep_and_amo as (
+      select * from data_center.ods_dep_and_amo_hq
+      union all
+      select * from data_center.ods_dep_and_amo_bo
+  )
   select
-    a.org_code,
-    a.org_name,
-    c.level_code,
-    date,
-    a.index_name,
-    a.index_code,
-    a.total_amount_lastyear,
-    a.main_biz_cost_lastyear,
-    a.manage_fee_lastyear,
-    a.sales_fee_lastyear,
-    a.other_biz_cost_lastyear,
-    a.cip_project_lastyear,
-    a.total_amount,
-    a.main_biz_cost,
-    a.manage_fee,
-    a.sales_fee,
-    a.other_biz_cost,
-    a.cip_project
+      a.org_code,
+      a.org_name,
+      c.level_code,
+      a.date,
+      a.index_name,
+      a.index_code,
+      a.total_amount_lastyear,
+      a.main_biz_cost_lastyear,
+      a.manage_fee_lastyear,
+      a.sales_fee_lastyear,
+      a.other_biz_cost_lastyear,
+      a.cip_project_lastyear,
+      a.total_amount,
+      a.main_biz_cost,
+      a.manage_fee,
+      a.sales_fee,
+      a.other_biz_cost,
+      a.cip_project,
+      '' as version_code,
+      o.budget_amount * 10000
   from ods_dep_and_amo a
-  left join data_center.ads_orgnization c
-  on a.org_code = c.org_code;
+      left join data_center.ads_orgnization c
+        on a.org_code = c.org_code
+      left join ods_budget_dep_and_amo o
+        on o.org_code = a.org_code 
+          and o.year = substr(a.date,1,4)
+          and o.index_code = a.index_code 
+          ;
+
 
   /** 2024-10-24 资产处置ybcb039
   drop table data_center.ads_asset_dispose;
@@ -3040,6 +3175,82 @@
   from asset_dispose a
   left join data_center.ads_orgnization c
   on a.org_code = c.org_code;
+
+/** 2024-12-03 资产处置-线下表 HZJ
+  drop table data_center.ods_asset_dispose_offline;
+  CREATE TABLE data_center.ods_asset_dispose_offline (
+    org_code varchar(16) comment '单位编码',
+    org_name varchar(64) comment '单位名称',
+    date varchar(16) comment '日期',
+    year varchar(16) comment '日期',
+    index_name varchar(64) comment '指标名称', 
+    index_code varchar(32) comment '指标编码',
+    plan_asset_original_value decimal(15, 2) comment '资产原值计划数',
+    plan_accumulated_depreciation decimal(15, 2) comment '累计折旧（累计摊销）计划数',
+    plan_asset_net_value decimal(15, 2) comment '资产净值计划数',
+    plan_impairment_provision decimal(15, 2) comment '减值准备计划数',
+    plan_asset_net_amount decimal(15, 2) comment '资产净额计划数',
+    act_asset_original_value decimal(15, 2) comment '资产原值实际数',
+    act_accumulated_depreciation decimal(15, 2) comment '累计折旧（累计摊销）实际数',
+    act_asset_net_value decimal(15, 2) comment '资产净值实际数',
+    act_impairment_provision decimal(15, 2) comment '减值准备实际数',
+    act_asset_net_amount decimal(15, 2) comment '资产净额实际数'
+  ) COMMENT='资产处置-线下表 HZJ';
+-- 线下表，导入的11月数据 2024-12-03
+INSERT INTO `data_center`.`ods_asset_dispose_offline`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `plan_asset_original_value`, `plan_accumulated_depreciation`, `plan_asset_net_value`, `plan_impairment_provision`, `plan_asset_net_amount`, `act_asset_original_value`, `act_accumulated_depreciation`, `act_asset_net_value`, `act_impairment_provision`, `act_asset_net_amount`) VALUES ('GY2F00', '包头能源', '2024-11', '2024', NULL, NULL, 75789.39, 59665.51, 16123.88, 11396.95, 4726.93, 10065.88, 9830.41, 235.47, NULL, 235.47);
+INSERT INTO `data_center`.`ods_asset_dispose_offline`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `plan_asset_original_value`, `plan_accumulated_depreciation`, `plan_asset_net_value`, `plan_impairment_provision`, `plan_asset_net_amount`, `act_asset_original_value`, `act_accumulated_depreciation`, `act_asset_net_value`, `act_impairment_provision`, `act_asset_net_amount`) VALUES ('2F06', '李家壕', '2024-11', '2024', NULL, NULL, 4069.84, 3046.16, 1023.68, NULL, 1023.68, 1712.14, 1677.49, 34.65, NULL, 34.65);
+INSERT INTO `data_center`.`ods_asset_dispose_offline`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `plan_asset_original_value`, `plan_accumulated_depreciation`, `plan_asset_net_value`, `plan_impairment_provision`, `plan_asset_net_amount`, `act_asset_original_value`, `act_accumulated_depreciation`, `act_asset_net_value`, `act_impairment_provision`, `act_asset_net_amount`) VALUES ('2F02', '万利矿', '2024-11', '2024', NULL, NULL, 59299.16, 51436.16, 7863.00, 5340.79, 2522.21, 6975.61, 6956.29, 19.32, NULL, 19.32);
+INSERT INTO `data_center`.`ods_asset_dispose_offline`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `plan_asset_original_value`, `plan_accumulated_depreciation`, `plan_asset_net_value`, `plan_impairment_provision`, `plan_asset_net_amount`, `act_asset_original_value`, `act_accumulated_depreciation`, `act_asset_net_value`, `act_impairment_provision`, `act_asset_net_amount`) VALUES ('2F08', '神山矿', '2024-11', '2024', NULL, NULL, 1616.54, 1359.41, 257.13, 0.00, 257.13, NULL, 0.00, NULL, NULL, NULL);
+INSERT INTO `data_center`.`ods_asset_dispose_offline`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `plan_asset_original_value`, `plan_accumulated_depreciation`, `plan_asset_net_value`, `plan_impairment_provision`, `plan_asset_net_amount`, `act_asset_original_value`, `act_accumulated_depreciation`, `act_asset_net_value`, `act_impairment_provision`, `act_asset_net_amount`) VALUES ('2F09', '洗选分公司', '2024-11', '2024', NULL, NULL, 669.28, 632.73, 36.55, 0.00, 36.55, 1378.13, 1196.63, 181.50, NULL, 181.50);
+INSERT INTO `data_center`.`ods_asset_dispose_offline`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `plan_asset_original_value`, `plan_accumulated_depreciation`, `plan_asset_net_value`, `plan_impairment_provision`, `plan_asset_net_amount`, `act_asset_original_value`, `act_accumulated_depreciation`, `act_asset_net_value`, `act_impairment_provision`, `act_asset_net_amount`) VALUES ('2F00', '能源公司', '2024-11', '2024', NULL, NULL, 368.10, 333.94, 34.16, 0.00, 34.16, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `data_center`.`ods_asset_dispose_offline`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `plan_asset_original_value`, `plan_accumulated_depreciation`, `plan_asset_net_value`, `plan_impairment_provision`, `plan_asset_net_amount`, `act_asset_original_value`, `act_accumulated_depreciation`, `act_asset_net_value`, `act_impairment_provision`, `act_asset_net_amount`) VALUES ('2F05', '水泉选煤厂', '2024-11', '2024', NULL, NULL, 9766.47, 2857.11, 6909.36, 6056.16, 853.20, NULL, NULL, NULL, NULL, NULL);
+
+-- 线下的 资产处置表 2024-12-03 HZJ
+drop table data_center.ads_asset_dispose_offline;
+CREATE TABLE data_center.ads_asset_dispose_offline (
+    org_code varchar(16) comment '单位编码',
+    org_name varchar(64) comment '单位名称',
+    level_code varchar(64) comment '权限预留',
+    date varchar(16) comment '日期',
+    year varchar(16) comment '年份',
+    index_name varchar(64) comment '指标名称', 
+    index_code varchar(32) comment '指标编码',
+    plan_asset_original_value decimal(15, 2) comment '资产原值计划数',
+    plan_accumulated_depreciation decimal(15, 2) comment '累计折旧（累计摊销）计划数',
+    plan_asset_net_value decimal(15, 2) comment '资产净值计划数',
+    plan_impairment_provision decimal(15, 2) comment '减值准备计划数',
+    plan_asset_net_amount decimal(15, 2) comment '资产净额计划数',
+    act_asset_original_value decimal(15, 2) comment '资产原值实际数',
+    act_accumulated_depreciation decimal(15, 2) comment '累计折旧（累计摊销）实际数',
+    act_asset_net_value decimal(15, 2) comment '资产净值实际数',
+    act_impairment_provision decimal(15, 2) comment '减值准备实际数',
+    act_asset_net_amount decimal(15, 2) comment '资产净额实际数'
+  ) COMMENT='资产处置-线下表 HZJ';
+  ***/
+truncate table data_center.ads_asset_dispose_offline;
+insert into data_center.ads_asset_dispose_offline
+select 
+    a.org_code,
+    a.org_name,
+    c.level_code,
+    a.date,
+    a.`year`,
+    a.index_name, 
+    a.index_code,
+    a.plan_asset_original_value,
+    a.plan_accumulated_depreciation,
+    a.plan_asset_net_value,
+    a.plan_impairment_provision,
+    a.plan_asset_net_amount,
+    a.act_asset_original_value,
+    a.act_accumulated_depreciation,
+    a.act_asset_net_value,
+    a.act_impairment_provision,
+    a.act_asset_net_amount
+from data_center.ods_asset_dispose_offline a
+  left join data_center.ads_orgnization c
+  on a.org_code = c.org_code;
+
 
   /**
   drop table data_center.ads_two_gold_budget;
