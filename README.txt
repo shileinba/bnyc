@@ -37,7 +37,7 @@ https://blog.csdn.net/u014303349/article/details/133833184
 
 三、资源
 1. git-bash下载 ：https://git-scm.com/downloads/win
-2.
+2. JDK 下载 ： https://url81.ctfile.com/d/19524381-37913945-572341 解压密码 ：3360
 
 四、GIT知识点
 1. branch 和 tag的区别
