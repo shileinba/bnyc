@@ -1,3 +1,11 @@
 # application.yml
 server:
   port: 8081
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/zentao
+    username: root
+    password: 0hwJPx>k4IO
+mybatis:
+  mapper-locations: classpath:com/yonyou/mapper/*.xml
