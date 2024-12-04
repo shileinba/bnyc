@@ -3226,6 +3226,25 @@ CREATE TABLE data_center.ads_asset_dispose_offline (
     act_impairment_provision decimal(15, 2) comment '减值准备实际数',
     act_asset_net_amount decimal(15, 2) comment '资产净额实际数'
   ) COMMENT='资产处置-线下表 HZJ';
+
+drop table data_center.ads_asset_dispose_offline_convert;
+CREATE TABLE data_center.ads_asset_dispose_offline_convert (
+    org_code varchar(16) comment '单位编码',
+    org_name varchar(64) comment '单位名称',
+    level_code varchar(64) comment '权限预留',
+    date varchar(16) comment '日期',
+    year varchar(16) comment '年份',
+    index_name varchar(64) comment '指标名称', 
+    index_code varchar(32) comment '指标编码',
+    is_plan varchar(8) comment '是否计划', -- 1 是  0 否
+    asset_original_value decimal(15, 2) comment '资产原值数',
+    accumulated_depreciation decimal(15, 2) comment '累计折旧（累计摊销）数',
+    asset_net_value decimal(15, 2) comment '资产净值数',
+    impairment_provision decimal(15, 2) comment '减值准备数',
+    asset_net_amount decimal(15, 2) comment '资产净额数',
+    created_time datetime(0) DEFAULT CURRENT_TIMESTAMP comment '创建时间',
+    updated_time datetime(0) DEFAULT CURRENT_TIMESTAMP comment '更新时间'
+  ) COMMENT='资产处置-线下表-转化 HZJ';
   ***/
 truncate table data_center.ads_asset_dispose_offline;
 insert into data_center.ads_asset_dispose_offline
@@ -3251,6 +3270,43 @@ from data_center.ods_asset_dispose_offline a
   left join data_center.ads_orgnization c
   on a.org_code = c.org_code;
 
+truncate table data_center.ads_asset_dispose_offline_convert;
+insert into data_center.ads_asset_dispose_offline_convert
+select 
+    org_code,
+    org_name,
+    level_code,
+    date,
+    `year`,
+    index_name, 
+    index_code,
+    '1', -- plan
+    plan_asset_original_value,
+    plan_accumulated_depreciation,
+    plan_asset_net_value,
+    plan_impairment_provision,
+    plan_asset_net_amount,
+    now(),
+    now()
+from data_center.ads_asset_dispose_offline ;
+insert into data_center.ads_asset_dispose_offline_convert
+select 
+    org_code,
+    org_name,
+    level_code,
+    date,
+    `year`,
+    index_name, 
+    index_code,
+    '0', -- 实际
+    act_asset_original_value,
+    act_accumulated_depreciation,
+    act_asset_net_value,
+    act_impairment_provision,
+    act_asset_net_amount,
+    now(),
+    now()
+from data_center.ads_asset_dispose_offline ;
 
   /**
   drop table data_center.ads_two_gold_budget;
@@ -3643,7 +3699,7 @@ from data_center.ods_asset_dispose_offline a
   version_code
   ;
 
-  /**      两金压控   **/
+  /**      两金压控 2024-12-04   **/
 
   /**
    -- 两金压控下面的表格数据
@@ -3666,10 +3722,10 @@ from data_center.ods_asset_dispose_offline a
     updated_time datetime(0) DEFAULT CURRENT_TIMESTAMP comment '更新时间'
   ) COMMENT='dws-两金压控预算表';
   **/
-  -- 两金 应收账款和存货
-  truncate table dws_two_gold_control;
-  insert into dws_two_gold_control
-  select
+-- 两金 应收账款和存货 , 资产负债表中的 15， 27 指标
+truncate table dws_two_gold_control;
+insert into dws_two_gold_control
+select
     a.*,
     v.version_code,
     b.account,
@@ -3679,7 +3735,7 @@ from data_center.ods_asset_dispose_offline a
     now(),
     now()
   from (
-      select * from ods_asset_balance_hq where index_code in (15,27,28,31)  
+      select * from ods_asset_balance_hq where index_code in (15,27,28,31)    -- 应收账款净额、存货、原材料、煤炭 
       union all 
       select * from ods_asset_balance_bo where index_code in (15,27,28,31)  
   ) a
@@ -3694,7 +3750,8 @@ from data_center.ods_asset_dispose_offline a
       and b.version = v.version_code
       and b.YEARS = v.year
   ;
-  insert into dws_two_gold_control
+
+insert into dws_two_gold_control
   select
     org_code,
     org_name,
@@ -3840,16 +3897,16 @@ from data_center.ods_asset_dispose_offline a
     org_name varchar(64) comment '单位名称',
     date varchar(64) comment '日期',
     leve_code varchar(64) comment '权限预留', 
-    yszk_growth_rate decimal(15, 2) comment '应收账款增长率',
+    yszk_growth_rate decimal(15, 2) comment '营业收入增长率',
     two_gold_growth_rate decimal(15, 2) comment '两金增长率',
     version_code varchar(16) comment '版本号',
     created_time datetime(0) DEFAULT CURRENT_TIMESTAMP comment '创建时间',
     updated_time datetime(0) DEFAULT CURRENT_TIMESTAMP comment '更新时间'
   ) COMMENT='ads-营收两金增长率对比表';
   **/
-  -- 插入营收增长率数据
-  truncate table data_center.ads_two_gold_growth_rate;
-  insert into data_center.ads_two_gold_growth_rate
+-- 插入营收增长率数据
+truncate table data_center.ads_two_gold_growth_rate;
+insert into data_center.ads_two_gold_growth_rate
   with a as (
     select * from ods_coal_produce_hq where index_code  = '1'
       union all 
@@ -3869,8 +3926,9 @@ from data_center.ods_asset_dispose_offline a
   left join ads_orgnization b on b.org_code = a.org_code
   left join ads_ys_version_info v on v.year = substr(a.date,1,4)
   ;
-  insert into data_center.ads_two_gold_growth_rate
-  select 
+-- 插入两金增长率数据
+insert into data_center.ads_two_gold_growth_rate
+select 
     org_code,
     org_name,
     date,
