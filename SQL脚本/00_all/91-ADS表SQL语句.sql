@@ -3918,7 +3918,7 @@ insert into dws_two_gold_control
     org_name varchar(64) comment '单位名称',
     date varchar(64) comment '日期',
     leve_code varchar(64) comment '权限预留', 
-    yszk_growth_rate decimal(15, 2) comment '营业收入增长率',
+    yysr_growth_rate decimal(15, 2) comment '营业收入增长率',
     two_gold_growth_rate decimal(15, 2) comment '两金增长率',
     version_code varchar(16) comment '版本号',
     rank_no varchar(16) comment '单位顺序',
@@ -3964,7 +3964,6 @@ select
     now() ,
     now()
   from data_center.ads_two_gold_control_convert
-  -- where org_code = 'GY2F00' and date  = '2024-10'
   group by 
     org_code,
     org_name,
