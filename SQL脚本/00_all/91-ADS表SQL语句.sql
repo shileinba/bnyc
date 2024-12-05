@@ -1891,8 +1891,9 @@
    69 非流动资产
    51 减-累计折旧
    126 - 负债合计 ： 10月23日增加指标
+
    drop table data_center.ads_asset_core;
-  CREATE TABLE data_center.ads_asset_core (
+   CREATE TABLE data_center.ads_asset_core (
     org_code varchar(64) comment '单位编码',
     org_name varchar(64) comment '单位名称',
     level_code varchar(64) comment '权限预留',
@@ -1900,9 +1901,9 @@
     index_name varchar(64) comment '指标名称', 
     index_code varchar(64) comment '指标编码',
     amount_acc decimal(15, 2) comment '期末值',
-   amount_acc_form decimal(15, 2) comment '同期值',
-    amount_acc_begin decimal(15, 2) comment '期初值'
-   
+    amount_acc_form decimal(15, 2) comment '同期值',
+    amount_acc_begin decimal(15, 2) comment '期初值',
+    rank_no varchar(16) comment '单位顺序' -- 2024-12-05 : 增加单位组织顺序
   ) COMMENT='资产核心指标';
    
   **/
@@ -1923,7 +1924,8 @@
    a.index_code,
    a.end_balance,
    a.amount_acc_form,
-   a.begin_balance
+   a.begin_balance,
+   b.rank_no
   from asset_balance a
   left join data_center.ads_orgnization b
     on a.org_code = b.org_code
@@ -1942,9 +1944,9 @@
   update data_center.ads_asset_core
   set index_name = '总资产' where index_name = '资产总计';
 
-  -- 2024-10-23 : 补充 ‘两金合计’指标
-  insert into data_center.ads_asset_core
-  select
+-- 2024-10-23 : 补充 ‘两金合计’指标
+insert into data_center.ads_asset_core
+select
   org_code,
   org_name,
   level_code,
@@ -1953,15 +1955,17 @@
   '9-27',
   sum(amount_acc),
   sum(amount_acc_form),
-  sum(amount_acc_begin)
-  from data_center.ads_asset_core
-  where index_code in ('9','27')
-  group by 
-    org_code,
-    org_name,
-    level_code,
-    date
-    ;
+  sum(amount_acc_begin),
+  rank_no
+from data_center.ads_asset_core
+where index_code in ('9','27')
+group by 
+  org_code,
+  org_name,
+  level_code,
+  date,
+  rank_no
+  ;
 
   /**
    【集团汇总指标】YGL0078
@@ -3176,7 +3180,8 @@ with ods_dep_and_amo as (
   left join data_center.ads_orgnization c
   on a.org_code = c.org_code;
 
-/** 2024-12-03 资产处置-线下表 HZJ
+/** 
+ * 此 ODS表作废，直接使用下面的 ADS表，2024-12-03 资产处置-线下表 HZJ
   drop table data_center.ods_asset_dispose_offline;
   CREATE TABLE data_center.ods_asset_dispose_offline (
     org_code varchar(16) comment '单位编码',
@@ -3204,7 +3209,9 @@ INSERT INTO `data_center`.`ods_asset_dispose_offline`(`org_code`, `org_name`, `d
 INSERT INTO `data_center`.`ods_asset_dispose_offline`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `plan_asset_original_value`, `plan_accumulated_depreciation`, `plan_asset_net_value`, `plan_impairment_provision`, `plan_asset_net_amount`, `act_asset_original_value`, `act_accumulated_depreciation`, `act_asset_net_value`, `act_impairment_provision`, `act_asset_net_amount`) VALUES ('2F09', '洗选分公司', '2024-11', '2024', NULL, NULL, 669.28, 632.73, 36.55, 0.00, 36.55, 1378.13, 1196.63, 181.50, NULL, 181.50);
 INSERT INTO `data_center`.`ods_asset_dispose_offline`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `plan_asset_original_value`, `plan_accumulated_depreciation`, `plan_asset_net_value`, `plan_impairment_provision`, `plan_asset_net_amount`, `act_asset_original_value`, `act_accumulated_depreciation`, `act_asset_net_value`, `act_impairment_provision`, `act_asset_net_amount`) VALUES ('2F00', '能源公司', '2024-11', '2024', NULL, NULL, 368.10, 333.94, 34.16, 0.00, 34.16, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `data_center`.`ods_asset_dispose_offline`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `plan_asset_original_value`, `plan_accumulated_depreciation`, `plan_asset_net_value`, `plan_impairment_provision`, `plan_asset_net_amount`, `act_asset_original_value`, `act_accumulated_depreciation`, `act_asset_net_value`, `act_impairment_provision`, `act_asset_net_amount`) VALUES ('2F05', '水泉选煤厂', '2024-11', '2024', NULL, NULL, 9766.47, 2857.11, 6909.36, 6056.16, 853.20, NULL, NULL, NULL, NULL, NULL);
+**/
 
+/**
 -- 线下的 资产处置表 2024-12-03 HZJ
 drop table data_center.ads_asset_dispose_offline;
 CREATE TABLE data_center.ads_asset_dispose_offline (
@@ -3224,9 +3231,38 @@ CREATE TABLE data_center.ads_asset_dispose_offline (
     act_accumulated_depreciation decimal(15, 2) comment '累计折旧（累计摊销）实际数',
     act_asset_net_value decimal(15, 2) comment '资产净值实际数',
     act_impairment_provision decimal(15, 2) comment '减值准备实际数',
-    act_asset_net_amount decimal(15, 2) comment '资产净额实际数'
+    act_asset_net_amount decimal(15, 2) comment '资产净额实际数',
+    id  varchar(64) comment 'id'
   ) COMMENT='资产处置-线下表 HZJ';
 
+***/
+-- truncate table data_center.ads_asset_dispose_offline;
+-- insert into data_center.ads_asset_dispose_offline
+-- select 
+--     a.org_code,
+--     a.org_name,
+--     c.level_code,
+--     a.date,
+--     a.`year`,
+--     a.index_name, 
+--     a.index_code,
+--     a.plan_asset_original_value,
+--     a.plan_accumulated_depreciation,
+--     a.plan_asset_net_value,
+--     a.plan_impairment_provision,
+--     a.plan_asset_net_amount,
+--     a.act_asset_original_value,
+--     a.act_accumulated_depreciation,
+--     a.act_asset_net_value,
+--     a.act_impairment_provision,
+--     a.act_asset_net_amount,
+--     now(),
+--     now()
+-- from data_center.ods_asset_dispose_offline a
+--   left join data_center.ads_orgnization c
+--   on a.org_code = c.org_code;
+
+/**
 drop table data_center.ads_asset_dispose_offline_convert;
 CREATE TABLE data_center.ads_asset_dispose_offline_convert (
     org_code varchar(16) comment '单位编码',
@@ -3245,31 +3281,7 @@ CREATE TABLE data_center.ads_asset_dispose_offline_convert (
     created_time datetime(0) DEFAULT CURRENT_TIMESTAMP comment '创建时间',
     updated_time datetime(0) DEFAULT CURRENT_TIMESTAMP comment '更新时间'
   ) COMMENT='资产处置-线下表-转化 HZJ';
-  ***/
-truncate table data_center.ads_asset_dispose_offline;
-insert into data_center.ads_asset_dispose_offline
-select 
-    a.org_code,
-    a.org_name,
-    c.level_code,
-    a.date,
-    a.`year`,
-    a.index_name, 
-    a.index_code,
-    a.plan_asset_original_value,
-    a.plan_accumulated_depreciation,
-    a.plan_asset_net_value,
-    a.plan_impairment_provision,
-    a.plan_asset_net_amount,
-    a.act_asset_original_value,
-    a.act_accumulated_depreciation,
-    a.act_asset_net_value,
-    a.act_impairment_provision,
-    a.act_asset_net_amount
-from data_center.ods_asset_dispose_offline a
-  left join data_center.ads_orgnization c
-  on a.org_code = c.org_code;
-
+**/
 truncate table data_center.ads_asset_dispose_offline_convert;
 insert into data_center.ads_asset_dispose_offline_convert
 select 
@@ -3289,6 +3301,7 @@ select
     now(),
     now()
 from data_center.ads_asset_dispose_offline ;
+
 insert into data_center.ads_asset_dispose_offline_convert
 select 
     org_code,
@@ -3798,13 +3811,14 @@ insert into dws_two_gold_control
     yszk_total_amount decimal(15, 2) comment '应收账款实际值',
     yszk_pre decimal(15, 2) comment '应收账款预算值',
     version_code varchar(16) comment '版本',
+    rank_no varchar(16) comment '单位顺序',
     created_time datetime(0) DEFAULT CURRENT_TIMESTAMP comment '创建时间',
     updated_time datetime(0) DEFAULT CURRENT_TIMESTAMP comment '更新时间'
   ) COMMENT='ads-两金压控预算表-转置';
   **/
   truncate table ads_two_gold_control_convert ;
   insert into ads_two_gold_control_convert
-  (`org_code`,`org_name`,`level_code`,`date`,`ljhj_total_amount`,`ljhj_pre`,`version_code`,`created_time`,`updated_time`)
+  (`org_code`,`org_name`,`level_code`,`date`,`ljhj_total_amount`,`ljhj_pre`,`version_code`,`rank_no`,`created_time`,`updated_time`)
   select
       b.org_code,
       b.org_name,
@@ -3813,6 +3827,7 @@ insert into dws_two_gold_control
       a.end_balance,
       a.amount,
       a.version_code,
+      b.rank_no,
       now(),
       now()
     from dws_two_gold_control a
@@ -3821,7 +3836,7 @@ insert into dws_two_gold_control
     where a.index_code  = 'LJHJ'  -- 两金合计总值
   ;
   insert into ads_two_gold_control_convert
-  (`org_code`,`org_name`,`level_code`,`date`,`ch_total_amount`,`ch_pre`,`version_code`,`created_time`,`updated_time`)
+  (`org_code`,`org_name`,`level_code`,`date`,`ch_total_amount`,`ch_pre`,`version_code`,`rank_no`,`created_time`,`updated_time`)
   select
       b.org_code,
       b.org_name,
@@ -3830,6 +3845,7 @@ insert into dws_two_gold_control
       a.end_balance,
       a.amount,
       a.version_code,
+      b.rank_no,
       now(),
       now()
     from dws_two_gold_control a
@@ -3838,7 +3854,7 @@ insert into dws_two_gold_control
     where a.index_code  = '27'  -- 存货
   ;
   insert into ads_two_gold_control_convert
-  (`org_code`,`org_name`,`level_code`,`date`,`ycl_total_amount`,`ycl_pre`,`version_code`,`created_time`,`updated_time`)
+  (`org_code`,`org_name`,`level_code`,`date`,`ycl_total_amount`,`ycl_pre`,`version_code`,`rank_no`,`created_time`,`updated_time`)
   select
       b.org_code,
       b.org_name,
@@ -3847,6 +3863,7 @@ insert into dws_two_gold_control
       a.end_balance,
       a.amount,
       a.version_code,
+      b.rank_no,
       now(),
       now()
     from dws_two_gold_control a
@@ -3855,7 +3872,7 @@ insert into dws_two_gold_control
     where a.index_code  = '28'  -- 原材料
   ;
   insert into ads_two_gold_control_convert
-  (`org_code`,`org_name`,`level_code`,`date`,`kcm_total_amount`,`kcm_pre`,`version_code`,`created_time`,`updated_time`)
+  (`org_code`,`org_name`,`level_code`,`date`,`kcm_total_amount`,`kcm_pre`,`version_code`,`rank_no`,`created_time`,`updated_time`)
   select
       b.org_code,
       b.org_name,
@@ -3864,6 +3881,7 @@ insert into dws_two_gold_control
       a.end_balance,
       a.amount,
       a.version_code,
+      b.rank_no,
       now(),
       now()
     from dws_two_gold_control a
@@ -3872,7 +3890,7 @@ insert into dws_two_gold_control
     where a.index_code  = '31'  -- 库存煤
   ;
   insert into ads_two_gold_control_convert
-  (`org_code`,`org_name`,`level_code`,`date`,`yszk_total_amount`,`yszk_pre`,`version_code`,`created_time`,`updated_time`)
+  (`org_code`,`org_name`,`level_code`,`date`,`yszk_total_amount`,`yszk_pre`,`version_code`,`rank_no`,`created_time`,`updated_time`)
   select
       b.org_code,
       b.org_name,
@@ -3881,6 +3899,7 @@ insert into dws_two_gold_control
       a.end_balance,
       a.amount,
       a.version_code,
+      b.rank_no,
       now(),
       now()
     from dws_two_gold_control a
@@ -3900,6 +3919,7 @@ insert into dws_two_gold_control
     yszk_growth_rate decimal(15, 2) comment '营业收入增长率',
     two_gold_growth_rate decimal(15, 2) comment '两金增长率',
     version_code varchar(16) comment '版本号',
+    rank_no varchar(16) comment '单位顺序',
     created_time datetime(0) DEFAULT CURRENT_TIMESTAMP comment '创建时间',
     updated_time datetime(0) DEFAULT CURRENT_TIMESTAMP comment '更新时间'
   ) COMMENT='ads-营收两金增长率对比表';
@@ -3920,12 +3940,14 @@ insert into data_center.ads_two_gold_growth_rate
     case when a.total_amount_acc_lastyear = 0 then 0 else a.total_amount_vs_lastyear / a.total_amount_acc_lastyear end,
     null,
     v.version_code,
+    b.rank_no,
     now() ,
     now()
   from a 
   left join ads_orgnization b on b.org_code = a.org_code
   left join ads_ys_version_info v on v.year = substr(a.date,1,4)
   ;
+
 -- 插入两金增长率数据
 insert into data_center.ads_two_gold_growth_rate
 select 
@@ -3936,6 +3958,7 @@ select
     null,
     (ljhj_total_amount - ljhj_pre ) / ljhj_pre,
     version_code,
+    rank_no,
     now() ,
     now()
   from data_center.ads_two_gold_control_convert
