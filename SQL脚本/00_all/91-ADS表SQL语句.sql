@@ -3337,6 +3337,7 @@ from data_center.ads_asset_dispose_offline ;
     amount decimal(15, 2) comment '预算值',
     ac_rate decimal(15, 2) comment '预算完成率',
     version_code  varchar(64) comment '版本',
+    rank_no varchar(16) comment '组织单位顺序',
     created_time datetime(0) DEFAULT CURRENT_TIMESTAMP comment '创建时间',
     updated_time datetime(0) DEFAULT CURRENT_TIMESTAMP comment '更新时间'
   ) COMMENT='两金预算模型';
@@ -3356,6 +3357,7 @@ from data_center.ads_asset_dispose_offline ;
           bud.AMOUNT,
           (case when bud.AMOUNT = 0 then null else asset.amount_acc / bud.AMOUNT end ) ac_rate ,
           v.version_code,
+          asset.rank_no,
           now(),
           now()
     from ads_asset_core asset
