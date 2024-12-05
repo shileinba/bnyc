@@ -803,9 +803,7 @@ where d.accum_purchase_value >= v.param_device_value
 /**
 资产管理 - 业财存货管理
 语义模型 23.业财存货管理    ads_ycch
-业财存货管理
-
-
+业财存货管理 语义模型使用的 sql脚本的方式，脚本如下：
 select 
 report_date, 
 '1' as index_code, -- 区队库金额
@@ -833,6 +831,26 @@ group by date;
 **/
 
 /**
+投资 - 2024-12-05 : 线下填报 HZJ
+drop table data_center.ods_invest_plan;
+CREATE TABLE data_center.ods_invest_plan (
+  org_code varchar(64) comment '单位编码',
+  org_name varchar(64) comment '单位名称',
+  date varchar(64) comment '日期',
+  index_name varchar(64) comment '指标名称', 
+  index_code varchar(64) comment '指标编码',
+  amount_pre decimal(15, 2) comment '本年预算',
+  amount_acc decimal(15, 2) comment '本年实际',
+  created_time varchar(64) comment '创建时间',
+  updated_time varchar(64) comment '更新时间',
+  id varchar(64) comment 'ID标识'
+) COMMENT='资产-投资计划odds';
+INSERT INTO `data_center`.`ods_invest_plan`(`org_code`, `org_name`, `date`, `index_name`, `index_code`, `amount_pre`, `amount_acc`, `created_time`, `updated_time`, `id`) VALUES ('GY2F00', '包头能源', '2024-11', '投资', '1', 104280.94, 93901.45, NULL, NULL, NULL);
+INSERT INTO `data_center`.`ods_invest_plan`(`org_code`, `org_name`, `date`, `index_name`, `index_code`, `amount_pre`, `amount_acc`, `created_time`, `updated_time`, `id`) VALUES ('GY2F00', '包头能源', '2024-10', '投资', '1', 100215.00, 55222.00, NULL, NULL, NULL);
+
+**/
+
+/**
 投资
 drop table data_center.ads_invest_plan;
 CREATE TABLE data_center.ads_invest_plan (
@@ -848,6 +866,22 @@ CREATE TABLE data_center.ads_invest_plan (
   updated_time datetime(0) DEFAULT CURRENT_TIMESTAMP comment '更新时间'
 ) COMMENT='投资计划ads';
 **/
+truncate table data_center.ads_invest_plan;
+insert into data_center.ads_invest_plan
+select 
+  b.org_code,
+  b.org_name,
+  b.level_code,
+  a.date,
+  a.index_name,
+  a.index_code,
+  a.amount_pre,
+  a.amount_acc,
+  now(),
+  now()
+from ods_invest_plan a
+left join  data_center.ads_orgnization b on a.org_code = b.org_code
+
 /**
 -- 投资计划是填报数据，不能truncate 
 truncate table ads_invest_plan;

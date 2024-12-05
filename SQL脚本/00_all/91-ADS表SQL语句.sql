@@ -3181,13 +3181,13 @@ with ods_dep_and_amo as (
   on a.org_code = c.org_code;
 
 /** 
- * 此 ODS表作废，直接使用下面的 ADS表，2024-12-03 资产处置-线下表 HZJ
+ * 2024-12-03 资产处置-线下表 HZJ
   drop table data_center.ods_asset_dispose_offline;
   CREATE TABLE data_center.ods_asset_dispose_offline (
     org_code varchar(16) comment '单位编码',
     org_name varchar(64) comment '单位名称',
     date varchar(16) comment '日期',
-    year varchar(16) comment '日期',
+    year varchar(16) comment '年',
     index_name varchar(64) comment '指标名称', 
     index_code varchar(32) comment '指标编码',
     plan_asset_original_value decimal(15, 2) comment '资产原值计划数',
@@ -3199,7 +3199,10 @@ with ods_dep_and_amo as (
     act_accumulated_depreciation decimal(15, 2) comment '累计折旧（累计摊销）实际数',
     act_asset_net_value decimal(15, 2) comment '资产净值实际数',
     act_impairment_provision decimal(15, 2) comment '减值准备实际数',
-    act_asset_net_amount decimal(15, 2) comment '资产净额实际数'
+    act_asset_net_amount decimal(15, 2) comment '资产净额实际数',
+    id varchar(32) comment '唯一标识ID',
+    created_time varchar(32) comment '创建时间',
+    updated_time varchar(32) comment '更新时间'
   ) COMMENT='资产处置-线下表 HZJ';
 -- 线下表，导入的11月数据 2024-12-03
 INSERT INTO `data_center`.`ods_asset_dispose_offline`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `plan_asset_original_value`, `plan_accumulated_depreciation`, `plan_asset_net_value`, `plan_impairment_provision`, `plan_asset_net_amount`, `act_asset_original_value`, `act_accumulated_depreciation`, `act_asset_net_value`, `act_impairment_provision`, `act_asset_net_amount`) VALUES ('GY2F00', '包头能源', '2024-11', '2024', NULL, NULL, 75789.39, 59665.51, 16123.88, 11396.95, 4726.93, 10065.88, 9830.41, 235.47, NULL, 235.47);
@@ -3232,35 +3235,36 @@ CREATE TABLE data_center.ads_asset_dispose_offline (
     act_asset_net_value decimal(15, 2) comment '资产净值实际数',
     act_impairment_provision decimal(15, 2) comment '减值准备实际数',
     act_asset_net_amount decimal(15, 2) comment '资产净额实际数',
-    id  varchar(64) comment 'id'
+    created_time varchar(32) comment '创建时间',
+    updated_time varchar(32) comment '更新时间'
   ) COMMENT='资产处置-线下表 HZJ';
 
 ***/
--- truncate table data_center.ads_asset_dispose_offline;
--- insert into data_center.ads_asset_dispose_offline
--- select 
---     a.org_code,
---     a.org_name,
---     c.level_code,
---     a.date,
---     a.`year`,
---     a.index_name, 
---     a.index_code,
---     a.plan_asset_original_value,
---     a.plan_accumulated_depreciation,
---     a.plan_asset_net_value,
---     a.plan_impairment_provision,
---     a.plan_asset_net_amount,
---     a.act_asset_original_value,
---     a.act_accumulated_depreciation,
---     a.act_asset_net_value,
---     a.act_impairment_provision,
---     a.act_asset_net_amount,
---     now(),
---     now()
--- from data_center.ods_asset_dispose_offline a
---   left join data_center.ads_orgnization c
---   on a.org_code = c.org_code;
+truncate table data_center.ads_asset_dispose_offline;
+insert into data_center.ads_asset_dispose_offline
+select 
+    a.org_code,
+    a.org_name,
+    c.level_code,
+    a.date,
+    a.`year`,
+    a.index_name, 
+    a.index_code,
+    a.plan_asset_original_value,
+    a.plan_accumulated_depreciation,
+    a.plan_asset_net_value,
+    a.plan_impairment_provision,
+    a.plan_asset_net_amount,
+    a.act_asset_original_value,
+    a.act_accumulated_depreciation,
+    a.act_asset_net_value,
+    a.act_impairment_provision,
+    a.act_asset_net_amount,
+    now(),
+    now()
+from data_center.ods_asset_dispose_offline a
+  left join data_center.ads_orgnization c
+  on a.org_code = c.org_code;
 
 /**
 drop table data_center.ads_asset_dispose_offline_convert;
@@ -3278,8 +3282,8 @@ CREATE TABLE data_center.ads_asset_dispose_offline_convert (
     asset_net_value decimal(15, 2) comment '资产净值数',
     impairment_provision decimal(15, 2) comment '减值准备数',
     asset_net_amount decimal(15, 2) comment '资产净额数',
-    created_time datetime(0) DEFAULT CURRENT_TIMESTAMP comment '创建时间',
-    updated_time datetime(0) DEFAULT CURRENT_TIMESTAMP comment '更新时间'
+    created_time varchar(32) comment '创建时间',
+    updated_time varchar(32) comment '更新时间'
   ) COMMENT='资产处置-线下表-转化 HZJ';
 **/
 truncate table data_center.ads_asset_dispose_offline_convert;
@@ -3321,9 +3325,9 @@ select
     now()
 from data_center.ads_asset_dispose_offline ;
 
-  /**
-  drop table data_center.ads_two_gold_budget;
-  CREATE TABLE data_center.ads_two_gold_budget (
+/**
+drop table data_center.ads_two_gold_budget;
+CREATE TABLE data_center.ads_two_gold_budget (
     org_code varchar(64) comment '单位编码',
     org_name varchar(64) comment '单位名称',
     level_code varchar(64) comment '权限预留',
@@ -3426,12 +3430,12 @@ from data_center.ads_asset_dispose_offline ;
       where b.entity = a.entity 
           and b.years = a.years 
           and b.version = a.version 
-          and b.account = 'QNPJZGRS'
+          and b.account = 'QNPJZGRS'  -- 全年平均职工人数
           and b.scenario = 'Budget' 
-        ),
+        ),   --  
       RAND() * 10000000
     from ods_empwelf_detail_value a
-    where a.account = 'ZGFLFHJ';
+    where a.account = 'ZGFLFHJ';  -- 职工福利费合计
 
   truncate table ads_emp_benefit_budget;
   insert into ads_emp_benefit_budget
