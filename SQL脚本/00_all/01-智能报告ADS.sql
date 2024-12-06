@@ -610,3 +610,4 @@ end_balance_networth,
 substr(date,1,4) as year ,
 substr(date,6,2) as month
 from ods_accounts_receivable_hq a
+;
