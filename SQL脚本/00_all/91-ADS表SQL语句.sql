@@ -1135,7 +1135,7 @@
   -- 74 （一）投资活动资金流入
   -- 30 （二）经营活动资金流出
   -- 86 （二）投资活动资金流出
-
+  -- 111 （二）筹资活动资金流出
   insert into data_center.ads_fund_income_expense
   select 
    b.org_code,
@@ -1218,9 +1218,11 @@
   group by b.org_name,b.org_code,a.date
   ; 
   --  资金收支表
-  -- 6 （一）经营活动资金流入
-  -- 74（一）投资活动资金流入
-
+  -- 6  （一）经营活动资金流入
+  -- 74 （一）投资活动资金流入
+  -- 30 （二）经营活动资金流出
+  -- 86 （二）投资活动资金流出
+  -- 111 （二）筹资活动资金流出
   insert into data_center.ads_fund_income_expense
   select 
    b.org_code,
@@ -1235,7 +1237,7 @@
   from  data_center.ods_fund_income_expense_bo a
   left join data_center.ads_orgnization b
     on a.org_code = b.org_code
-  where a.index_code in ('30','86')
+  where a.index_code in ('30','86','111')
   group by b.org_name,b.org_code,a.date
   ; 
 
@@ -4048,3 +4050,67 @@ insert into data_center.ads_two_gold_growth_rate
   ;
 delete from data_center.ads_two_gold_growth_rate where group_flag  = '0';
 
+/**
+2024-12-6 : 新增加的 资产负债分析模型， 替换自助ETL的 资产负债转化表
+  drop table data_center.ads_asset_balance_analyse;
+  CREATE TABLE data_center.ads_asset_balance_analyse (
+                                                         org_code varchar(64) comment '单位编码',
+                                                         org_name varchar(64) comment '单位名称',
+                                                         level_code varchar(64) comment '权限预留',
+                                                         date varchar(64) comment '日期',
+                                                         index_name varchar(64) comment '指标名称',
+                                                         index_code varchar(64) comment '指标编码',
+                                                         total_amount_acc decimal(15, 2) comment '78总资产',
+                                                         balance_amount_acc decimal(15, 2) comment '126总负债',
+                                                         rank_no varchar(16) comment '单位顺序', -- 2024-12-05 : 增加单位组织顺序
+                                                         created_time varchar(64) comment '创建时间',
+                                                         updated_time varchar(64) comment '更新时间'
+  ) COMMENT='资产负债分析-ads';
+**/
+  truncate table data_center.ads_asset_balance_analyse;
+  insert into data_center.ads_asset_balance_analyse
+  with asset_balance as(
+      select * from data_center.ods_asset_balance_hq
+      union all
+      select * from data_center.ods_asset_balance_bo
+  )
+  select
+      b.org_code,
+      b.org_name,
+      b.level_code,
+      substr(a.date,1,7) as date,
+   a.index_name,
+   a.index_code,
+   a.end_balance as total_amount_acc,
+	 0 as balance_amount_acc,
+   b.rank_no,
+	 now(),
+	 now()
+  from asset_balance a
+      left join data_center.ads_orgnization b
+  on a.org_code = b.org_code
+  where a.index_code in ('78')  -- 78 总资产
+  ;
+  insert into data_center.ads_asset_balance_analyse
+  with asset_balance as(
+      select * from data_center.ods_asset_balance_hq
+      union all
+      select * from data_center.ods_asset_balance_bo
+  )
+  select
+      b.org_code,
+      b.org_name,
+      b.level_code,
+      substr(a.date,1,7) as date,
+   a.index_name,
+   a.index_code,
+   a.end_balance as total_amount_acc,
+	 0 as balance_amount_acc,
+   b.rank_no,
+	 now(),
+	 now()
+  from asset_balance a
+      left join data_center.ads_orgnization b
+  on a.org_code = b.org_code
+  where a.index_code in ('126')  -- 126 总负债
+  ;

@@ -25,12 +25,13 @@ CREATE TABLE data_center.ads_asset_lcc (
 **/
 truncate table data_center.ads_asset_lcc;
 insert into data_center.ads_asset_lcc
-with asset_lcc as(
- select * from data_center.ods_asset_lcc_hq
- union all 
- select * from data_center.ods_asset_lcc_bo
-)
-select * from asset_lcc;
+with asset_lcc as (select *
+                   from data_center.ods_asset_lcc_hq
+                   union all
+                   select *
+                   from data_center.ods_asset_lcc_bo)
+select *
+from asset_lcc;
 
 /**
 重点设备使用情况
@@ -64,78 +65,82 @@ CREATE TABLE data_center.ads_key_equipment (
 
 **/
 
-truncate table  data_center.ads_key_equipment;
-INSERT INTO  data_center.ads_key_equipment
-SELECT
-a.org_code,
-a.org_name,
-c.level_code,
-case when a.device_type not like '00%' then '0099' else b.device_type_no end ,
-case when a.device_type not like '00%' then '其他' else b.device_type_name end ,
-a.device_name,
-'' as is_key,
-a.serial_no,
-a.cnt,
-a.manufacture,
-a.purchase_time,
-a.total_coal_amount,
-a.original_value,
-a.accumulated_depreciation,
-a.net_value,
-a.location,
-a.statistics_time,
-a.status,
-a.scrap_time,
-a.depreciation_life_years,
-a.design_lifetime_years,
-a.actual_usage_years
-FROM 
-data_center.ods_key_equipment a
-left join data_center.ads_device_type b on a.device_type = b.device_type_no
-left join data_center.ads_orgnization c on a.org_code = c.org_code ;
+truncate table data_center.ads_key_equipment;
+INSERT INTO data_center.ads_key_equipment
+SELECT a.org_code,
+       a.org_name,
+       c.level_code,
+       case when a.device_type not like '00%' then '0099' else b.device_type_no end,
+       case when a.device_type not like '00%' then '其他' else b.device_type_name end,
+       a.device_name,
+       '' as is_key,
+       a.serial_no,
+       a.cnt,
+       a.manufacture,
+       a.purchase_time,
+       a.total_coal_amount,
+       a.original_value,
+       a.accumulated_depreciation,
+       a.net_value,
+       a.location,
+       a.statistics_time,
+       a.status,
+       a.scrap_time,
+       a.depreciation_life_years,
+       a.design_lifetime_years,
+       a.actual_usage_years
+FROM data_center.ods_key_equipment a
+         left join data_center.ads_device_type b on a.device_type = b.device_type_no
+         left join data_center.ads_orgnization c on a.org_code = c.org_code;
 
-update data_center.ads_key_equipment  set is_key = 'N';
-update data_center.ads_key_equipment  set is_key = 'Y' where original_value >= 1000 * 10000;
-UPDATE data_center.ads_key_equipment  set  statistics_time = substr(now() + interval '-1' month,1,7);
+update data_center.ads_key_equipment
+set is_key = 'N';
+update data_center.ads_key_equipment
+set is_key = 'Y'
+where original_value >= 1000 * 10000;
+UPDATE data_center.ads_key_equipment
+set statistics_time = substr(now() + interval '-1' month, 1, 7);
 
 -- update data_center.ads_key_equipment set device_type = concat('00',device_type);
-update data_center.ads_key_equipment set  level_code = '1006' where org_name = '李家壕煤矿';
-update data_center.ads_key_equipment set  level_code = '1002' where org_name = '万利一矿';
+update data_center.ads_key_equipment
+set level_code = '1006'
+where org_name = '李家壕煤矿';
+update data_center.ads_key_equipment
+set level_code = '1002'
+where org_name = '万利一矿';
 
 -- 重点设备的包头能源汇总合并数据。 20240930
-insert  into data_center.ads_key_equipment
-select 
-	'GY2F00' as org_code,
-	'包头能源' as org_name,
-	'100' as level_code,
-	device_type_no,
-	device_type_name,
-	device_name,
-	'' as is_key,
-	'' as serial_no,
-	sum(cnt) as cnt,
-	'' as manufacture,
-	'' as purchase_time,
-	null as total_coal_amount,
-	sum(original_value) as original_value,
-	sum(accumulated_depreciation) as accumulated_depreciation,
-	sum(net_value) as net_value,
-	'' as locatino,
-	statistics_time,
-	status,
-	scrap_time,
-	null as depreciation_life_years,
-	null as design_lifetime_years,
-	null as actual_usage_years
+insert into data_center.ads_key_equipment
+select 'GY2F00'                      as org_code,
+       '包头能源'                    as org_name,
+       '100'                         as level_code,
+       device_type_no,
+       device_type_name,
+       device_name,
+       ''                            as is_key,
+       ''                            as serial_no,
+       sum(cnt)                      as cnt,
+       ''                            as manufacture,
+       ''                            as purchase_time,
+       null                          as total_coal_amount,
+       sum(original_value)           as original_value,
+       sum(accumulated_depreciation) as accumulated_depreciation,
+       sum(net_value)                as net_value,
+       ''                            as locatino,
+       statistics_time,
+       status,
+       scrap_time,
+       null                          as depreciation_life_years,
+       null                          as design_lifetime_years,
+       null                          as actual_usage_years
 from ads_key_equipment
-group by 
-device_type_no,
-device_type_name,
-device_name,
-accumulated_depreciation,
-statistics_time,
-status,
-scrap_time;
+group by device_type_no,
+         device_type_name,
+         device_name,
+         accumulated_depreciation,
+         statistics_time,
+         status,
+         scrap_time;
 
 /**
 区队模型--一级页面
@@ -156,21 +161,22 @@ CREATE TABLE data_center.ads_qudui_model (
 **/
 
 -- truncate table data_center.ads_qudui_model;
-delete from data_center.ads_qudui_model where report_date = substr(now() + interval '-1' month,1,7);
+delete
+from data_center.ads_qudui_model
+where report_date = substr(now() + interval '-1' month, 1, 7);
 insert into data_center.ads_qudui_model
-select 
-a.cl_no,
-a.cl_name,
-b.cwfl_name,
-a.scale,
-a.unit,
-a.dept_id,
-a.dept_name,
-a.remain,
-a.price,
-substr(now() + interval '-1' month,1,7) as report_date
-from data_center.qd_kc_cw a 
-left join ( select distinct cl_no,cwfl_name from data_center.xh_cl_cw) b on a.cl_no = b.cl_no;
+select a.cl_no,
+       a.cl_name,
+       b.cwfl_name,
+       a.scale,
+       a.unit,
+       a.dept_id,
+       a.dept_name,
+       a.remain,
+       a.price,
+       substr(now() + interval '-1' month, 1, 7) as report_date
+from data_center.qd_kc_cw a
+         left join (select distinct cl_no, cwfl_name from data_center.xh_cl_cw) b on a.cl_no = b.cl_no;
 
 /**
 周转库--一级页面
@@ -193,21 +199,22 @@ CREATE TABLE data_center.ads_zhouzhuan_model (
 
 
 -- truncate table data_center.ads_zhouzhuan_model;
-delete from data_center.ads_zhouzhuan_model where report_date = substr(now() + interval '-1' month,1,7);
+delete
+from data_center.ads_zhouzhuan_model
+where report_date = substr(now() + interval '-1' month, 1, 7);
 insert into data_center.ads_zhouzhuan_model
-select 
-a.cl_no,
-a.cl_name,
-b.cwfl_name,
-a.scale,
-a.unit,
-a.dept_id,
-a.dept_name,
-a.remain,
-a.price,
-substr(now() + interval '-1' month,1,7) as report_date
-from data_center.zz_tz_cw a 
-left join ( select distinct cl_no,cwfl_name from data_center.xh_cl_cw) b on a.cl_no = b.cl_no;
+select a.cl_no,
+       a.cl_name,
+       b.cwfl_name,
+       a.scale,
+       a.unit,
+       a.dept_id,
+       a.dept_name,
+       a.remain,
+       a.price,
+       substr(now() + interval '-1' month, 1, 7) as report_date
+from data_center.zz_tz_cw a
+         left join (select distinct cl_no, cwfl_name from data_center.xh_cl_cw) b on a.cl_no = b.cl_no;
 
 
 /**
@@ -239,29 +246,26 @@ CREATE TABLE data_center.ads_qudui_kc_detail (
 **/
 truncate table data_center.ads_qudui_kc_detail;
 insert into data_center.ads_qudui_kc_detail
-SELECT 
-	a.cl_no,
-	a.cl_name,
-	a.scale,
-	sum(a.remain) as remain,
-	a.price,
-	a.unit,
-	a.dept_id,
-	a.dept_name,
-	b.cwfl_name
+SELECT a.cl_no,
+       a.cl_name,
+       a.scale,
+       sum(a.remain) as remain,
+       a.price,
+       a.unit,
+       a.dept_id,
+       a.dept_name,
+       b.cwfl_name
 FROM data_center.qd_kc_cw a
-left join ( select distinct cl_no,cwfl_name from data_center.xh_cl_cw) b on a.cl_no = b.cl_no
-group by 
-	a.cl_no,
-	a.cl_name,
-	a.scale,
-	a.price,
-	a.unit,
-	a.dept_id,
-	a.dept_name,
-	b.cwfl_name
+         left join (select distinct cl_no, cwfl_name from data_center.xh_cl_cw) b on a.cl_no = b.cl_no
+group by a.cl_no,
+         a.cl_name,
+         a.scale,
+         a.price,
+         a.unit,
+         a.dept_id,
+         a.dept_name,
+         b.cwfl_name
 ;
-
 
 
 /**
@@ -282,24 +286,22 @@ CREATE TABLE data_center.ads_qudui_in_detail (
 **/
 truncate table data_center.ads_qudui_in_detail;
 insert into data_center.ads_qudui_in_detail
-SELECT 
-	cl_no,
-	cl_name,
-	scale,
-	sum(input),
-	price,
-	sum(amount),
-	cwfl_name,
-	substr(sdate,1,10),
-	qd_name
+SELECT cl_no,
+       cl_name,
+       scale,
+       sum(input),
+       price,
+       sum(amount),
+       cwfl_name,
+       substr(sdate, 1, 10),
+       qd_name
 FROM `qd_in_cw`
-group by 
-	substr(sdate,1,7),
-	scale,
-	cwfl_name,
-	cl_name,
-	price,
-	qd_name;
+group by substr(sdate, 1, 7),
+         scale,
+         cwfl_name,
+         cl_name,
+         price,
+         qd_name;
 
 
 /**
@@ -321,28 +323,26 @@ CREATE TABLE data_center.ads_qudui_out_detail (
 **/
 truncate table data_center.ads_qudui_out_detail;
 insert into data_center.ads_qudui_out_detail
-SELECT 
-	a.cl_no,
-	a.cl_name,
-	a.scale,
-	sum(a.output),
-	a.price,
-	sum(a.amount),
-	b.cwfl_name,
-	substr(a.sdate,1,10),
-	a.dept_fname,
-	a.dept_name
-FROM data_center.`qd_out_cw` a 
-left join data_center.xh_cl_cw b on a.scale = b.scale
-group by 
-	substr(a.sdate,1,7),
-	a.scale,
-	b.cwfl_name,
-	a.cl_name,
-	a.price,
-	a.dept_fname,
-	a.dept_name;
-	
+SELECT a.cl_no,
+       a.cl_name,
+       a.scale,
+       sum(a.output),
+       a.price,
+       sum(a.amount),
+       b.cwfl_name,
+       substr(a.sdate, 1, 10),
+       a.dept_fname,
+       a.dept_name
+FROM data_center.`qd_out_cw` a
+         left join data_center.xh_cl_cw b on a.scale = b.scale
+group by substr(a.sdate, 1, 7),
+         a.scale,
+         b.cwfl_name,
+         a.cl_name,
+         a.price,
+         a.dept_fname,
+         a.dept_name;
+
 
 /**
 * 周转库明细信息-二级
@@ -372,96 +372,92 @@ CREATE TABLE data_center.ads_zhouzhuan_detail (
 
 truncate table data_center.ads_zhouzhuan_detail;
 insert into data_center.ads_zhouzhuan_detail
-select 
-	a.self_no,
-	a.orig_price,
-	a.dept_id,
-	a.cl_no,
-	a.ejplace_idname,
-	a.cl_name,
-	a.remain,
-	a.repair_count,
-	a.amount,
-	a.scale,
-	a.status_idname,
-	a.price,
-	a.xamount,
-	a.unit,
-	a.dept_name,
-	a.total_repair_amount,
-	b.cwfl_name,
-	'2024-08' as report_date
-from data_center.zz_tz_cw a 
-left join ( select distinct cl_no,cwfl_name from data_center.xh_cl_cw) b on a.cl_no = b.cl_no;
+select a.self_no,
+       a.orig_price,
+       a.dept_id,
+       a.cl_no,
+       a.ejplace_idname,
+       a.cl_name,
+       a.remain,
+       a.repair_count,
+       a.amount,
+       a.scale,
+       a.status_idname,
+       a.price,
+       a.xamount,
+       a.unit,
+       a.dept_name,
+       a.total_repair_amount,
+       b.cwfl_name,
+       '2024-08' as report_date
+from data_center.zz_tz_cw a
+         left join (select distinct cl_no, cwfl_name from data_center.xh_cl_cw) b on a.cl_no = b.cl_no;
 
 insert into data_center.ads_zhouzhuan_detail
-select 
-	a.self_no,
-	a.orig_price,
-	a.dept_id,
-	a.cl_no,
-	a.ejplace_idname,
-	a.cl_name,
-	a.remain,
-	a.repair_count,
-	a.amount,
-	a.scale,
-	a.status_idname,
-	a.price,
-	a.xamount,
-	a.unit,
-	a.dept_name,
-	a.total_repair_amount,
-	b.cwfl_name,
-	'2024-09' as report_date
-from data_center.zz_tz_cw a 
-left join ( select distinct cl_no,cwfl_name from data_center.xh_cl_cw) b on a.cl_no = b.cl_no;
+select a.self_no,
+       a.orig_price,
+       a.dept_id,
+       a.cl_no,
+       a.ejplace_idname,
+       a.cl_name,
+       a.remain,
+       a.repair_count,
+       a.amount,
+       a.scale,
+       a.status_idname,
+       a.price,
+       a.xamount,
+       a.unit,
+       a.dept_name,
+       a.total_repair_amount,
+       b.cwfl_name,
+       '2024-09' as report_date
+from data_center.zz_tz_cw a
+         left join (select distinct cl_no, cwfl_name from data_center.xh_cl_cw) b on a.cl_no = b.cl_no;
 
 insert into data_center.ads_zhouzhuan_detail
-select 
-	a.self_no,
-	a.orig_price,
-	a.dept_id,
-	a.cl_no,
-	a.ejplace_idname,
-	a.cl_name,
-	a.remain,
-	a.repair_count,
-	a.amount,
-	a.scale,
-	a.status_idname,
-	a.price,
-	a.xamount,
-	a.unit,
-	a.dept_name,
-	a.total_repair_amount,
-	b.cwfl_name,
-	'2024-10' as report_date
-from data_center.zz_tz_cw a 
-left join ( select distinct cl_no,cwfl_name from data_center.xh_cl_cw) b on a.cl_no = b.cl_no;
+select a.self_no,
+       a.orig_price,
+       a.dept_id,
+       a.cl_no,
+       a.ejplace_idname,
+       a.cl_name,
+       a.remain,
+       a.repair_count,
+       a.amount,
+       a.scale,
+       a.status_idname,
+       a.price,
+       a.xamount,
+       a.unit,
+       a.dept_name,
+       a.total_repair_amount,
+       b.cwfl_name,
+       '2024-10' as report_date
+from data_center.zz_tz_cw a
+         left join (select distinct cl_no, cwfl_name from data_center.xh_cl_cw) b on a.cl_no = b.cl_no;
 
 insert into data_center.ads_zhouzhuan_detail
-select 
-	a.self_no,
-	a.orig_price,
-	a.dept_id,
-	a.cl_no,
-	a.ejplace_idname,
-	a.cl_name,
-	a.remain,
-	a.repair_count,
-	a.amount,
-	a.scale,
-	a.status_idname,
-	a.price,
-	a.xamount,
-	a.unit,
-	a.dept_name,
-	a.total_repair_amount,
-	b.cwfl_name,
-	'2024-11' as report_date
-from data_center.zz_tz_cw a 
-left join ( select distinct cl_no,cwfl_name from data_center.xh_cl_cw) b on a.cl_no = b.cl_no;
+select a.self_no,
+       a.orig_price,
+       a.dept_id,
+       a.cl_no,
+       a.ejplace_idname,
+       a.cl_name,
+       a.remain,
+       a.repair_count,
+       a.amount,
+       a.scale,
+       a.status_idname,
+       a.price,
+       a.xamount,
+       a.unit,
+       a.dept_name,
+       a.total_repair_amount,
+       b.cwfl_name,
+       '2024-11' as report_date
+from data_center.zz_tz_cw a
+         left join (select distinct cl_no, cwfl_name from data_center.xh_cl_cw) b on a.cl_no = b.cl_no;
 
 -- 设备资产表 1024 
 /**
@@ -551,7 +547,8 @@ CREATE TABLE device_table (
     wbs_element VARCHAR(50) COMMENT 'WBS元素',  
     wbs_element_desc VARCHAR(100) COMMENT 'WBS元素描述',  
     related_equipment_full VARCHAR(300) COMMENT '关联设备（全）',  
-    org_main_data_code VARCHAR(50) COMMENT '组织机构主数据编码'  
+    org_main_data_code VARCHAR(50) COMMENT '组织机构主数据编码'  ,
+    date  VARCHAR(32) COMMENT '日期'
 ) COMMENT='ods设备信息表' ;
 **/
 
@@ -571,29 +568,64 @@ CREATE TABLE data_center.ads_device_type (
 truncate table ads_device_type;
 
 insert into ads_device_type
-select distinct asset_catalog_code,substring_index(asset_catalog_name,'-',-1),'','','' ,now(),null
-  from device_table
+select distinct asset_catalog_code, substring_index(asset_catalog_name, '-', -1), '', '', '', now(), null
+from device_table
 where asset_catalog_code like '14%'
 order by asset_catalog_code;
-insert into ads_device_type values('1400000000','合计','100','合计','1',now(),null);
+insert into ads_device_type
+values ('1400000000', '合计', '100', '合计', '1', now(), null);
 
 -- 更新父级设备 类型 2024-11-19 
-update ads_device_type set parent_type_name = '掘进机' ,parent_type_no = '1001', is_key = '1', updated_time = now()
-where device_type_name in ('掘进机','掘锚机','连续采煤机','掘进设备');
-update ads_device_type set parent_type_name = '采煤机' ,parent_type_no = '1002',is_key = '1', updated_time = now()
-where device_type_name in ('采煤机','滚筒采煤机');
-update ads_device_type set parent_type_name = '刮板输送机' ,parent_type_no = '1003',is_key = '1', updated_time = now()
+update ads_device_type
+set parent_type_name = '掘进机',
+    parent_type_no   = '1001',
+    is_key           = '1',
+    updated_time     = now()
+where device_type_name in ('掘进机', '掘锚机', '连续采煤机', '掘进设备');
+update ads_device_type
+set parent_type_name = '采煤机',
+    parent_type_no   = '1002',
+    is_key           = '1',
+    updated_time     = now()
+where device_type_name in ('采煤机', '滚筒采煤机');
+update ads_device_type
+set parent_type_name = '刮板输送机',
+    parent_type_no   = '1003',
+    is_key           = '1',
+    updated_time     = now()
 where device_type_name in ('刮板输送机');
-update ads_device_type set parent_type_name = '胶带输送机' ,parent_type_no = '1004',is_key = '1', updated_time = now()
+update ads_device_type
+set parent_type_name = '胶带输送机',
+    parent_type_no   = '1004',
+    is_key           = '1',
+    updated_time     = now()
 where device_type_name in ('胶带输送机');
-update ads_device_type set parent_type_name = '转载机' ,parent_type_no = '1005',is_key = '1', updated_time = now()
+update ads_device_type
+set parent_type_name = '转载机',
+    parent_type_no   = '1005',
+    is_key           = '1',
+    updated_time     = now()
 where device_type_name in ('转载机');
-update ads_device_type set parent_type_name = '破碎机' ,parent_type_no = '1006',is_key = '1', updated_time = now()
+update ads_device_type
+set parent_type_name = '破碎机',
+    parent_type_no   = '1006',
+    is_key           = '1',
+    updated_time     = now()
 where device_type_name in ('破碎机');
-update ads_device_type set parent_type_name = '液压支架' ,parent_type_no = '1007',is_key = '1', updated_time = now()
-where device_type_name in ('液压支架','端头液压支架','中间液压支架','过渡液压支架','超前液压支架','三角区掩护液压支架','其他液压支架');
-update ads_device_type set parent_type_name = '胶轮车' ,parent_type_no = '1008',is_key = '1', updated_time = now()
-where device_type_name in ('支架搬运车','胶轮车');
+update ads_device_type
+set parent_type_name = '液压支架',
+    parent_type_no   = '1007',
+    is_key           = '1',
+    updated_time     = now()
+where device_type_name in
+      ('液压支架', '端头液压支架', '中间液压支架', '过渡液压支架', '超前液压支架', '三角区掩护液压支架',
+       '其他液压支架');
+update ads_device_type
+set parent_type_name = '胶轮车',
+    parent_type_no   = '1008',
+    is_key           = '1',
+    updated_time     = now()
+where device_type_name in ('支架搬运车', '胶轮车');
 
 
 /**
@@ -695,107 +727,108 @@ CREATE TABLE ads_device_info (
     org_main_data_code VARCHAR(50) COMMENT '组织机构主数据编码'  
 ) COMMENT='ads设备信息表' ;
 **/
-delete from  ads_device_info where date = substr(now() + interval '-1' month,1,7);
+delete
+from ads_device_info
+where date = substr(now() + interval '-1' month,1,7);
 insert into ads_device_info
-select
-	c.org_code,
-	c.org_name,
-	c.level_code,
-	substr(now() + interval '-1' month,1,7),
-	t.is_key,
-	fiscal_year,  
-    asset_id,  
-    sub_asset_id,  
-    asset_name,  
-    asset_main_text,  
-    profit_center,  
-    profit_center_name,  
-    cost_center,  
-    cost_center_name,  
-    resp_cost_center,  
-    resp_cost_center_name,  
-    asset_category,  
-    asset_category_name,  
-    asset_catalog_code,  
-    asset_catalog_name,  
-    t.device_type_no,
-    t.device_type_name,
-    t.parent_type_no,
-    t.parent_type_name,
-    serial_num,  
-    orig_asset_card_id,  
-    spec_model,  
-    quantity,  
-    measure_unit,  
-    storage_loc,  
-    asset_status_use,  
-    pre_fixed_asset,  
-    supplier,  
-    supplier_name,  
-    manufacturer,  
-    investment_order,  
-    capitalization_date,  
-    substr(capitalization_date,1,4),
-    inactive_date,  
-    internal_order,  
-    internal_order_name,  
-    ship_tonnage,  
-    license_plate,  
-    personnel_id,  
-    personnel_desc,  
-    supplement_text,  
-    inventory_note,  
-    eam_code,  
-    service_life,  
-    category,  
-    elec_asset_flag,  
-    special_fund,  
-    eam_asset_class,  
-    orig_cost_type,  
-    orig_cost_type_name,  
-    lease_type,  
-    lease_type_desc,  
-    accum_purchase_value,  
-    impairment_prep,  
-    prev_year_accum_depr,  
-    curr_year_accum_depr,  
-    total_accum_depr,  
-    curr_month_depr,  
-    net_value,  
-    salvage_value_rate,  
-    salvage_value,  
-    depr_code,  
-    depr_code_desc,  
-    depr_years,  
-    depr_month,  
-    accum_depr_months,  
-    remaining_years,  
-    remaining_months,  
-    entry_person,  
-    entry_date,  
-    is_frozen,  
-    net_value_calc,  
-    net_amount_calc,  
-    last_inventory_date,  
-    asset_condition,  
-    acquisition_method,  
-    planned_depr_months_total,  
-    equipment_num,  
-    accum_depr_begin_new,  
-    curr_year_normal_depr_new,  
-    curr_year_other_adj_depr_new,  
-    accum_depr_end_new,  
-    impairment_prep_new,  
-    net_value_new,  
-    depr_start_date,  
-    wbs_element,  
-    wbs_element_desc,  
-    related_equipment_full,  
-    org_main_data_code 
+select c.org_code,
+       c.org_name,
+       c.level_code,
+       date,
+       t.is_key,
+       fiscal_year,
+       asset_id,
+       sub_asset_id,
+       asset_name,
+       asset_main_text,
+       profit_center,
+       profit_center_name,
+       cost_center,
+       cost_center_name,
+       resp_cost_center,
+       resp_cost_center_name,
+       asset_category,
+       asset_category_name,
+       asset_catalog_code,
+       asset_catalog_name,
+       t.device_type_no,
+       t.device_type_name,
+       t.parent_type_no,
+       t.parent_type_name,
+       serial_num,
+       orig_asset_card_id,
+       spec_model,
+       quantity,
+       measure_unit,
+       storage_loc,
+       asset_status_use,
+       pre_fixed_asset,
+       supplier,
+       supplier_name,
+       manufacturer,
+       investment_order,
+       capitalization_date,
+       substr(capitalization_date, 1, 4),
+       inactive_date,
+       internal_order,
+       internal_order_name,
+       ship_tonnage,
+       license_plate,
+       personnel_id,
+       personnel_desc,
+       supplement_text,
+       inventory_note,
+       eam_code,
+       service_life,
+       category,
+       elec_asset_flag,
+       special_fund,
+       eam_asset_class,
+       orig_cost_type,
+       orig_cost_type_name,
+       lease_type,
+       lease_type_desc,
+       accum_purchase_value,
+       impairment_prep,
+       prev_year_accum_depr,
+       curr_year_accum_depr,
+       total_accum_depr,
+       curr_month_depr,
+       net_value,
+       salvage_value_rate,
+       salvage_value,
+       depr_code,
+       depr_code_desc,
+       depr_years,
+       depr_month,
+       accum_depr_months,
+       remaining_years,
+       remaining_months,
+       entry_person,
+       entry_date,
+       is_frozen,
+       net_value_calc,
+       net_amount_calc,
+       last_inventory_date,
+       asset_condition,
+       acquisition_method,
+       planned_depr_months_total,
+       equipment_num,
+       accum_depr_begin_new,
+       curr_year_normal_depr_new,
+       curr_year_other_adj_depr_new,
+       accum_depr_end_new,
+       impairment_prep_new,
+       net_value_new,
+       depr_start_date,
+       wbs_element,
+       wbs_element_desc,
+       related_equipment_full,
+       org_main_data_code
 from device_table d
-left join  data_center.ads_orgnization c on d.org_code = c.org_code
-left join ads_device_type t on d.asset_catalog_code = t.device_type_no
-left join ads_device_param_value v on 1 = 1
+         left join data_center.ads_orgnization c on d.org_code = c.org_code
+         left join ads_device_type t on d.asset_catalog_code = t.device_type_no
+         left join ads_device_param_value v on 1 = 1
 where d.accum_purchase_value >= v.param_device_value
 ;
 
@@ -868,19 +901,18 @@ CREATE TABLE data_center.ads_invest_plan (
 **/
 truncate table data_center.ads_invest_plan;
 insert into data_center.ads_invest_plan
-select 
-  b.org_code,
-  b.org_name,
-  b.level_code,
-  a.date,
-  a.index_name,
-  a.index_code,
-  a.amount_pre,
-  a.amount_acc,
-  now(),
-  now()
+select b.org_code,
+       b.org_name,
+       b.level_code,
+       a.date,
+       a.index_name,
+       a.index_code,
+       a.amount_pre,
+       a.amount_acc,
+       now(),
+       now()
 from ods_invest_plan a
-left join  data_center.ads_orgnization b on a.org_code = b.org_code
+         left join data_center.ads_orgnization b on a.org_code = b.org_code
 ;
 /**
 -- 投资计划是填报数据，不能truncate 
@@ -961,410 +993,393 @@ CREATE TABLE data_center.ads_device_purchase_plan_convert (
 truncate table ads_device_purchase_plan_convert;
 -- 插入年度数据
 insert into ads_device_purchase_plan_convert
-select 
-  b.org_code,
-  b.org_name,
-  b.level_code,
-	a.date,
-	substr(a.date,1,4),
-	substr(a.date,6,2),
-  a.index_name, 
-  a.index_code,
-	a.device_type_no,
-	a.device_type_name,
-  a.spec_model,
-  a.count,
-	'Y',
-	substr(a.date,1,4),
-  a.budget_year,
-	NOW(),
-	NOW()
-from ods_device_purchase_plan  a
-left join ads_orgnization b 
-on b.org_code = a.org_code
+select b.org_code,
+       b.org_name,
+       b.level_code,
+       a.date,
+       substr(a.date, 1, 4),
+       substr(a.date, 6, 2),
+       a.index_name,
+       a.index_code,
+       a.device_type_no,
+       a.device_type_name,
+       a.spec_model,
+       a.count,
+       'Y',
+       substr(a.date, 1, 4),
+       a.budget_year,
+       NOW(),
+       NOW()
+from ods_device_purchase_plan a
+         left join ads_orgnization b
+                   on b.org_code = a.org_code
 ;
 
 insert into ads_device_purchase_plan_convert
-select 
-  b.org_code,
-  b.org_name,
-  b.level_code,
-	a.date,
-	substr(a.date,1,4),
-	substr(a.date,6,2),
-  a.index_name, 
-  a.index_code,
-	a.device_type_no,
-	a.device_type_name,
-  a.spec_model,
-  0,
-	'Q',
-	'1',
-  a.budget_q1,
-	NOW(),
-	NOW()
-from ods_device_purchase_plan  a
-left join ads_orgnization b 
-on b.org_code = a.org_code
+select b.org_code,
+       b.org_name,
+       b.level_code,
+       a.date,
+       substr(a.date, 1, 4),
+       substr(a.date, 6, 2),
+       a.index_name,
+       a.index_code,
+       a.device_type_no,
+       a.device_type_name,
+       a.spec_model,
+       0,
+       'Q',
+       '1',
+       a.budget_q1,
+       NOW(),
+       NOW()
+from ods_device_purchase_plan a
+         left join ads_orgnization b
+                   on b.org_code = a.org_code
 ;
 
 insert into ads_device_purchase_plan_convert
-select 
-  b.org_code,
-  b.org_name,
-  b.level_code,
-	a.date,
-	substr(a.date,1,4),
-	substr(a.date,6,2),
-  a.index_name, 
-  a.index_code,
-	a.device_type_no,
-	a.device_type_name,
-  a.spec_model,
-  0,
-	'Q',
-	'2',
-  a.budget_q2,
-	NOW(),
-	NOW()
-from ods_device_purchase_plan  a
-left join ads_orgnization b 
-on b.org_code = a.org_code
+select b.org_code,
+       b.org_name,
+       b.level_code,
+       a.date,
+       substr(a.date, 1, 4),
+       substr(a.date, 6, 2),
+       a.index_name,
+       a.index_code,
+       a.device_type_no,
+       a.device_type_name,
+       a.spec_model,
+       0,
+       'Q',
+       '2',
+       a.budget_q2,
+       NOW(),
+       NOW()
+from ods_device_purchase_plan a
+         left join ads_orgnization b
+                   on b.org_code = a.org_code
 ;
 insert into ads_device_purchase_plan_convert
-select 
-  b.org_code,
-  b.org_name,
-  b.level_code,
-	a.date,
-	substr(a.date,1,4),
-	substr(a.date,6,2),
-  a.index_name, 
-  a.index_code,
-	a.device_type_no,
-	a.device_type_name,
-  a.spec_model,
-  0,
-	'Q',
-	'3',
-  a.budget_q3,
-	NOW(),
-	NOW()
-from ods_device_purchase_plan  a
-left join ads_orgnization b 
-on b.org_code = a.org_code
+select b.org_code,
+       b.org_name,
+       b.level_code,
+       a.date,
+       substr(a.date, 1, 4),
+       substr(a.date, 6, 2),
+       a.index_name,
+       a.index_code,
+       a.device_type_no,
+       a.device_type_name,
+       a.spec_model,
+       0,
+       'Q',
+       '3',
+       a.budget_q3,
+       NOW(),
+       NOW()
+from ods_device_purchase_plan a
+         left join ads_orgnization b
+                   on b.org_code = a.org_code
 ;
 insert into ads_device_purchase_plan_convert
-select 
-  b.org_code,
-  b.org_name,
-  b.level_code,
-	a.date,
-	substr(a.date,1,4),
-	substr(a.date,6,2),
-  a.index_name, 
-  a.index_code,
-	a.device_type_no,
-	a.device_type_name,
-  a.spec_model,
-  0,
-	'Q',
-	'4',
-  a.budget_q4,
-	NOW(),
-	NOW()
-from ods_device_purchase_plan  a
-left join ads_orgnization b 
-on b.org_code = a.org_code
+select b.org_code,
+       b.org_name,
+       b.level_code,
+       a.date,
+       substr(a.date, 1, 4),
+       substr(a.date, 6, 2),
+       a.index_name,
+       a.index_code,
+       a.device_type_no,
+       a.device_type_name,
+       a.spec_model,
+       0,
+       'Q',
+       '4',
+       a.budget_q4,
+       NOW(),
+       NOW()
+from ods_device_purchase_plan a
+         left join ads_orgnization b
+                   on b.org_code = a.org_code
 ;
 
 insert into ads_device_purchase_plan_convert
-select 
-  b.org_code,
-  b.org_name,
-  b.level_code,
-	a.date,
-	substr(a.date,1,4),
-	substr(a.date,6,2),
-  a.index_name, 
-  a.index_code,
-	a.device_type_no,
-	a.device_type_name,
-  a.spec_model,
-  0,
-	'M',
-	concat(substr(a.date,1,4),'-01' ),
-  a.budget_m1,
-	NOW(),
-	NOW()
-from ods_device_purchase_plan  a
-left join ads_orgnization b 
-on b.org_code = a.org_code
+select b.org_code,
+       b.org_name,
+       b.level_code,
+       a.date,
+       substr(a.date, 1, 4),
+       substr(a.date, 6, 2),
+       a.index_name,
+       a.index_code,
+       a.device_type_no,
+       a.device_type_name,
+       a.spec_model,
+       0,
+       'M',
+       concat(substr(a.date, 1, 4), '-01'),
+       a.budget_m1,
+       NOW(),
+       NOW()
+from ods_device_purchase_plan a
+         left join ads_orgnization b
+                   on b.org_code = a.org_code
 ;
 
 
 insert into ads_device_purchase_plan_convert
-select 
-  b.org_code,
-  b.org_name,
-  b.level_code,
-	a.date,
-	substr(a.date,1,4),
-	substr(a.date,6,2),
-  a.index_name, 
-  a.index_code,
-	a.device_type_no,
-	a.device_type_name,
-  a.spec_model,
-  0,
-	'M',
-	concat(substr(a.date,1,4),'-02' ),
-  a.budget_m2,
-	NOW(),
-	NOW()
-from ods_device_purchase_plan  a
-left join ads_orgnization b 
-on b.org_code = a.org_code
+select b.org_code,
+       b.org_name,
+       b.level_code,
+       a.date,
+       substr(a.date, 1, 4),
+       substr(a.date, 6, 2),
+       a.index_name,
+       a.index_code,
+       a.device_type_no,
+       a.device_type_name,
+       a.spec_model,
+       0,
+       'M',
+       concat(substr(a.date, 1, 4), '-02'),
+       a.budget_m2,
+       NOW(),
+       NOW()
+from ods_device_purchase_plan a
+         left join ads_orgnization b
+                   on b.org_code = a.org_code
 ;
 
 insert into ads_device_purchase_plan_convert
-select 
-  b.org_code,
-  b.org_name,
-  b.level_code,
-	a.date,
-	substr(a.date,1,4),
-	substr(a.date,6,2),
-  a.index_name, 
-  a.index_code,
-	a.device_type_no,
-	a.device_type_name,
-  a.spec_model,
-  0,
-	'M',
-	concat(substr(a.date,1,4),'-03' ),
-  a.budget_m3,
-	NOW(),
-	NOW()
-from ods_device_purchase_plan  a
-left join ads_orgnization b 
-on b.org_code = a.org_code
+select b.org_code,
+       b.org_name,
+       b.level_code,
+       a.date,
+       substr(a.date, 1, 4),
+       substr(a.date, 6, 2),
+       a.index_name,
+       a.index_code,
+       a.device_type_no,
+       a.device_type_name,
+       a.spec_model,
+       0,
+       'M',
+       concat(substr(a.date, 1, 4), '-03'),
+       a.budget_m3,
+       NOW(),
+       NOW()
+from ods_device_purchase_plan a
+         left join ads_orgnization b
+                   on b.org_code = a.org_code
 ;
 
 insert into ads_device_purchase_plan_convert
-select 
-  b.org_code,
-  b.org_name,
-  b.level_code,
-	a.date,
-	substr(a.date,1,4),
-	substr(a.date,6,2),
-  a.index_name, 
-  a.index_code,
-	a.device_type_no,
-	a.device_type_name,
-  a.spec_model,
-  0,
-	'M',
-	concat(substr(a.date,1,4),'-04' ),
-  a.budget_m4,
-	NOW(),
-	NOW()
-from ods_device_purchase_plan  a
-left join ads_orgnization b 
-on b.org_code = a.org_code
+select b.org_code,
+       b.org_name,
+       b.level_code,
+       a.date,
+       substr(a.date, 1, 4),
+       substr(a.date, 6, 2),
+       a.index_name,
+       a.index_code,
+       a.device_type_no,
+       a.device_type_name,
+       a.spec_model,
+       0,
+       'M',
+       concat(substr(a.date, 1, 4), '-04'),
+       a.budget_m4,
+       NOW(),
+       NOW()
+from ods_device_purchase_plan a
+         left join ads_orgnization b
+                   on b.org_code = a.org_code
 ;
 
 insert into ads_device_purchase_plan_convert
-select 
-  b.org_code,
-  b.org_name,
-  b.level_code,
-	a.date,
-	substr(a.date,1,4),
-	substr(a.date,6,2),
-  a.index_name, 
-  a.index_code,
-	a.device_type_no,
-	a.device_type_name,
-  a.spec_model,
-  0,
-	'M',
-	concat(substr(a.date,1,4),'-05' ),
-  a.budget_m5,
-	NOW(),
-	NOW()
-from ods_device_purchase_plan  a
-left join ads_orgnization b 
-on b.org_code = a.org_code
+select b.org_code,
+       b.org_name,
+       b.level_code,
+       a.date,
+       substr(a.date, 1, 4),
+       substr(a.date, 6, 2),
+       a.index_name,
+       a.index_code,
+       a.device_type_no,
+       a.device_type_name,
+       a.spec_model,
+       0,
+       'M',
+       concat(substr(a.date, 1, 4), '-05'),
+       a.budget_m5,
+       NOW(),
+       NOW()
+from ods_device_purchase_plan a
+         left join ads_orgnization b
+                   on b.org_code = a.org_code
 ;
 
 insert into ads_device_purchase_plan_convert
-select 
-  b.org_code,
-  b.org_name,
-  b.level_code,
-	a.date,
-	substr(a.date,1,4),
-	substr(a.date,6,2),
-  a.index_name, 
-  a.index_code,
-	a.device_type_no,
-	a.device_type_name,
-  a.spec_model,
-  0,
-	'M',
-	concat(substr(a.date,1,4),'-06' ),
-  a.budget_m6,
-	NOW(),
-	NOW()
-from ods_device_purchase_plan  a
-left join ads_orgnization b 
-on b.org_code = a.org_code
+select b.org_code,
+       b.org_name,
+       b.level_code,
+       a.date,
+       substr(a.date, 1, 4),
+       substr(a.date, 6, 2),
+       a.index_name,
+       a.index_code,
+       a.device_type_no,
+       a.device_type_name,
+       a.spec_model,
+       0,
+       'M',
+       concat(substr(a.date, 1, 4), '-06'),
+       a.budget_m6,
+       NOW(),
+       NOW()
+from ods_device_purchase_plan a
+         left join ads_orgnization b
+                   on b.org_code = a.org_code
 ;
 
 insert into ads_device_purchase_plan_convert
-select 
-  b.org_code,
-  b.org_name,
-  b.level_code,
-	a.date,
-	substr(a.date,1,4),
-	substr(a.date,6,2),
-  a.index_name, 
-  a.index_code,
-	a.device_type_no,
-	a.device_type_name,
-  a.spec_model,
-  0,
-	'M',
-	concat(substr(a.date,1,4),'-07' ),
-  a.budget_m7,
-	NOW(),
-	NOW()
-from ods_device_purchase_plan  a
-left join ads_orgnization b 
-on b.org_code = a.org_code
+select b.org_code,
+       b.org_name,
+       b.level_code,
+       a.date,
+       substr(a.date, 1, 4),
+       substr(a.date, 6, 2),
+       a.index_name,
+       a.index_code,
+       a.device_type_no,
+       a.device_type_name,
+       a.spec_model,
+       0,
+       'M',
+       concat(substr(a.date, 1, 4), '-07'),
+       a.budget_m7,
+       NOW(),
+       NOW()
+from ods_device_purchase_plan a
+         left join ads_orgnization b
+                   on b.org_code = a.org_code
 ;
 
 insert into ads_device_purchase_plan_convert
-select 
-  b.org_code,
-  b.org_name,
-  b.level_code,
-	a.date,
-	substr(a.date,1,4),
-	substr(a.date,6,2),
-  a.index_name, 
-  a.index_code,
-	a.device_type_no,
-	a.device_type_name,
-  a.spec_model,
-  0,
-	'M',
-	concat(substr(a.date,1,4),'-08' ),
-  a.budget_m8,
-	NOW(),
-	NOW()
-from ods_device_purchase_plan  a
-left join ads_orgnization b 
-on b.org_code = a.org_code
+select b.org_code,
+       b.org_name,
+       b.level_code,
+       a.date,
+       substr(a.date, 1, 4),
+       substr(a.date, 6, 2),
+       a.index_name,
+       a.index_code,
+       a.device_type_no,
+       a.device_type_name,
+       a.spec_model,
+       0,
+       'M',
+       concat(substr(a.date, 1, 4), '-08'),
+       a.budget_m8,
+       NOW(),
+       NOW()
+from ods_device_purchase_plan a
+         left join ads_orgnization b
+                   on b.org_code = a.org_code
 ;
 
 insert into ads_device_purchase_plan_convert
-select 
-  b.org_code,
-  b.org_name,
-  b.level_code,
-	a.date,
-	substr(a.date,1,4),
-	substr(a.date,6,2),
-  a.index_name, 
-  a.index_code,
-	a.device_type_no,
-	a.device_type_name,
-  a.spec_model,
-  0,
-	'M',
-	concat(substr(a.date,1,4),'-09' ),
-  a.budget_m9,
-	NOW(),
-	NOW()
-from ods_device_purchase_plan  a
-left join ads_orgnization b 
-on b.org_code = a.org_code
+select b.org_code,
+       b.org_name,
+       b.level_code,
+       a.date,
+       substr(a.date, 1, 4),
+       substr(a.date, 6, 2),
+       a.index_name,
+       a.index_code,
+       a.device_type_no,
+       a.device_type_name,
+       a.spec_model,
+       0,
+       'M',
+       concat(substr(a.date, 1, 4), '-09'),
+       a.budget_m9,
+       NOW(),
+       NOW()
+from ods_device_purchase_plan a
+         left join ads_orgnization b
+                   on b.org_code = a.org_code
 ;
 
 insert into ads_device_purchase_plan_convert
-select 
-  b.org_code,
-  b.org_name,
-  b.level_code,
-	a.date,
-	substr(a.date,1,4),
-	substr(a.date,6,2),
-  a.index_name, 
-  a.index_code,
-	a.device_type_no,
-	a.device_type_name,
-  a.spec_model,
-  0,
-	'M',
-	concat(substr(a.date,1,4),'-10' ),
-  a.budget_m10,
-	NOW(),
-	NOW()
-from ods_device_purchase_plan  a
-left join ads_orgnization b 
-on b.org_code = a.org_code
+select b.org_code,
+       b.org_name,
+       b.level_code,
+       a.date,
+       substr(a.date, 1, 4),
+       substr(a.date, 6, 2),
+       a.index_name,
+       a.index_code,
+       a.device_type_no,
+       a.device_type_name,
+       a.spec_model,
+       0,
+       'M',
+       concat(substr(a.date, 1, 4), '-10'),
+       a.budget_m10,
+       NOW(),
+       NOW()
+from ods_device_purchase_plan a
+         left join ads_orgnization b
+                   on b.org_code = a.org_code
 ;
 
 insert into ads_device_purchase_plan_convert
-select 
-  b.org_code,
-  b.org_name,
-  b.level_code,
-	a.date,
-	substr(a.date,1,4),
-	substr(a.date,6,2),
-  a.index_name, 
-  a.index_code,
-	a.device_type_no,
-	a.device_type_name,
-  a.spec_model,
-  0,
-	'M',
-	concat(substr(a.date,1,4),'-11' ),
-  a.budget_m11,
-	NOW(),
-	NOW()
-from ods_device_purchase_plan  a
-left join ads_orgnization b 
-on b.org_code = a.org_code
+select b.org_code,
+       b.org_name,
+       b.level_code,
+       a.date,
+       substr(a.date, 1, 4),
+       substr(a.date, 6, 2),
+       a.index_name,
+       a.index_code,
+       a.device_type_no,
+       a.device_type_name,
+       a.spec_model,
+       0,
+       'M',
+       concat(substr(a.date, 1, 4), '-11'),
+       a.budget_m11,
+       NOW(),
+       NOW()
+from ods_device_purchase_plan a
+         left join ads_orgnization b
+                   on b.org_code = a.org_code
 ;
 
 insert into ads_device_purchase_plan_convert
-select 
-  b.org_code,
-  b.org_name,
-  b.level_code,
-	a.date,
-	substr(a.date,1,4),
-	substr(a.date,6,2),
-  a.index_name, 
-  a.index_code,
-	a.device_type_no,
-	a.device_type_name,
-  a.spec_model,
-  0,
-	'M',
-	concat(substr(a.date,1,4),'-12' ),
-  a.budget_m12,
-	NOW(),
-	NOW()
-from ods_device_purchase_plan  a
-left join ads_orgnization b 
-on b.org_code = a.org_code
+select b.org_code,
+       b.org_name,
+       b.level_code,
+       a.date,
+       substr(a.date, 1, 4),
+       substr(a.date, 6, 2),
+       a.index_name,
+       a.index_code,
+       a.device_type_no,
+       a.device_type_name,
+       a.spec_model,
+       0,
+       'M',
+       concat(substr(a.date, 1, 4), '-12'),
+       a.budget_m12,
+       NOW(),
+       NOW()
+from ods_device_purchase_plan a
+         left join ads_orgnization b
+                   on b.org_code = a.org_code
 ;
 
 /**
@@ -1423,12 +1438,11 @@ CREATE TABLE data_center.ads_device_oee (
 **/
 truncate table data_center.ads_device_oee;
 insert into data_center.ads_device_oee
-select
-  b.org_code,
-  b.org_name,
-  b.level_code,
-  a.date,
-  substr(a.date,1,4) as year,
+select b.org_code,
+       b.org_name,
+       b.level_code,
+       a.date,
+       substr(a.date, 1, 4) as year,
   substr(a.date,6,2) as month,
   substr(a.date,9,2) as day,
   a.asset_id,
@@ -1442,18 +1456,48 @@ select
   now(),
   now()
 from ods_device_oee a
-left join ads_orgnization b
-  on b.org_code = a.org_code
-left join ads_device_info d
-  on d.asset_id = a.asset_id
-    and d.device_type_no =  a.asset_catalog_code
-left join ads_device_type t
-  on t.device_type_no =  a.asset_catalog_code
+    left join ads_orgnization b
+on b.org_code = a.org_code
+    left join ads_device_info d
+    on d.asset_id = a.asset_id
+    and d.device_type_no = a.asset_catalog_code
+    left join ads_device_type t
+    on t.device_type_no = a.asset_catalog_code
 ;
 truncate table data_center.ads_device_oee;
-INSERT INTO `data_center`.`ads_device_oee`(`org_code`, `org_name`, `level_code`, `date`, `year`, `month`, `day`, `asset_id`,`asset_name`, `device_type_no`, `device_type_name`, `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`, `updated_time`) VALUES ('2F06', '李家壕煤矿', '10006', '2024-09-30', '2024', '09', '30', '140000003886','采煤机','1401010001', '滚筒采煤机', 400.00, 420.00, 560000.00, 570000.00, '2024-12-02 14:28:44', '2024-12-02 14:28:44');
-INSERT INTO `data_center`.`ads_device_oee`(`org_code`, `org_name`, `level_code`, `date`, `year`, `month`, `day`, `asset_id`,`asset_name`, `device_type_no`, `device_type_name`, `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`, `updated_time`) VALUES ('2F02', '万利一矿', '10002', '2024-09-30', '2024', '09', '30', '140000000728', '采煤机','1401010001', '滚筒采煤机', 352.00, 480.00, 596000.00, 704000.00, '2024-12-02 14:28:44', '2024-12-02 14:28:44');
-INSERT INTO `data_center`.`ads_device_oee`(`org_code`, `org_name`, `level_code`, `date`, `year`, `month`, `day`, `asset_id`,`asset_name`, `device_type_no`, `device_type_name`, `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`, `updated_time`) VALUES ('2F02', '万利一矿', '10002', '2024-09-30', '2024', '09', '30', '140000001666', '6650采煤机','1401010001', '滚筒采煤机', 600.00, 690.00, 601579.00, 600000.00, '2024-12-02 14:28:44', '2024-12-02 14:28:44');
-INSERT INTO `data_center`.`ads_device_oee`(`org_code`, `org_name`, `level_code`, `date`, `year`, `month`, `day`, `asset_id`,`asset_name`, `device_type_no`, `device_type_name`, `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`, `updated_time`) VALUES ('2F06', '李家壕煤矿', '10006', '2024-10-30', '2024', '10', '30', '140000003886', '采煤机','1401010001', '滚筒采煤机', 400.00, 420.00, 560000.00, 570000.00, '2024-12-02 14:28:44', '2024-12-02 14:28:44');
-INSERT INTO `data_center`.`ads_device_oee`(`org_code`, `org_name`, `level_code`, `date`, `year`, `month`, `day`, `asset_id`,`asset_name`, `device_type_no`, `device_type_name`, `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`, `updated_time`) VALUES ('2F02', '万利一矿', '10002', '2024-10-30', '2024', '10', '30', '140000000728', '采煤机','1401010001', '滚筒采煤机', 352.00, 480.00, 596000.00, 704000.00, '2024-12-02 14:28:44', '2024-12-02 14:28:44');
-INSERT INTO `data_center`.`ads_device_oee`(`org_code`, `org_name`, `level_code`, `date`, `year`, `month`, `day`, `asset_id`,`asset_name`, `device_type_no`, `device_type_name`, `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`, `updated_time`) VALUES ('2F02', '万利一矿', '10002', '2024-10-30', '2024', '10', '30', '140000001666', '6650采煤机','1401010001', '滚筒采煤机', 600.00, 690.00, 601579.00, 600000.00, '2024-12-02 14:28:44', '2024-12-02 14:28:44');
+INSERT INTO `data_center`.`ads_device_oee`(`org_code`, `org_name`, `level_code`, `date`, `year`, `month`, `day`,
+                                           `asset_id`, `asset_name`, `device_type_no`, `device_type_name`,
+                                           `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`,
+                                           `updated_time`)
+VALUES ('2F06', '李家壕煤矿', '10006', '2024-09-30', '2024', '09', '30', '140000003886', '采煤机', '1401010001',
+        '滚筒采煤机', 400.00, 420.00, 560000.00, 570000.00, '2024-12-02 14:28:44', '2024-12-02 14:28:44');
+INSERT INTO `data_center`.`ads_device_oee`(`org_code`, `org_name`, `level_code`, `date`, `year`, `month`, `day`,
+                                           `asset_id`, `asset_name`, `device_type_no`, `device_type_name`,
+                                           `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`,
+                                           `updated_time`)
+VALUES ('2F02', '万利一矿', '10002', '2024-09-30', '2024', '09', '30', '140000000728', '采煤机', '1401010001',
+        '滚筒采煤机', 352.00, 480.00, 596000.00, 704000.00, '2024-12-02 14:28:44', '2024-12-02 14:28:44');
+INSERT INTO `data_center`.`ads_device_oee`(`org_code`, `org_name`, `level_code`, `date`, `year`, `month`, `day`,
+                                           `asset_id`, `asset_name`, `device_type_no`, `device_type_name`,
+                                           `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`,
+                                           `updated_time`)
+VALUES ('2F02', '万利一矿', '10002', '2024-09-30', '2024', '09', '30', '140000001666', '6650采煤机', '1401010001',
+        '滚筒采煤机', 600.00, 690.00, 601579.00, 600000.00, '2024-12-02 14:28:44', '2024-12-02 14:28:44');
+INSERT INTO `data_center`.`ads_device_oee`(`org_code`, `org_name`, `level_code`, `date`, `year`, `month`, `day`,
+                                           `asset_id`, `asset_name`, `device_type_no`, `device_type_name`,
+                                           `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`,
+                                           `updated_time`)
+VALUES ('2F06', '李家壕煤矿', '10006', '2024-10-30', '2024', '10', '30', '140000003886', '采煤机', '1401010001',
+        '滚筒采煤机', 400.00, 420.00, 560000.00, 570000.00, '2024-12-02 14:28:44', '2024-12-02 14:28:44');
+INSERT INTO `data_center`.`ads_device_oee`(`org_code`, `org_name`, `level_code`, `date`, `year`, `month`, `day`,
+                                           `asset_id`, `asset_name`, `device_type_no`, `device_type_name`,
+                                           `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`,
+                                           `updated_time`)
+VALUES ('2F02', '万利一矿', '10002', '2024-10-30', '2024', '10', '30', '140000000728', '采煤机', '1401010001',
+        '滚筒采煤机', 352.00, 480.00, 596000.00, 704000.00, '2024-12-02 14:28:44', '2024-12-02 14:28:44');
+INSERT INTO `data_center`.`ads_device_oee`(`org_code`, `org_name`, `level_code`, `date`, `year`, `month`, `day`,
+                                           `asset_id`, `asset_name`, `device_type_no`, `device_type_name`,
+                                           `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`,
+                                           `updated_time`)
+VALUES ('2F02', '万利一矿', '10002', '2024-10-30', '2024', '10', '30', '140000001666', '6650采煤机', '1401010001',
+        '滚筒采煤机', 600.00, 690.00, 601579.00, 600000.00, '2024-12-02 14:28:44', '2024-12-02 14:28:44');
