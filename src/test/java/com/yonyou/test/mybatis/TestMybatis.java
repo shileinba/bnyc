@@ -1,4 +1,4 @@
-package com.yonyou.test;
+package com.yonyou.test.mybatis;
 
 import com.yonyou.mapper.UserMapper;
 import com.yonyou.pojo.User;
@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-public class Test {
+public class TestMybatis {
     public static void main(String[] args) throws IOException {
         // 定义资源文件名
         String resource = "mybatis_conf.xml";
