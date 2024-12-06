@@ -881,7 +881,7 @@ select
   now()
 from ods_invest_plan a
 left join  data_center.ads_orgnization b on a.org_code = b.org_code
-
+;
 /**
 -- 投资计划是填报数据，不能truncate 
 truncate table ads_invest_plan;

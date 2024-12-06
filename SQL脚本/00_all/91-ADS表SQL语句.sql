@@ -3818,13 +3818,14 @@ insert into dws_two_gold_control
     yszk_pre decimal(15, 2) comment '应收账款预算值',
     version_code varchar(16) comment '版本',
     rank_no varchar(16) comment '单位顺序',
+    group_flag varchar(1) comment '分组标志', -- 1 ： 经过group处理后的数据 0 ： 未经group处理的数据
     created_time datetime(0) DEFAULT CURRENT_TIMESTAMP comment '创建时间',
     updated_time datetime(0) DEFAULT CURRENT_TIMESTAMP comment '更新时间'
   ) COMMENT='ads-两金压控预算表-转置';
   **/
-  truncate table ads_two_gold_control_convert ;
-  insert into ads_two_gold_control_convert
-  (`org_code`,`org_name`,`level_code`,`date`,`ljhj_total_amount`,`ljhj_pre`,`version_code`,`rank_no`,`created_time`,`updated_time`)
+truncate table ads_two_gold_control_convert ;
+insert into ads_two_gold_control_convert
+  (`org_code`,`org_name`,`level_code`,`date`,`ljhj_total_amount`,`ljhj_pre`,`version_code`,`rank_no`,`group_flag`,`created_time`,`updated_time`)
   select
       b.org_code,
       b.org_name,
@@ -3834,6 +3835,7 @@ insert into dws_two_gold_control
       a.amount,
       a.version_code,
       b.rank_no,
+      '0',
       now(),
       now()
     from dws_two_gold_control a
@@ -3842,7 +3844,7 @@ insert into dws_two_gold_control
     where a.index_code  = 'LJHJ'  -- 两金合计总值
   ;
   insert into ads_two_gold_control_convert
-  (`org_code`,`org_name`,`level_code`,`date`,`ch_total_amount`,`ch_pre`,`version_code`,`rank_no`,`created_time`,`updated_time`)
+  (`org_code`,`org_name`,`level_code`,`date`,`ch_total_amount`,`ch_pre`,`version_code`,`rank_no`,`group_flag`,`created_time`,`updated_time`)
   select
       b.org_code,
       b.org_name,
@@ -3852,6 +3854,7 @@ insert into dws_two_gold_control
       a.amount,
       a.version_code,
       b.rank_no,
+      '0',
       now(),
       now()
     from dws_two_gold_control a
@@ -3860,7 +3863,7 @@ insert into dws_two_gold_control
     where a.index_code  = '27'  -- 存货
   ;
   insert into ads_two_gold_control_convert
-  (`org_code`,`org_name`,`level_code`,`date`,`ycl_total_amount`,`ycl_pre`,`version_code`,`rank_no`,`created_time`,`updated_time`)
+  (`org_code`,`org_name`,`level_code`,`date`,`ycl_total_amount`,`ycl_pre`,`version_code`,`rank_no`,`group_flag`,`created_time`,`updated_time`)
   select
       b.org_code,
       b.org_name,
@@ -3870,6 +3873,7 @@ insert into dws_two_gold_control
       a.amount,
       a.version_code,
       b.rank_no,
+      '0',
       now(),
       now()
     from dws_two_gold_control a
@@ -3878,7 +3882,7 @@ insert into dws_two_gold_control
     where a.index_code  = '28'  -- 原材料
   ;
   insert into ads_two_gold_control_convert
-  (`org_code`,`org_name`,`level_code`,`date`,`kcm_total_amount`,`kcm_pre`,`version_code`,`rank_no`,`created_time`,`updated_time`)
+  (`org_code`,`org_name`,`level_code`,`date`,`kcm_total_amount`,`kcm_pre`,`version_code`,`rank_no`,`group_flag`,`created_time`,`updated_time`)
   select
       b.org_code,
       b.org_name,
@@ -3888,6 +3892,7 @@ insert into dws_two_gold_control
       a.amount,
       a.version_code,
       b.rank_no,
+      '0',
       now(),
       now()
     from dws_two_gold_control a
@@ -3896,7 +3901,7 @@ insert into dws_two_gold_control
     where a.index_code  = '31'  -- 库存煤
   ;
   insert into ads_two_gold_control_convert
-  (`org_code`,`org_name`,`level_code`,`date`,`yszk_total_amount`,`yszk_pre`,`version_code`,`rank_no`,`created_time`,`updated_time`)
+  (`org_code`,`org_name`,`level_code`,`date`,`yszk_total_amount`,`yszk_pre`,`version_code`,`rank_no`,`group_flag`,`created_time`,`updated_time`)
   select
       b.org_code,
       b.org_name,
@@ -3906,6 +3911,7 @@ insert into dws_two_gold_control
       a.amount,
       a.version_code,
       b.rank_no,
+      '0',
       now(),
       now()
     from dws_two_gold_control a
@@ -3914,6 +3920,40 @@ insert into dws_two_gold_control
     where a.index_code  = '15'  -- 应收账款
   ;
 
+  insert into ads_two_gold_control_convert
+  select
+      org_code,
+      org_name,
+      level_code,
+      date,
+      sum(ljhj_total_amount) ,
+      sum(ljhj_pre) ,
+      sum(ch_total_amount) ,
+      sum(ch_pre) ,
+      sum(ycl_total_amount) ,
+      sum(ycl_pre) ,
+      sum(kcm_total_amount) ,
+      sum(kcm_pre) ,
+      sum(yszk_total_amount) ,
+      sum(yszk_pre) ,
+      version_code,
+      rank_no,
+      '1',
+      now(),
+      now()
+  from ads_two_gold_control_convert
+  group by
+      org_code,
+      org_name,
+      level_code,
+      date,
+      version_code,
+      rank_no
+  ;
+-- 删除之前的单条数据，时间限定 为 3分钟以前
+-- delete from ads_two_gold_control_convert where created_Time  < DATE_SUB(NOW(), INTERVAL 3 MINUTE);
+delete from ads_two_gold_control_convert where group_flag  = '0';
+
   /**
   -- 营收增长率和两金增长率的对比数据
   drop table data_center.ads_two_gold_growth_rate;
@@ -3921,11 +3961,12 @@ insert into dws_two_gold_control
     org_code varchar(64) comment '单位编码',
     org_name varchar(64) comment '单位名称',
     date varchar(64) comment '日期',
-    leve_code varchar(64) comment '权限预留', 
+    level_code varchar(64) comment '权限预留',
     yysr_growth_rate decimal(15, 2) comment '营业收入增长率',
     two_gold_growth_rate decimal(15, 2) comment '两金增长率',
     version_code varchar(16) comment '版本号',
     rank_no varchar(16) comment '单位顺序',
+    group_flag varchar(1) comment '分组标志', -- 1 ： 经过group处理后的数据 0 ： 未经group处理的数据
     created_time datetime(0) DEFAULT CURRENT_TIMESTAMP comment '创建时间',
     updated_time datetime(0) DEFAULT CURRENT_TIMESTAMP comment '更新时间'
   ) COMMENT='ads-营收两金增长率对比表';
@@ -3947,6 +3988,7 @@ insert into data_center.ads_two_gold_growth_rate
     null,
     v.version_code,
     b.rank_no,
+    '0',
     now() ,
     now()
   from a 
@@ -3956,22 +3998,53 @@ insert into data_center.ads_two_gold_growth_rate
 
 -- 插入两金增长率数据
 insert into data_center.ads_two_gold_growth_rate
-select 
-    org_code,
-    org_name,
-    date,
-    level_code,
+select
+    a.org_code,
+    a.org_name,
+    a.date,
+    a.level_code,
     null,
-    (ljhj_total_amount - ljhj_pre ) / ljhj_pre,
-    version_code,
-    rank_no,
+    (a.ljhj_total_amount - a.ljhj_pre ) / a.ljhj_pre,
+    a.version_code,
+    a.rank_no,
+    '0',
     now() ,
     now()
-  from data_center.ads_two_gold_control_convert
-  group by 
-    org_code,
-    org_name,
-    date,
-    level_code,
-    version_code
+from data_center.ads_two_gold_control_convert a
+where  a.org_code in (
+    select org_code from ads_asset_core
+    where index_code  = '27' and amount_acc != 0  and date  = a.date
+    )
+group by
+    a.org_code,
+    a.org_name,
+    a.date,
+    a.level_code,
+    a.version_code
   ;
+
+-- 插入合计值
+insert into data_center.ads_two_gold_growth_rate
+  select
+      org_code,
+      org_name,
+      date,
+      level_code,
+      sum(yysr_growth_rate),
+      sum(two_gold_growth_rate),
+      version_code,
+      rank_no,
+      '1',
+      now(),
+      now()
+  from ads_two_gold_growth_rate
+  group by
+      org_code,
+      org_name,
+      date,
+      level_code,
+      version_code,
+      rank_no
+  ;
+delete from data_center.ads_two_gold_growth_rate where group_flag  = '0';
+
