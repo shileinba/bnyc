@@ -10,18 +10,19 @@ public class Demo4 {
 //        };
 //        CarFactory cf=name ->  new Car(name);
 
-        CarFactory cf=Car:: new ;
-        Car c1=cf.getCar("奥迪");
+        // 使用场景：如果某个Lambda表达式里只是创建对象，并且“->”前后参数的形式一致，就可以使用构造器引用
+        CarFactory cf = Car::new;
+        Car c1 = cf.getCar("奥迪");
         System.out.println(c1.getName());
 
     }
 }
 
-interface CarFactory{
+interface CarFactory {
     Car getCar(String name);
 }
 
-class Car{
+class Car {
     private String name;
 
     public Car() {

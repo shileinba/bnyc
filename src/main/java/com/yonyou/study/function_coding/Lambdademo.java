@@ -1,6 +1,7 @@
 package com.yonyou.study.function_coding;
 
 /**
+ * 函数式编程思想概论 : https://baijiahao.baidu.com/s?id=1791743660971172652&wfr=spider&for=pc
  * 代码网页 ：https://blog.csdn.net/weixin_44456914/article/details/142728122
  */
 public class Lambdademo {
