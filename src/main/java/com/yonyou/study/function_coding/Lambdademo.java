@@ -1,5 +1,8 @@
 package com.yonyou.study.function_coding;
 
+/**
+ * 代码网页 ：https://blog.csdn.net/weixin_44456914/article/details/142728122
+ */
 public class Lambdademo {
     public static void main(String[] args) {
         Animal a = new Animal() {
@@ -35,4 +38,17 @@ abstract class Animal {
 interface Swim {
     void swim();
 }
-
+/**
+ * 分析这段代码：
+ *
+ * Animal由于只是抽象类不是接口，所以不能使用Lambda表达式替代
+ *
+ * 而Swim是接口，且只有一个抽象方法所以能被Lambda表达式替代
+ *
+ * **为什么这个Lambda能替代？**因为能推断出上下文，Swim s2能推断出是一个接口，后面的方法体代码能代码能推断出只有一个抽象方法，所以能推断出原来的代码如s1。
+ * ————————————————
+ *
+ *                             版权声明：本文为博主原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接和本声明。
+ *
+ * 原文链接：https://blog.csdn.net/weixin_44456914/article/details/142728122
+ */

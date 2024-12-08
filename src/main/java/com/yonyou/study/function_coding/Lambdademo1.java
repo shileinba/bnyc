@@ -20,7 +20,7 @@ public class Lambdademo1 {
             System.out.println(student.getName() + "," + student.getAge() + "," + student.getHeight());
         }
 
-
+        // 用灰色标记Comparator提示可以进行Lambda表达式进行简化，进入该方法的声明，该方法有声明函数式接口的注解，说明该匿名内部类可以使用Lambda表达式进行化简
         Arrays.sort(students, new Comparator<Student>() {
             @Override
             public int compare(Student o1, Student o2) {
@@ -28,6 +28,12 @@ public class Lambdademo1 {
 
             }
         });
+
+        // 方法同上
+        Arrays.sort(students, (Student o1, Student o2)->{
+            return o1.getAge()-o2.getAge();//升序
+        });
+
         System.out.println("=======================================");
         //输出排序后的学生数组
         for (int i = 0; i < students.length; i++) {
