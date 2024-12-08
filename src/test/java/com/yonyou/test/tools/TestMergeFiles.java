@@ -28,5 +28,7 @@ public class TestMergeFiles {
         MergeFiles mf = new MergeFiles();
 //        mf.listCurrentPathFile();
         mf.merge(inputFiles, outputFile);
+
+        System.out.println("[success] generate new SQL named " + outputFile);
     }
 }
