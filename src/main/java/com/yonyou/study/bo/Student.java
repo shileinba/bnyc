@@ -6,6 +6,8 @@ public class Student {
     private int age;
     private double height;
 
+    public Student() {}
+
     public Student(String name, int age, double height) {
         this.name = name;
         this.age = age;
@@ -34,5 +36,14 @@ public class Student {
 
     public void setHeight(double height) {
         this.height = height;
+    }
+
+    // 供 lamda表达式调用的静态方法
+    public static int compareAge(Student s1, Student s2){
+        return s1.getAge() - s2.getAge();
+    }
+
+    public int compareByHeight(Student o1,Student o2){
+        return Double.compare(o1.getHeight(), o2.getHeight());
     }
 }

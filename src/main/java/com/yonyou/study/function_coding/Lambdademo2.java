@@ -25,6 +25,14 @@ public class Lambdademo2 {
             System.out.println("登录成功");
         });
 
+        //简化lamda写法
+        /**
+         * 参数类型全部可以省略不写
+         * 如果只有一个参数，参数类型省略的同时“()”也可以省略，但多个参数不能省略“()”
+         * 如果Lambda表达式只有一行代码，大括号可以不写，同时要省略分号”;”，如果这行代码是return语句，也必须去掉return
+         */
+        button.addActionListener(e -> System.out.println("登录成功"));
+
         win.setVisible(true);
     }
 }
