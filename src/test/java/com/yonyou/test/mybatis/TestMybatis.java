@@ -38,7 +38,12 @@ public class TestMybatis {
         // 2024-12-09 ： 获取bcs11月出现重复数据的表。
         BCSDataProcessor bcsDataProcessor = new BCSDataProcessor();
         List<String> repeatTables = bcsDataProcessor.getBCSRepeat(sqlSession);
+
+        sqlSession = sqlSessionFactory.openSession();
         bcsDataProcessor.deleteBCSRepeat(sqlSession,repeatTables);
+
+        sqlSession = sqlSessionFactory.openSession();
+        bcsDataProcessor.testDeleteBCSData(sqlSession);
     }
 
     public void selectUser(){

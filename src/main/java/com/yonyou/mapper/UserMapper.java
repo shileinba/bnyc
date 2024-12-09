@@ -13,5 +13,5 @@ public interface UserMapper {
 
     BcsData selectBcsRepeatData(String tableName);
 
-    BcsData deleteBcsRepeatData(String tableName);
+    void deleteBcsRepeatData(String tableName);
 }

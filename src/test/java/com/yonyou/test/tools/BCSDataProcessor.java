@@ -99,4 +99,17 @@ public class BCSDataProcessor {
             sqlSession.close();
         }
     }
+
+    public void testDeleteBCSData(SqlSession sqlSession) {
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+
+        try {
+            String tableName  = "ygl0072__zygl0072";
+            System.out.println("[WARNING] : DELETE REPEAT TABLE NAME IS " + tableName);
+            userMapper.deleteBcsRepeatData(tableName);
+
+        } finally {
+            sqlSession.close();
+        }
+    }
 }

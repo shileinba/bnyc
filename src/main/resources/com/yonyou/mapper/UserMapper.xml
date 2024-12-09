@@ -33,7 +33,6 @@
                     max(id) as id
                 from ${tableName}
                 where per  = '2024' and ucode like 'GY2F00_011%'
-                -- and rid  = '1'
                 group by rid,ucode,per
                 having count(rid)  > 1
             )
