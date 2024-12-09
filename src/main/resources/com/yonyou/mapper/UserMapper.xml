@@ -11,7 +11,7 @@
         select id,account,realname from user where id = '1';
     </select>
 
-    <select id="selectBcsData" parameterType="java.lang.String" resultType="com.yonyou.pojo.BcsData" >
+    <select id="selectBcsRepeatData" parameterType="java.lang.String" resultType="com.yonyou.pojo.BcsData" >
         select
             ucode ,
             per,
@@ -24,5 +24,21 @@
         group by rid,ucode,per
         having count(rid)  > 1
     </select>
+
+    <delete id="deleteBcsRepeatData" parameterType="java.lang.String" >
+        delete from ${tableName}
+        where id in (
+            with tt as (
+                select
+                    max(id) as id
+                from ${tableName}
+                where per  = '2024' and ucode like 'GY2F00_011%'
+                -- and rid  = '1'
+                group by rid,ucode,per
+                having count(rid)  > 1
+            )
+            select id from tt
+        )
+    </delete>
 
 </mapper>

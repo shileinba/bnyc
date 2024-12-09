@@ -5,7 +5,7 @@ import com.yonyou.tools.MergeFiles;
 
 import java.util.Date;
 
-public class TestMergeFiles {
+public class MergeSQLFiles {
 
     public static void main(String args[]) {
         String[] inputFiles = {
