@@ -2,31 +2,50 @@ package com.yonyou.controller;
 
 import com.yonyou.pojo.BcsData;
 import com.yonyou.service.BcsDataService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+
+@Tag(name = "BCS数据管理",description = "")
 @RestController
 public class BcsDataController {
 
     @Autowired
     private BcsDataService bcsDataService;
 
-    @RequestMapping("/getBcsRepeatTable")
-    public List getBcsRepeatTable(){
+    @Operation(summary = "查询有重复数据的BCS表",description = "查询有重复数据的BCS表")
+    @GetMapping("/getBcsRepeatTable")
+    public JSONObject getBcsRepeatTable(){
         List<BcsData> bcsDataList = bcsDataService.getBcsRepeatDataTableList();
-        return bcsDataList;
+        JSONObject jsonObject = new JSONObject();
+        if(bcsDataList != null && bcsDataList.size() > 0) {
+            jsonObject.put("info", "success");
+            jsonObject.put("data", bcsDataList);
+        }else{
+            jsonObject.put("info", "no data return.");
+        }
+        return jsonObject;
     }
 
-    @RequestMapping("/delBcsRepeatTable")
-    public String delBcsRepeatTable(){
+    @Operation(summary = "删除有重复数据的BCS表",description = "删除有重复数据的BCS表")
+    @DeleteMapping("/delBcsRepeatTable")
+    public JSONObject delBcsRepeatTable(){
         List<BcsData> bcsDataList = bcsDataService.getBcsRepeatDataTableList();
+        JSONObject jsonObject = new JSONObject();
         if(bcsDataList != null && bcsDataList.size() > 0){
             bcsDataService.deleteBCSRepeat(bcsDataList);
-            return "删除成功！";
+            jsonObject.put("info", "删除成功");
         }else{
-            return " 没有要删除的重复数据表！";
+            jsonObject.put("info", "没有要删除的重复数据表");
         }
+        return jsonObject;
     }
 }
