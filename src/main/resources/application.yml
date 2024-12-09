@@ -1,11 +1,28 @@
-# application.yml
 server:
   port: 8081
 spring:
   datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+#    driver-class-name: com.mysql.jdbc.Driver
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/zentao
-    username: root
-    password: 0hwJPx>k4IO
+#    url: jdbc:mysql://localhost:3306/zentao
+#    username: root
+#    password: 0hwJPx>k4IO
+    url: jdbc:mysql://10.26.40.151:3306/data_center
+    username: oper_dc
+    password: operzADF2020qwer
+    druid:
+      initial-size: 5
+      min-idle: 5
+      max-active: 20
+      max-wait: 60000
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 1 FROM DUAL
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
 mybatis:
   mapper-locations: classpath:com/yonyou/mapper/*.xml

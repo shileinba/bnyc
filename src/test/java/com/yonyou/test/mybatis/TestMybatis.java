@@ -22,6 +22,7 @@ public class TestMybatis {
     public static void main(String[] args) throws IOException {
         // 定义资源文件名
         String resource = "mybatis_conf.xml";
+//        String resource = "application.yml";
 
         // 通过Resources类获取资源文件的输入流
         InputStream inputStream = Resources.getResourceAsStream(resource);
@@ -39,11 +40,11 @@ public class TestMybatis {
         BCSDataProcessor bcsDataProcessor = new BCSDataProcessor();
         List<String> repeatTables = bcsDataProcessor.getBCSRepeat(sqlSession);
 
-        sqlSession = sqlSessionFactory.openSession();
-        bcsDataProcessor.deleteBCSRepeat(sqlSession,repeatTables);
+//        sqlSession = sqlSessionFactory.openSession();
+//        bcsDataProcessor.deleteBCSRepeat(sqlSession,repeatTables);
 
-        sqlSession = sqlSessionFactory.openSession();
-        bcsDataProcessor.testDeleteBCSData(sqlSession);
+//        sqlSession = sqlSessionFactory.openSession();
+//        bcsDataProcessor.testDeleteBCSData(sqlSession);
     }
 
     public void selectUser(){

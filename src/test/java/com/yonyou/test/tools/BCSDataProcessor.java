@@ -1,12 +1,16 @@
 package com.yonyou.test.tools;
 
+import com.yonyou.mapper.BcsDataMapper;
 import com.yonyou.mapper.UserMapper;
 import com.yonyou.pojo.BcsData;
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class BCSDataProcessor {
 
     /**
@@ -14,6 +18,10 @@ public class BCSDataProcessor {
      *
      * @param sqlSession
      */
+
+    @Autowired
+    BcsDataMapper bcsDataMapper;
+
     public List<String> getBCSRepeat(SqlSession sqlSession) {
         String[] tableNames = {
                 "ybsr009__zybsr009_01",
@@ -50,14 +58,13 @@ public class BCSDataProcessor {
                 "yzb0102__zyzb0102",
                 "ybzb003__zybzb003",
                 "ygl0083__zygl0083"
-
         };
 
-        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+//        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
         List<BcsData> bcsDataList = new ArrayList<BcsData>();
         try {
             for (String tableName : tableNames) {
-                BcsData bcsData = userMapper.selectBcsRepeatData(tableName);
+                BcsData bcsData = bcsDataMapper.selectBcsRepeatData(tableName);
                 if (bcsData != null && Integer.parseInt(bcsData.getCount()) > 1)
                     bcsData.setTableName(tableName);
                 bcsDataList.add(bcsData);
@@ -93,7 +100,7 @@ public class BCSDataProcessor {
         try {
             for (String tableName : tableNames) {
                 System.out.println("[WARNING] : DELETE REPEAT TABLE NAME IS " + tableName);
-                userMapper.deleteBcsRepeatData(tableName);
+                bcsDataMapper.deleteBcsRepeatData(tableName);
             }
         } finally {
             sqlSession.close();
@@ -106,7 +113,7 @@ public class BCSDataProcessor {
         try {
             String tableName  = "ygl0072__zygl0072";
             System.out.println("[WARNING] : DELETE REPEAT TABLE NAME IS " + tableName);
-            userMapper.deleteBcsRepeatData(tableName);
+            bcsDataMapper.deleteBcsRepeatData(tableName);
 
         } finally {
             sqlSession.close();

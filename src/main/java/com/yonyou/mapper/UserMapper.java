@@ -11,7 +11,5 @@ public interface UserMapper {
     List<User> selectall();
     User selectlogin();
 
-    BcsData selectBcsRepeatData(String tableName);
 
-    void deleteBcsRepeatData(String tableName);
 }
