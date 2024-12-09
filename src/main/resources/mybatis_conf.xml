@@ -4,14 +4,26 @@
     <environments default="development">
         <environment id="development">
             <transactionManager type="JDBC"/>
+            <!-- 本地禅道数据库 -->
+<!--            <dataSource type="POOLED">-->
+<!--                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>-->
+<!--                &lt;!&ndash; 笔记本的数据库链接信息 &ndash;&gt;-->
+<!--&lt;!&ndash;                <property name="url" value="jdbc:mysql://localhost:3306/zentao2"/>&ndash;&gt;-->
+<!--                &lt;!&ndash; 包能台式机笔记本的数据库链接信息 &ndash;&gt;-->
+<!--                <property name="url" value="jdbc:mysql://localhost:3306/zentao"/>-->
+<!--                <property name="username" value="root"/>-->
+<!--                <property name="password" value="0hwJPx>k4IO"/>-->
+<!--            </dataSource>-->
+
+            <!-- 包能正式数据库 -->
             <dataSource type="POOLED">
                 <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
                 <!-- 笔记本的数据库链接信息 -->
-<!--                <property name="url" value="jdbc:mysql://localhost:3306/zentao2"/>-->
+                <!--                <property name="url" value="jdbc:mysql://localhost:3306/zentao2"/>-->
                 <!-- 包能台式机笔记本的数据库链接信息 -->
-                <property name="url" value="jdbc:mysql://localhost:3306/zentao"/>
-                <property name="username" value="root"/>
-                <property name="password" value="0hwJPx>k4IO"/>
+                <property name="url" value="jdbc:mysql://10.26.40.151:3306/data_center"/>
+                <property name="username" value="oper_dc"/>
+                <property name="password" value="operzADF2020qwer"/>
             </dataSource>
         </environment>
     </environments>

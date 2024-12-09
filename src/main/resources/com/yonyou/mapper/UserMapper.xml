@@ -10,4 +10,19 @@
     <select id="selectlogin" resultType="com.yonyou.pojo.User">
         select id,account,realname from user where id = '1';
     </select>
+
+    <select id="selectBcsData" parameterType="java.lang.String" resultType="com.yonyou.pojo.BcsData" >
+        select
+            ucode ,
+            per,
+            rid,
+            count(rid) as count
+        from
+            ${tableName}
+        where per  = '2024' and ucode like 'GY2F00_011%'
+          and rid  = '1'
+        group by rid,ucode,per
+        having count(rid)  > 1
+    </select>
+
 </mapper>
