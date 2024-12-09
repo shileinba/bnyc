@@ -10,8 +10,8 @@ public class MergeSQLFiles {
     public static void main(String args[]) {
         String[] inputFiles = {
                 "./SQL脚本/00_all/xuefeng/ods建表语句-史磊修改20241107.sql",
-                "./SQL脚本/00_all/xuefeng/ads建表语句-史磊修改20241112.sql",
                 "./SQL脚本/00_all/90-ODS建表及切换语句.sql",
+                "./SQL脚本/00_all/xuefeng/ads建表语句-史磊修改20241112.sql",
                 "./SQL脚本/00_all/91-ADS表SQL语句.sql",
                 "./SQL脚本/00_all/92-ADS表-资产.sql",
                 "./SQL脚本/00_all/93-ADS表-预算.sql",
