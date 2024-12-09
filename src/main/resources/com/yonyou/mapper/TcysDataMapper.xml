@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yonyou.mapper.BcsDataMapper">
+    <select id="selectTcysData" parameterType="java.lang.String" resultType="com.yonyou.pojo.BcsData" >
+        select hc from ods_tcys
+        group by
+            org_code,
+            org_name,
+            tcxm,
+            hc,
+            date
+        having count(*) > 1
+    </select>
+
+
+
+</mapper>
