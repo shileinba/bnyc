@@ -9,6 +9,6 @@ public interface BcsDataService {
 
     List<BcsData> getBcsRepeatDataTableList();
 
-    String deleteBCSRepeat(List<String> tableNameList);
+    String deleteBCSRepeat(List<BcsData> bcsDataList);
 
 }

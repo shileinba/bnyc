@@ -56,20 +56,16 @@ public class BcsDataSeviceImpl implements BcsDataService {
         List<BcsData> bcsDataList = new ArrayList<BcsData>();
         for(String tableName : tableNames){
             BcsData bcsData = bcsDataMapper.selectBcsRepeatData(tableName);
-            bcsDataList.add(bcsData);
+            if(bcsData != null){
+                bcsDataList.add(bcsData);
+            }
         }
 
         return bcsDataList;
     }
 
     @Override
-    public String deleteBCSRepeat(List<String> tableNameList){
-        List<BcsData> bcsDataList = new ArrayList<BcsData>();
-        for(String tableName : tableNames){
-            BcsData bcsData = bcsDataMapper.selectBcsRepeatData(tableName);
-            bcsDataList.add(bcsData);
-        }
-
+    public String deleteBCSRepeat(List<BcsData> bcsDataList){
         for (BcsData bcsData : bcsDataList) {
             String deleteTableName = bcsData.getTableName();
             System.out.println("[WARNING] : DELETE REPEAT TABLE NAME IS " + deleteTableName);
