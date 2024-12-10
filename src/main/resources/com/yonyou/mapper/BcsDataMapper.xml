@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.yonyou.mapper.BcsDataMapper">
-    <select id="selectBcsRepeatData" parameterType="java.lang.String" resultType="com.yonyou.pojo.BcsData" >
+    <select id="selectBcsRepeatData" resultType="com.yonyou.pojo.BcsData" >
         select
             ucode ,
             per,
@@ -10,20 +10,20 @@
             count(rid) as count
         from
             ${tableName}
-        where per  = '2024' and ucode like 'GY2F00_011%'
+        where per  = #{year} and ucode like CONCAT(#{orgCode},'_0',#{month},'%')
           and rid  = '1'
         group by rid,ucode,per
         having count(rid)  > 1
     </select>
 
-    <delete id="deleteBcsRepeatData" parameterType="java.lang.String" >
+    <delete id="deleteBcsRepeatData" >
         delete from ${tableName}
         where id in (
             with tt as (
                 select
                     max(id) as id
                 from ${tableName}
-                where per  = '2024' and ucode like 'GY2F00_011%'
+                where per  = #{year} and ucode like 'GY2F00_011%'
                 group by rid,ucode,per
                 having count(rid)  > 1
             )

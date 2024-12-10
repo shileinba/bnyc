@@ -52,10 +52,10 @@ public class BcsDataSeviceImpl implements BcsDataService {
     BcsDataMapper bcsDataMapper;
 
     @Override
-    public List<BcsData> getBcsRepeatDataTableList() {
+    public List<BcsData> getBcsRepeatDataTableList(String year,String orgCode,String month) {
         List<BcsData> bcsDataList = new ArrayList<BcsData>();
         for(String tableName : tableNames){
-            BcsData bcsData = bcsDataMapper.selectBcsRepeatData(tableName);
+            BcsData bcsData = bcsDataMapper.selectBcsRepeatData(tableName,year,orgCode,month);
             if(bcsData != null){
                 bcsDataList.add(bcsData);
             }

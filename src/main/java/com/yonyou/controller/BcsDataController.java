@@ -5,10 +5,8 @@ import com.yonyou.service.BcsDataService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 import com.alibaba.fastjson.JSON;
@@ -23,8 +21,8 @@ public class BcsDataController {
 
     @Operation(summary = "查询有重复数据的BCS表",description = "查询有重复数据的BCS表")
     @GetMapping("/getBcsRepeatTable")
-    public JSONObject getBcsRepeatTable(){
-        List<BcsData> bcsDataList = bcsDataService.getBcsRepeatDataTableList();
+    public JSONObject getBcsRepeatTable(@RequestParam String year,@RequestParam String orgCode,@RequestParam String month) {
+        List<BcsData> bcsDataList = bcsDataService.getBcsRepeatDataTableList(year,orgCode,month);
         JSONObject jsonObject = new JSONObject();
         if(bcsDataList != null && bcsDataList.size() > 0) {
             jsonObject.put("info", "success");
@@ -37,8 +35,8 @@ public class BcsDataController {
 
     @Operation(summary = "删除有重复数据的BCS表",description = "删除有重复数据的BCS表")
     @DeleteMapping("/delBcsRepeatTable")
-    public JSONObject delBcsRepeatTable(){
-        List<BcsData> bcsDataList = bcsDataService.getBcsRepeatDataTableList();
+    public JSONObject delBcsRepeatTable(@RequestParam String year,@RequestParam String orgCode,@RequestParam String month){
+        List<BcsData> bcsDataList = bcsDataService.getBcsRepeatDataTableList(year,orgCode,month);
         JSONObject jsonObject = new JSONObject();
         if(bcsDataList != null && bcsDataList.size() > 0){
             bcsDataService.deleteBCSRepeat(bcsDataList);
