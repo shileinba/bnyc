@@ -128,12 +128,13 @@ set z06 = z06 * 10000
   , z36 = z36 * 10000
 ;
 
+
 -- 13.
 truncate yzb0102__zyzb0102_r;
 insert into yzb0102__zyzb0102_r
 select * from yzb0102__zyzb0102
 where ucode like '%_r';
-update data_center.yzb0102__zyzb0102_r set org_code =
+update data_center.yzb0102__zyzb0102_r set org =
                                                case when substr(ucode ,1,1) = '2'  then  substr(ucode ,1,4)
                                                     else substr(ucode ,1,6) end ;
 update data_center.yzb0102__zyzb0102_r set month =  substr(ucode,-4,2);
@@ -143,7 +144,7 @@ truncate yzb0002__zyzb0002_r;
 insert into yzb0002__zyzb0002_r
 select * from yzb0002__zyzb0002
 where ucode like '%_r';
-update data_center.yzb0002__zyzb0002_r set org_code =
+update data_center.yzb0002__zyzb0002_r set org =
                                                case when substr(ucode ,1,1) = '2'  then  substr(ucode ,1,4)
                                                     else substr(ucode ,1,6) end ;
 update data_center.yzb0002__zyzb0002_r set month =  substr(ucode,-4,2);
@@ -153,9 +154,8 @@ truncate yzb0003__zyzb0003_r;
 insert into yzb0003__zyzb0003_r
 select * from yzb0003__zyzb0003
 where ucode like '%_r';
-update data_center.yzb0003__zyzb0003_r set org_code =
+update data_center.yzb0003__zyzb0003_r set org =
                                                case when substr(ucode ,1,1) = '2'  then  substr(ucode ,1,4)
                                                     else substr(ucode ,1,6) end ;
 update data_center.yzb0003__zyzb0003_r set month =  substr(ucode,-4,2);
-
 
