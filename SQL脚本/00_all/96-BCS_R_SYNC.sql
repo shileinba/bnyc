@@ -19,7 +19,7 @@ update data_center.ybcb010__zybcb010_r set org_code =
                                                     else substr(ucode ,1,6) end ;
 update data_center.ybcb010__zybcb010_r set month =  substr(ucode,-4,2);
 
---3.
+-- 3.
 truncate ybcb019__zybcb019_01_r;
 insert into ybcb019__zybcb019_01_r
 select * from ybcb019__zybcb019_01
@@ -29,7 +29,7 @@ update data_center.ybcb019__zybcb019_01_r set org_code =
                                                        else substr(ucode ,1,6) end ;
 update data_center.ybcb019__zybcb019_01_r set month =  substr(ucode,-4,2);
 
---4.
+-- 4.
 truncate ybsr009__zybsr009_01_r;
 insert into ybsr009__zybsr009_01_r
 select * from ybsr009__zybsr009_01
