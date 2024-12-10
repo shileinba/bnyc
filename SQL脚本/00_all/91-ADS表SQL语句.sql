@@ -1154,48 +1154,70 @@
   group by b.org_name, b.org_code, a.date
   ; 
 
-  -- 期末货币资金余额 
+  -- 包头能源合并（管理口径） ： 期末货币资金余额
   insert into data_center.ads_fund_income_expense
-  select 
-   b.org_code,
-   b.org_name,
-   b.level_code,
-   substr(a.date,1,7),
-   '期末货币资金余额' ,
-   'A0002',
-  ifnull(a.end_balance,0) + ifnull((select endofyearbalance_booknetvalue from   data_center.ods_other_amount_due_hq where substr(date,1,7) = substr(a.date,1,7) ),0)
-    as amount_acc,
-   a.amount_acc_form +  ifnull((select endofyearbalance_booknetvalue from   data_center.ods_other_amount_due_hq where substr(date,1,7) = substr(cast(concat(a.date,'-01') as date) + interval '-1' year,1,7) ),0)  
-  as amount_acc_form,
-   0 as plan_amount
-  from  data_center.ods_asset_balance_hq  a
-  left join data_center.ads_orgnization b
-    on a.org_code = b.org_code
-  where a.index_code in ('2')
-  AND substr(a.date,6,7) <= '12';   
-  -- 资产负债表  2- 货币资金  
+  with a as (
+      select
+          org_code,
+          org_name,
+      date,
+      sum(end_balance) as end_balance,
+      sum(amount_acc_form) as amount_acc_form,
+      sum(begin_balance) as begin_balance
+  from data_center.ods_asset_balance_hq
+  where index_code in ('2', '8')
+  group by org_code, org_name, date
+      )
+  select
+      b.org_code,
+      b.org_name,
+      b.level_code,
+      substr(a.date,1,7),
+      '期末货币资金余额' ,
+      'A0002',
+      ifnull(a.end_balance,0) + ifnull((select endofyearbalance_booknetvalue from   data_center.ods_other_amount_due_hq where substr(date,1,7) = substr(a.date,1,7) ),0)
+          as amount_acc,
+      a.amount_acc_form +  ifnull((select endofyearbalance_booknetvalue from   data_center.ods_other_amount_due_hq where substr(date,1,7) = substr(cast(concat(a.date,'-01') as date) + interval '-1' year,1,7) ),0)
+          as amount_acc_form,
+      0 as plan_amount
+  from  a
+            left join data_center.ads_orgnization b
+                      on a.org_code = b.org_code
+  where substr(a.date,6,7) <= '12';
+  ;
+  -- 资产负债表  2- 货币资金  8- 应收票款（2024-12-10： 陈凤林老师新提出的）
   -- 其他应用款项表 18 期末余额-账面净额
 
   -- 期初货币资金余额
-
   insert into data_center.ads_fund_income_expense
-  select 
-   b.org_code,
-   b.org_name,
-   b.level_code,
-   substr(cast(concat(a.date,'-01') as date) + interval '1' month,1,7)  as date ,
+  with a as (
+      select
+          org_code,
+          org_name,
+      date,
+      sum(end_balance) as end_balance,
+      sum(amount_acc_form) as amount_acc_form,
+      sum(begin_balance) as begin_balance
+  from data_center.ods_asset_balance_hq
+  where index_code in ('2', '8')
+  group by org_code, org_name, date
+      )
+  select
+      b.org_code,
+      b.org_name,
+      b.level_code,
+      substr(cast(concat(a.date,'-01') as date) + interval '1' month,1,7)  as date ,
    '期初货币资金余额' ,
    'A0001',
    ifnull(a.end_balance,0) + ifnull((select endofyearbalance_booknetvalue from   data_center.ods_other_amount_due_hq where substr(date,1,7) = substr(a.date,1,7) ),0)
    as amount_acc,
-   a.amount_acc_form +  ifnull((select endofyearbalance_booknetvalue from   data_center.ods_other_amount_due_hq where substr(date,1,7) = substr(cast(concat(a.date,'-01') as date) + interval '-1' year,1,7) ),0)  
+   a.amount_acc_form +  ifnull((select endofyearbalance_booknetvalue from   data_center.ods_other_amount_due_hq where substr(date,1,7) = substr(cast(concat(a.date,'-01') as date) + interval '-1' year,1,7) ),0)
    as amount_acc_form,
    0 as plan_amount
-  from  data_center.ods_asset_balance_hq  a
-  left join data_center.ads_orgnization b
-    on a.org_code = b.org_code
-  where index_code in ('2')
-  AND substr(a.date,6,7) <= '12';
+  from   a
+      left join data_center.ads_orgnization b
+  on a.org_code = b.org_code
+  where substr(a.date,6,7) <= '12';
   -- 资产负债表  2- 货币资金   
   -- 其他应用款项表 18 期末余额-账面净额
 
@@ -1241,47 +1263,69 @@
   group by b.org_name,b.org_code,a.date
   ; 
 
-  -- 期末货币资金余额 
+  -- 下级各单位 ：[期末]货币资金余额
   insert into data_center.ads_fund_income_expense
-  select 
-   b.org_code,
-   b.org_name,
-   b.level_code,
-   substr(a.date,1,7) as date,
+  with a as (
+      select
+          org_code,
+          org_name,
+      date,
+      sum(end_balance) as end_balance,
+      sum(amount_acc_form) as amount_acc_form,
+      sum(begin_balance) as begin_balance
+  from data_center.ods_asset_balance_bo
+  where index_code in ('2', '8')
+  group by org_code, org_name, date
+      )
+  select
+      b.org_code,
+      b.org_name,
+      b.level_code,
+      substr(a.date,1,7) as date,
    '期末货币资金余额' ,
    'A0002',
    ifnull(a.end_balance,0) + ifnull((select endofyearbalance_booknetvalue from   data_center.ods_other_amount_due_bo where substr(date,1,7) = substr(a.date,1,7) and org_code = a.org_code ),0)
    as amount_acc,
-   a.amount_acc_form +  ifnull((select endofyearbalance_booknetvalue from   data_center.ods_other_amount_due_bo where substr(date,1,7) = substr(cast(concat(a.date,'-01') as date) + interval '-1' year,1,7) and org_code = a.org_code),0)  
+   a.amount_acc_form +  ifnull((select endofyearbalance_booknetvalue from   data_center.ods_other_amount_due_bo where substr(date,1,7) = substr(cast(concat(a.date,'-01') as date) + interval '-1' year,1,7) and org_code = a.org_code),0)
    as amount_acc_form,
    0 as plan_amount
-  from  data_center.ods_asset_balance_bo  a
-  left join data_center.ads_orgnization b
-    on a.org_code = b.org_code
-  where a.index_code in ('2');   
+  from   a
+      left join data_center.ads_orgnization b
+  on a.org_code = b.org_code
+  ;
   -- 资产负债表  2- 货币资金  
   -- 其他应用款项表 18 期末余额-账面净额
 
-  -- 期初货币资金余额
-
+  --  下级各单位 ：[期初]货币资金余额
   insert into data_center.ads_fund_income_expense
-  select 
-   b.org_code,
-   b.org_name,
-   b.level_code,
-   substr(cast(concat(a.date,'-01') as date) + interval '1' month,1,7)  as date ,
+  with a as (
+      select
+          org_code,
+          org_name,
+      date,
+      sum(end_balance) as end_balance,
+      sum(amount_acc_form) as amount_acc_form,
+      sum(begin_balance) as begin_balance
+  from data_center.ods_asset_balance_bo
+  where index_code in ('2', '8')
+  group by org_code, org_name, date
+      )
+  select
+      b.org_code,
+      b.org_name,
+      b.level_code,
+      substr(cast(concat(a.date,'-01') as date) + interval '1' month,1,7)  as date ,
    '期初货币资金余额' ,
    'A0001',
     ifnull(end_balance,0) + ifnull((select endofyearbalance_booknetvalue from   data_center.ods_other_amount_due_bo where substr(date,1,7) = substr(a.date,1,7) and org_code = a.org_code ),0)
    as amount_acc,
-   a.amount_acc_form +  ifnull((select endofyearbalance_booknetvalue from   data_center.ods_other_amount_due_bo where substr(date,1,7) = substr(cast(concat(a.date,'-01') as date) + interval '-1' year,1,7) and org_code = a.org_code),0)  
+   a.amount_acc_form +  ifnull((select endofyearbalance_booknetvalue from   data_center.ods_other_amount_due_bo where substr(date,1,7) = substr(cast(concat(a.date,'-01') as date) + interval '-1' year,1,7) and org_code = a.org_code),0)
    as amount_acc_form,
    0 as plan_amount
-  from  data_center.ods_asset_balance_bo  a
-  left join data_center.ads_orgnization b
-    on a.org_code = b.org_code
-  where a.index_code in ('2')
-  AND substr(a.date,6,7) <= '12';
+  from  a
+      left join data_center.ads_orgnization b
+  on a.org_code = b.org_code
+  where substr(a.date,6,7) <= '12';
   -- 资产负债表  2- 货币资金   
   -- 其他应用款项表 18 期末余额-账面净额
 
