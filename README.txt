@@ -33,8 +33,8 @@ https://blog.csdn.net/u014303349/article/details/133833184
 -- developer settings
 -- personal access token
 -- generate new token
-2)  gitbash 中使用 git 命令 添加 access token
--- git config --global user.token <access_token>   , 以上是在BNYC项目连接 YYRD git时的命令。
+2)  gitbash 中使用 git 命令
+
 
 
 三、资源
