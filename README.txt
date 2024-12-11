@@ -12,7 +12,7 @@ git clone https://github.com/shileinba/demo.git
 1）添加文件 ：
 git add .
 git commit -m "任意文字"
-git push
+git push origin master
 
 2）拉取更新文件
 git pull https://github.com/shileinba/demo.git
@@ -33,7 +33,9 @@ https://blog.csdn.net/u014303349/article/details/133833184
 -- developer settings
 -- personal access token
 -- generate new token
-2)
+2)  gitbash 中使用 git 命令 添加 access token
+ git config --global user.token glpat-yFMyNdRyHsZwxHbW4xYt   , 以上是在BNYC项目连接 YYRD git时的命令。
+
 
 三、资源
 1. git-bash下载 ：https://git-scm.com/downloads/win
