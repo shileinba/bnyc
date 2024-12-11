@@ -64,7 +64,7 @@ public class BCSDataProcessor {
         List<BcsData> bcsDataList = new ArrayList<BcsData>();
         try {
             for (String tableName : tableNames) {
-                BcsData bcsData = bcsDataMapper.selectBcsRepeatData(tableName);
+                BcsData bcsData = bcsDataMapper.selectBcsRepeatData(tableName,"2024","GY2F00","10");
                 if (bcsData != null && Integer.parseInt(bcsData.getCount()) > 1)
                     bcsData.setTableName(tableName);
                 bcsDataList.add(bcsData);
