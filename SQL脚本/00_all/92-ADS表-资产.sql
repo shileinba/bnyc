@@ -727,9 +727,11 @@ CREATE TABLE ads_device_info (
     org_main_data_code VARCHAR(50) COMMENT '组织机构主数据编码'  
 ) COMMENT='ads设备信息表' ;
 **/
-delete
-from ads_device_info
-where date = substr(now() + interval '-1' month,1,7);
+-- delete
+-- from ads_device_info
+-- where date = substr(now() + interval '-1' month,1,7)
+truncate table ads_device_info;
+;
 insert into ads_device_info
 select c.org_code,
        c.org_name,
