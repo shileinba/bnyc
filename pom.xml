@@ -6,7 +6,7 @@
 
     <groupId>groupId</groupId>
     <artifactId>bnyc</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>prd</version>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -92,6 +92,24 @@
             <version>2.1.5</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.4.0</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
