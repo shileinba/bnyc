@@ -4,10 +4,10 @@ import java.io.*;
 
 public class MergeFiles {
 
-    public void merge(String[] inputFiles, String outputFile) {
+    public void merge(String parentPath , String[] inputFiles, String outputFile) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile))) {
             for (String file : inputFiles) {
-                try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                try (BufferedReader reader = new BufferedReader(new FileReader(parentPath + file))) {
                     String line;
                     while ((line = reader.readLine()) != null) {
                         writer.write(line);

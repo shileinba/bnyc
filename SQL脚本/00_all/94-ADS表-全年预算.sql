@@ -66,7 +66,7 @@ insert into ods_budget_operating_value
         and b.scenario = 'Budget' 
         and b.synthesis = 'ZE'
       ),
-    RAND() * 10000000
+    RAND() * 100000000 -- ID
   from ods_budget_operating_value a
   where a.account = 'DJMCB2001'
       and a.scenario = 'Budget' and a.synthesis = 'ZE'
@@ -89,7 +89,7 @@ select
     a.bywe,
     a.byws,
     a.amount + case when b.amount is null then 0 else b.amount end,
-    RAND() * 10000000  -- id
+    RAND() * 100000000  -- id
   from 
     (select * from ods_budget_operating_value where account = 'DJMCB08' and scenario = 'Budget' and synthesis = 'DWJE') a   -- 剥离费
   left join 
@@ -111,7 +111,7 @@ select
     a.index_name,
     a.index_code,
     a.account,
-    a.scenario,
+    b.scenario,  -- 2024.12.12 : 替换 b.scenario
     a.synthesis,
     a.version_code,
     b.amount,
@@ -128,7 +128,7 @@ select
     where t1.account <> '' and (t1.exclude <> '1'  or t1.exclude is null)  and t2.year = '2024' -- 是2024年的，取NCYSS 年初预算数
   )  a
   left join ods_budget_operating_value b
-    on b.entity = a.org_code
+    on b.entity = (case when a.org_code like '00%' then substr(a.org_code,3,4) else a.org_code end)
       and b.years = a.year
       and b.version = a.version_code
       and b.scenario = 'NCYSS'
@@ -144,7 +144,7 @@ insert into data_center.ads_budget_broad_chart_2
     a.index_name,
     a.index_code,
     a.account,
-    a.scenario,
+    b.scenario,  -- 2024.12.12 : 替换 b.scenario
     a.synthesis,
     a.version_code,
     b.amount,
@@ -161,7 +161,7 @@ insert into data_center.ads_budget_broad_chart_2
     where t1.account <> '' and (t1.exclude <> '1'  or t1.exclude is null)  and t2.year <> '2024'   -- 不是2024年的，取Budget 预算数
   )  a
   left join ods_budget_operating_value b
-    on b.entity = a.org_code
+    on b.entity = (case when a.org_code like '00%' then substr(a.org_code,3,4) else a.org_code end)
       and b.years = a.year
       and b.version = a.version_code
       and b.scenario = 'Budget'
@@ -179,7 +179,7 @@ select
     a.index_name,
     a.index_code,
     a.account,
-    a.scenario,
+    b.scenario,
     a.synthesis,
     a.version_code,
     b.amount,
@@ -196,7 +196,7 @@ select
     where t1.index_code in ('254','255','256','257','258')  and t2.year = '2024'  -- 不是2024年的，取Budget 预算数
   )  a
   left join ods_budget_operating_value b
-    on b.entity = a.org_code
+    on b.entity = (case when a.org_code like '00%' then substr(a.org_code,3,4) else a.org_code end)
       and b.years = a.year
       and b.version = a.version_code
       and b.scenario = 'Budget'

@@ -1336,7 +1336,7 @@ update ads_budget_broad_chart_1 a
 join ads_index_code_account_ref r
 on a.index_code = r.index_code
 join ods_budget_operating_value b 
-on b.entity = a.org_code
+on b.entity = (case when a.org_code like '00%' then substr(a.org_code,3,4) else a.org_code end)
       and b.years = substr(a.date,1,4) 
       and b.version = a.bbh
       and b.scenario = r.scenario
@@ -1350,7 +1350,7 @@ update ads_budget_broad_chart_1 a
 join ads_index_code_account_ref r
 on a.index_code = r.index_code
 join ods_budget_operating_value b 
-on b.entity = a.org_code
+on b.entity = (case when a.org_code like '00%' then substr(a.org_code,3,4) else a.org_code end)
       and b.years = substr(a.date,1,4) 
       and b.version = a.bbh
       and b.scenario = r.scenario
@@ -1365,7 +1365,7 @@ update ads_budget_broad_chart_1 a
 join ads_index_code_account_ref r
 on a.index_code = r.index_code
 join ods_budget_operating_value b 
-on b.entity = a.org_code
+on b.entity = (case when a.org_code like '00%' then substr(a.org_code,3,4) else a.org_code end)
       and b.years = substr(a.date,1,4) 
       and b.version = a.bbh
       and b.scenario = r.scenario
@@ -1374,4 +1374,3 @@ on b.entity = a.org_code
 set a.amount_month_pre = b.amount , a.amount_pre = b.amount ,
 a.updated_time  = now()
 where r.synthesis = '[None]';
-
