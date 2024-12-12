@@ -57,6 +57,7 @@ https://blog.csdn.net/u014303349/article/details/133833184
 6. git remote add origin ，origin的含义
     origin 是指代码库的链接。 比如：[https://github.com/shileinba/bnyc.git]
     https://www.php.cn/faq/487235.html
+7. git推送失败，可能是main 分支或者master主干是protected的，需要取消保护。
 
 21. 查询MYSQL数据库版本
 SELECT VERSION();
