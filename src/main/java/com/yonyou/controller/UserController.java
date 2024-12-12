@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Tag(name = "用户查询")
-@RestController
+//@Tag(name = "用户查询")
+//@RestController
 public class UserController {
 
-    @Autowired
+    //@Autowired
     private UserService userService;
 
     @GetMapping("/")
