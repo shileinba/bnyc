@@ -73,11 +73,11 @@ public class SQLController {
                 "/95-ADS表-剔除数据表.sql"
         }; // 绝对路径的输入文件列表
 
-        String prefix = "./SQL脚本/00_all/";
-        String fileName = "mergedFile_";
+//        String prefix = "/SQL脚本/00_all/";
+        String fileName = "/mergedFile_";
         String dateStr = DateUtils.formatTime(new Date(),"yyyyMMdd_HHmmss");
         String suffix = ".sql";
-        String outputFile = prefix + fileName + dateStr + suffix; // 输出文件
+        String outputFile = parentPath + fileName + dateStr + suffix; // 输出文件
 
         MergeFiles mf = new MergeFiles();
 //        mf.listCurrentPathFile();
