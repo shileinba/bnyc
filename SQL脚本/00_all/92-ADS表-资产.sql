@@ -998,9 +998,9 @@ insert into ads_device_purchase_plan_convert
 select b.org_code,
        b.org_name,
        b.level_code,
-       a.date,
-       substr(a.date, 1, 4),
-       substr(a.date, 6, 2),
+       '' as date,-- a.date, -- 年月
+       a.year,  -- 年
+       '' as month,-- substr(a.date, 6, 2),  -- 月
        a.index_name,
        a.index_code,
        a.device_type_no,
@@ -1008,22 +1008,22 @@ select b.org_code,
        a.spec_model,
        a.count,
        'Y',
-       substr(a.date, 1, 4),
+       a.year,
        a.budget_year,
        NOW(),
        NOW()
 from ods_device_purchase_plan a
-         left join ads_orgnization b
-                   on b.org_code = a.org_code
+    left join ads_orgnization b
+on b.org_code = a.org_code
 ;
 
 insert into ads_device_purchase_plan_convert
 select b.org_code,
        b.org_name,
        b.level_code,
-       a.date,
-       substr(a.date, 1, 4),
-       substr(a.date, 6, 2),
+       '' as date,-- a.date, -- 年月
+       a.year,  -- 年
+       concat(a.year,'-01',a.year,'-02',a.year,'-03') as month,-- substr(a.date, 6, 2),  -- 月
        a.index_name,
        a.index_code,
        a.device_type_no,
@@ -1036,17 +1036,17 @@ select b.org_code,
        NOW(),
        NOW()
 from ods_device_purchase_plan a
-         left join ads_orgnization b
-                   on b.org_code = a.org_code
+    left join ads_orgnization b
+on b.org_code = a.org_code
 ;
 
 insert into ads_device_purchase_plan_convert
 select b.org_code,
        b.org_name,
        b.level_code,
-       a.date,
-       substr(a.date, 1, 4),
-       substr(a.date, 6, 2),
+       '' as date,-- a.date, -- 年月
+       a.year,  -- 年
+       concat(a.year,'-04',a.year,'-05',a.year,'-06') as month,-- substr(a.date, 6, 2),  -- 月
        a.index_name,
        a.index_code,
        a.device_type_no,
@@ -1059,16 +1059,16 @@ select b.org_code,
        NOW(),
        NOW()
 from ods_device_purchase_plan a
-         left join ads_orgnization b
-                   on b.org_code = a.org_code
+    left join ads_orgnization b
+on b.org_code = a.org_code
 ;
 insert into ads_device_purchase_plan_convert
 select b.org_code,
        b.org_name,
        b.level_code,
-       a.date,
-       substr(a.date, 1, 4),
-       substr(a.date, 6, 2),
+       '' as date,-- a.date, -- 年月
+       a.year,  -- 年
+       concat(a.year,'-07',a.year,'-08',a.year,'-09') as month,-- substr(a.date, 6, 2),  -- 月
        a.index_name,
        a.index_code,
        a.device_type_no,
@@ -1081,16 +1081,16 @@ select b.org_code,
        NOW(),
        NOW()
 from ods_device_purchase_plan a
-         left join ads_orgnization b
-                   on b.org_code = a.org_code
+    left join ads_orgnization b
+on b.org_code = a.org_code
 ;
 insert into ads_device_purchase_plan_convert
 select b.org_code,
        b.org_name,
        b.level_code,
-       a.date,
-       substr(a.date, 1, 4),
-       substr(a.date, 6, 2),
+       '' as date,-- a.date, -- 年月
+       a.year,  -- 年
+       concat(a.year,'-10',a.year,'-11',a.year,'-12') as month,-- substr(a.date, 6, 2),  -- 月
        a.index_name,
        a.index_code,
        a.device_type_no,
@@ -1103,17 +1103,17 @@ select b.org_code,
        NOW(),
        NOW()
 from ods_device_purchase_plan a
-         left join ads_orgnization b
-                   on b.org_code = a.org_code
+    left join ads_orgnization b
+on b.org_code = a.org_code
 ;
 
 insert into ads_device_purchase_plan_convert
 select b.org_code,
        b.org_name,
        b.level_code,
-       a.date,
-       substr(a.date, 1, 4),
-       substr(a.date, 6, 2),
+       '' as date,-- a.date, -- 年月
+       a.year,  -- 年
+       '' as month,-- substr(a.date, 6, 2),  -- 月
        a.index_name,
        a.index_code,
        a.device_type_no,
@@ -1126,8 +1126,8 @@ select b.org_code,
        NOW(),
        NOW()
 from ods_device_purchase_plan a
-         left join ads_orgnization b
-                   on b.org_code = a.org_code
+    left join ads_orgnization b
+on b.org_code = a.org_code
 ;
 
 
@@ -1135,9 +1135,9 @@ insert into ads_device_purchase_plan_convert
 select b.org_code,
        b.org_name,
        b.level_code,
-       a.date,
-       substr(a.date, 1, 4),
-       substr(a.date, 6, 2),
+       '' as date,-- a.date, -- 年月
+       a.year,  -- 年
+       '' as month,-- substr(a.date, 6, 2),  -- 月
        a.index_name,
        a.index_code,
        a.device_type_no,
@@ -1150,17 +1150,17 @@ select b.org_code,
        NOW(),
        NOW()
 from ods_device_purchase_plan a
-         left join ads_orgnization b
-                   on b.org_code = a.org_code
+    left join ads_orgnization b
+on b.org_code = a.org_code
 ;
 
 insert into ads_device_purchase_plan_convert
 select b.org_code,
        b.org_name,
        b.level_code,
-       a.date,
-       substr(a.date, 1, 4),
-       substr(a.date, 6, 2),
+       '' as date,-- a.date, -- 年月
+       a.year,  -- 年
+       '' as month,-- substr(a.date, 6, 2),  -- 月
        a.index_name,
        a.index_code,
        a.device_type_no,
@@ -1173,17 +1173,17 @@ select b.org_code,
        NOW(),
        NOW()
 from ods_device_purchase_plan a
-         left join ads_orgnization b
-                   on b.org_code = a.org_code
+    left join ads_orgnization b
+on b.org_code = a.org_code
 ;
 
 insert into ads_device_purchase_plan_convert
 select b.org_code,
        b.org_name,
        b.level_code,
-       a.date,
-       substr(a.date, 1, 4),
-       substr(a.date, 6, 2),
+       '' as date,-- a.date, -- 年月
+       a.year,  -- 年
+       '' as month,-- substr(a.date, 6, 2),  -- 月
        a.index_name,
        a.index_code,
        a.device_type_no,
@@ -1196,17 +1196,17 @@ select b.org_code,
        NOW(),
        NOW()
 from ods_device_purchase_plan a
-         left join ads_orgnization b
-                   on b.org_code = a.org_code
+    left join ads_orgnization b
+on b.org_code = a.org_code
 ;
 
 insert into ads_device_purchase_plan_convert
 select b.org_code,
        b.org_name,
        b.level_code,
-       a.date,
-       substr(a.date, 1, 4),
-       substr(a.date, 6, 2),
+       '' as date,-- a.date, -- 年月
+       a.year,  -- 年
+       '' as month,-- substr(a.date, 6, 2),  -- 月
        a.index_name,
        a.index_code,
        a.device_type_no,
@@ -1219,17 +1219,17 @@ select b.org_code,
        NOW(),
        NOW()
 from ods_device_purchase_plan a
-         left join ads_orgnization b
-                   on b.org_code = a.org_code
+    left join ads_orgnization b
+on b.org_code = a.org_code
 ;
 
 insert into ads_device_purchase_plan_convert
 select b.org_code,
        b.org_name,
        b.level_code,
-       a.date,
-       substr(a.date, 1, 4),
-       substr(a.date, 6, 2),
+       '' as date,-- a.date, -- 年月
+       a.year,  -- 年
+       '' as month,-- substr(a.date, 6, 2),  -- 月
        a.index_name,
        a.index_code,
        a.device_type_no,
@@ -1242,17 +1242,17 @@ select b.org_code,
        NOW(),
        NOW()
 from ods_device_purchase_plan a
-         left join ads_orgnization b
-                   on b.org_code = a.org_code
+    left join ads_orgnization b
+on b.org_code = a.org_code
 ;
 
 insert into ads_device_purchase_plan_convert
 select b.org_code,
        b.org_name,
        b.level_code,
-       a.date,
-       substr(a.date, 1, 4),
-       substr(a.date, 6, 2),
+       '' as date,-- a.date, -- 年月
+       a.year,  -- 年
+       '' as month,-- substr(a.date, 6, 2),  -- 月
        a.index_name,
        a.index_code,
        a.device_type_no,
@@ -1265,17 +1265,17 @@ select b.org_code,
        NOW(),
        NOW()
 from ods_device_purchase_plan a
-         left join ads_orgnization b
-                   on b.org_code = a.org_code
+    left join ads_orgnization b
+on b.org_code = a.org_code
 ;
 
 insert into ads_device_purchase_plan_convert
 select b.org_code,
        b.org_name,
        b.level_code,
-       a.date,
-       substr(a.date, 1, 4),
-       substr(a.date, 6, 2),
+       '' as date,-- a.date, -- 年月
+       a.year,  -- 年
+       '' as month,-- substr(a.date, 6, 2),  -- 月
        a.index_name,
        a.index_code,
        a.device_type_no,
@@ -1288,17 +1288,17 @@ select b.org_code,
        NOW(),
        NOW()
 from ods_device_purchase_plan a
-         left join ads_orgnization b
-                   on b.org_code = a.org_code
+    left join ads_orgnization b
+on b.org_code = a.org_code
 ;
 
 insert into ads_device_purchase_plan_convert
 select b.org_code,
        b.org_name,
        b.level_code,
-       a.date,
-       substr(a.date, 1, 4),
-       substr(a.date, 6, 2),
+       '' as date,-- a.date, -- 年月
+       a.year,  -- 年
+       '' as month,-- substr(a.date, 6, 2),  -- 月
        a.index_name,
        a.index_code,
        a.device_type_no,
@@ -1311,17 +1311,17 @@ select b.org_code,
        NOW(),
        NOW()
 from ods_device_purchase_plan a
-         left join ads_orgnization b
-                   on b.org_code = a.org_code
+    left join ads_orgnization b
+on b.org_code = a.org_code
 ;
 
 insert into ads_device_purchase_plan_convert
 select b.org_code,
        b.org_name,
        b.level_code,
-       a.date,
-       substr(a.date, 1, 4),
-       substr(a.date, 6, 2),
+       '' as date,-- a.date, -- 年月
+       a.year,  -- 年
+       '' as month,-- substr(a.date, 6, 2),  -- 月
        a.index_name,
        a.index_code,
        a.device_type_no,
@@ -1334,17 +1334,17 @@ select b.org_code,
        NOW(),
        NOW()
 from ods_device_purchase_plan a
-         left join ads_orgnization b
-                   on b.org_code = a.org_code
+    left join ads_orgnization b
+on b.org_code = a.org_code
 ;
 
 insert into ads_device_purchase_plan_convert
 select b.org_code,
        b.org_name,
        b.level_code,
-       a.date,
-       substr(a.date, 1, 4),
-       substr(a.date, 6, 2),
+       '' as date,-- a.date, -- 年月
+       a.year,  -- 年
+       '' as month,-- substr(a.date, 6, 2),  -- 月
        a.index_name,
        a.index_code,
        a.device_type_no,
@@ -1357,17 +1357,17 @@ select b.org_code,
        NOW(),
        NOW()
 from ods_device_purchase_plan a
-         left join ads_orgnization b
-                   on b.org_code = a.org_code
+    left join ads_orgnization b
+on b.org_code = a.org_code
 ;
 
 insert into ads_device_purchase_plan_convert
 select b.org_code,
        b.org_name,
        b.level_code,
-       a.date,
-       substr(a.date, 1, 4),
-       substr(a.date, 6, 2),
+       '' as date,-- a.date, -- 年月
+       a.year,  -- 年
+       '' as month,-- substr(a.date, 6, 2),  -- 月
        a.index_name,
        a.index_code,
        a.device_type_no,
@@ -1380,8 +1380,8 @@ select b.org_code,
        NOW(),
        NOW()
 from ods_device_purchase_plan a
-         left join ads_orgnization b
-                   on b.org_code = a.org_code
+    left join ads_orgnization b
+on b.org_code = a.org_code
 ;
 
 /**
