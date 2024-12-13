@@ -831,7 +831,7 @@ from device_table d
          left join data_center.ads_orgnization c on d.org_code = c.org_code
          left join ads_device_type t on d.asset_catalog_code = t.device_type_no
          left join ads_device_param_value v on 1 = 1
-where d.accum_purchase_value >= v.param_device_value
+-- where d.accum_purchase_value >= v.param_device_value
 ;
 
 
@@ -1403,15 +1403,9 @@ CREATE TABLE data_center.ods_device_oee (
   updated_time datetime(0) DEFAULT CURRENT_TIMESTAMP comment '更新时间'
 ) COMMENT='oee－ods表';
 truncate table data_center.ods_device_oee;
-INSERT INTO `data_center`.`ods_device_oee`(`org_code`, `org_name`, `date`, `asset_id`, `asset_catalog_code`, `asset_catalog_name`, `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`, `updated_time`) VALUES ('2F06', '李家壕煤矿','2024-10-28',  '140000003886', '1401010001', '采煤机', 10.00, 12.00, 300.00, 320.00, '2024-11-26 11:50:23', '2024-11-26 11:50:23');
-INSERT INTO `data_center`.`ods_device_oee`(`org_code`, `org_name`, `date`, `asset_id`, `asset_catalog_code`, `asset_catalog_name`, `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`, `updated_time`) VALUES ('2F06', '李家壕煤矿', '2024-10-29',  '140000003886', '1401010001', '采煤机', 11.00, 12.00, 301.00, 320.00, '2024-11-26 11:50:23', '2024-11-26 11:50:23');
-INSERT INTO `data_center`.`ods_device_oee`(`org_code`, `org_name`, `date`, `asset_id`, `asset_catalog_code`, `asset_catalog_name`, `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`, `updated_time`) VALUES ('2F06', '李家壕煤矿', '2024-10-30',  '140000003886', '1401010001', '采煤机', 12.00, 12.00, 310.00, 320.00, '2024-11-26 11:50:23', '2024-11-26 11:50:23');
-INSERT INTO `data_center`.`ods_device_oee`(`org_code`, `org_name`, `date`, `asset_id`, `asset_catalog_code`, `asset_catalog_name`, `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`, `updated_time`) VALUES ('2F02', '万利一矿',  '2024-10-28',  '140000000728', '1401010001', '采煤机', 13.00, 19.00, 280.00, 330.00, '2024-11-26 11:50:23', '2024-11-26 11:50:23');
-INSERT INTO `data_center`.`ods_device_oee`(`org_code`, `org_name`, `date`, `asset_id`, `asset_catalog_code`, `asset_catalog_name`, `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`, `updated_time`) VALUES ('2F02', '万利一矿',  '2024-10-29',  '140000000728', '1401010001', '采煤机', 15.00, 18.00, 287.00, 330.00, '2024-11-26 11:50:23', '2024-11-26 11:50:23');
-INSERT INTO `data_center`.`ods_device_oee`(`org_code`, `org_name`, `date`, `asset_id`, `asset_catalog_code`, `asset_catalog_name`, `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`, `updated_time`) VALUES ('2F02', '万利一矿',  '2024-10-30',  '140000000728', '1401010001', '采煤机', 17.00, 19.00, 299.00, 340.00, '2024-11-26 11:50:23', '2024-11-26 11:50:23');
-INSERT INTO `data_center`.`ods_device_oee`(`org_code`, `org_name`, `date`, `asset_id`, `asset_catalog_code`, `asset_catalog_name`, `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`, `updated_time`) VALUES ('2F02', '万利一矿',  '2024-10-28',  '140000001666', '1401010001', '采煤机', 16.00, 22.00, 333.00, 380.00, '2024-11-26 11:50:23', '2024-11-26 11:50:23');
-INSERT INTO `data_center`.`ods_device_oee`(`org_code`, `org_name`, `date`, `asset_id`, `asset_catalog_code`, `asset_catalog_name`, `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`, `updated_time`) VALUES ('2F02', '万利一矿',  '2024-10-29',  '140000001666', '1401010001', '采煤机', 18.00, 22.00, 365.00, 380.00, '2024-11-26 11:50:23', '2024-11-26 11:50:23');
-INSERT INTO `data_center`.`ods_device_oee`(`org_code`, `org_name`, `date`, `asset_id`, `asset_catalog_code`, `asset_catalog_name`, `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`, `updated_time`) VALUES ('2F02', '万利一矿',  '2024-10-30',  '140000001666', '1401010001', '采煤机', 20.00, 22.00, 367.00, 380.00, '2024-11-26 11:50:23', '2024-11-26 11:50:23');
+INSERT INTO `data_center`.`ods_device_oee`(`org_code`, `org_name`, `date`, `index_name`, `index_code`, `asset_id`, `asset_catalog_code`, `asset_catalog_name`, `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`, `updated_time`, `id`) VALUES ('2F02', '万利一矿', '2024-11-30', NULL, NULL, '140000000728', '1401010001', '采煤机', 600.00, 690.00, 601579.00, 600000.00, '2024-12-13 17:52:55', NULL, '5d12a01142f144b3a2c594297665fa99');
+INSERT INTO `data_center`.`ods_device_oee`(`org_code`, `org_name`, `date`, `index_name`, `index_code`, `asset_id`, `asset_catalog_code`, `asset_catalog_name`, `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`, `updated_time`, `id`) VALUES ('2F06', '李家壕', '2024-11-30', NULL, NULL, '140000003886', '1401010001', '采煤机', 5100.00, 5280.00, 5938020.00, 5940000.00, '2024-12-13 17:52:55', NULL, '3afcx0ba2x42bdxb5cax187d98b2755c');
+INSERT INTO `data_center`.`ods_device_oee`(`org_code`, `org_name`, `date`, `index_name`, `index_code`, `asset_id`, `asset_catalog_code`, `asset_catalog_name`, `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`, `updated_time`, `id`) VALUES ('2F02', '万利一矿', '2024-11-30', NULL, NULL, '140000001666', '1401010001', '采煤机', 352.00, 480.00, 596000.00, 704000.00, '2024-12-13 17:52:55', NULL, 'ab6feddc65514d95a5db15d8af7ef2ba');
 
 **/
 
@@ -1445,61 +1439,81 @@ select b.org_code,
        b.level_code,
        a.date,
        substr(a.date, 1, 4) as year,
-  substr(a.date,6,2) as month,
-  substr(a.date,9,2) as day,
-  a.asset_id,
-  d.asset_name,
-  t.device_type_no,
-  t.device_type_name,
-  a.actual_time,
-  a.plan_time,
-  a.actual_amount,
-  a.plan_amount,
-  now(),
-  now()
+      substr(a.date,6,2) as month,
+      substr(a.date,9,2) as day,
+      a.asset_id,
+      d.asset_name,
+      t.device_type_no,
+      t.device_type_name,
+      a.actual_time,
+      a.plan_time,
+      a.actual_amount,
+      a.plan_amount,
+      now(),
+      now()
 from ods_device_oee a
     left join ads_orgnization b
 on b.org_code = a.org_code
     left join ads_device_info d
     on d.asset_id = a.asset_id
     and d.device_type_no = a.asset_catalog_code
+    and d.date = substr(a.date,1,7)
     left join ads_device_type t
     on t.device_type_no = a.asset_catalog_code
 ;
-truncate table data_center.ads_device_oee;
-INSERT INTO `data_center`.`ads_device_oee`(`org_code`, `org_name`, `level_code`, `date`, `year`, `month`, `day`,
-                                           `asset_id`, `asset_name`, `device_type_no`, `device_type_name`,
-                                           `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`,
-                                           `updated_time`)
-VALUES ('2F06', '李家壕煤矿', '10006', '2024-09-30', '2024', '09', '30', '140000003886', '采煤机', '1401010001',
-        '滚筒采煤机', 400.00, 420.00, 560000.00, 570000.00, '2024-12-02 14:28:44', '2024-12-02 14:28:44');
-INSERT INTO `data_center`.`ads_device_oee`(`org_code`, `org_name`, `level_code`, `date`, `year`, `month`, `day`,
-                                           `asset_id`, `asset_name`, `device_type_no`, `device_type_name`,
-                                           `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`,
-                                           `updated_time`)
-VALUES ('2F02', '万利一矿', '10002', '2024-09-30', '2024', '09', '30', '140000000728', '采煤机', '1401010001',
-        '滚筒采煤机', 352.00, 480.00, 596000.00, 704000.00, '2024-12-02 14:28:44', '2024-12-02 14:28:44');
-INSERT INTO `data_center`.`ads_device_oee`(`org_code`, `org_name`, `level_code`, `date`, `year`, `month`, `day`,
-                                           `asset_id`, `asset_name`, `device_type_no`, `device_type_name`,
-                                           `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`,
-                                           `updated_time`)
-VALUES ('2F02', '万利一矿', '10002', '2024-09-30', '2024', '09', '30', '140000001666', '6650采煤机', '1401010001',
-        '滚筒采煤机', 600.00, 690.00, 601579.00, 600000.00, '2024-12-02 14:28:44', '2024-12-02 14:28:44');
-INSERT INTO `data_center`.`ads_device_oee`(`org_code`, `org_name`, `level_code`, `date`, `year`, `month`, `day`,
-                                           `asset_id`, `asset_name`, `device_type_no`, `device_type_name`,
-                                           `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`,
-                                           `updated_time`)
-VALUES ('2F06', '李家壕煤矿', '10006', '2024-10-30', '2024', '10', '30', '140000003886', '采煤机', '1401010001',
-        '滚筒采煤机', 400.00, 420.00, 560000.00, 570000.00, '2024-12-02 14:28:44', '2024-12-02 14:28:44');
-INSERT INTO `data_center`.`ads_device_oee`(`org_code`, `org_name`, `level_code`, `date`, `year`, `month`, `day`,
-                                           `asset_id`, `asset_name`, `device_type_no`, `device_type_name`,
-                                           `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`,
-                                           `updated_time`)
-VALUES ('2F02', '万利一矿', '10002', '2024-10-30', '2024', '10', '30', '140000000728', '采煤机', '1401010001',
-        '滚筒采煤机', 352.00, 480.00, 596000.00, 704000.00, '2024-12-02 14:28:44', '2024-12-02 14:28:44');
-INSERT INTO `data_center`.`ads_device_oee`(`org_code`, `org_name`, `level_code`, `date`, `year`, `month`, `day`,
-                                           `asset_id`, `asset_name`, `device_type_no`, `device_type_name`,
-                                           `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`,
-                                           `updated_time`)
-VALUES ('2F02', '万利一矿', '10002', '2024-10-30', '2024', '10', '30', '140000001666', '6650采煤机', '1401010001',
-        '滚筒采煤机', 600.00, 690.00, 601579.00, 600000.00, '2024-12-02 14:28:44', '2024-12-02 14:28:44');
+-- truncate table data_center.ads_device_oee;
+-- INSERT INTO `data_center`.`ads_device_oee`(`org_code`, `org_name`, `level_code`, `date`, `year`, `month`, `day`,
+--                                            `asset_id`, `asset_name`, `device_type_no`, `device_type_name`,
+--                                            `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`,
+--                                            `updated_time`)
+-- VALUES ('2F06', '李家壕煤矿', '10006', '2024-09-30', '2024', '09', '30', '140000003886', '采煤机', '1401010001',
+--         '滚筒采煤机', 400.00, 420.00, 560000.00, 570000.00, '2024-12-02 14:28:44', '2024-12-02 14:28:44');
+-- INSERT INTO `data_center`.`ads_device_oee`(`org_code`, `org_name`, `level_code`, `date`, `year`, `month`, `day`,
+--                                            `asset_id`, `asset_name`, `device_type_no`, `device_type_name`,
+--                                            `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`,
+--                                            `updated_time`)
+-- VALUES ('2F02', '万利一矿', '10002', '2024-09-30', '2024', '09', '30', '140000000728', '采煤机', '1401010001',
+--         '滚筒采煤机', 352.00, 480.00, 596000.00, 704000.00, '2024-12-02 14:28:44', '2024-12-02 14:28:44');
+-- INSERT INTO `data_center`.`ads_device_oee`(`org_code`, `org_name`, `level_code`, `date`, `year`, `month`, `day`,
+--                                            `asset_id`, `asset_name`, `device_type_no`, `device_type_name`,
+--                                            `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`,
+--                                            `updated_time`)
+-- VALUES ('2F02', '万利一矿', '10002', '2024-09-30', '2024', '09', '30', '140000001666', '6650采煤机', '1401010001',
+--         '滚筒采煤机', 600.00, 690.00, 601579.00, 600000.00, '2024-12-02 14:28:44', '2024-12-02 14:28:44');
+-- INSERT INTO `data_center`.`ads_device_oee`(`org_code`, `org_name`, `level_code`, `date`, `year`, `month`, `day`,
+--                                            `asset_id`, `asset_name`, `device_type_no`, `device_type_name`,
+--                                            `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`,
+--                                            `updated_time`)
+-- VALUES ('2F06', '李家壕煤矿', '10006', '2024-10-30', '2024', '10', '30', '140000003886', '采煤机', '1401010001',
+--         '滚筒采煤机', 5100.00, 5280.00, 5938020.00, 5940000.00, '2024-12-02 14:28:44', '2024-12-02 14:28:44');
+-- INSERT INTO `data_center`.`ads_device_oee`(`org_code`, `org_name`, `level_code`, `date`, `year`, `month`, `day`,
+--                                            `asset_id`, `asset_name`, `device_type_no`, `device_type_name`,
+--                                            `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`,
+--                                            `updated_time`)
+-- VALUES ('2F02', '万利一矿', '10002', '2024-10-30', '2024', '10', '30', '140000000728', '采煤机', '1401010001',
+--         '滚筒采煤机', 352.00, 480.00, 596000.00, 704000.00, '2024-12-02 14:28:44', '2024-12-02 14:28:44');
+-- INSERT INTO `data_center`.`ads_device_oee`(`org_code`, `org_name`, `level_code`, `date`, `year`, `month`, `day`,
+--                                            `asset_id`, `asset_name`, `device_type_no`, `device_type_name`,
+--                                            `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`,
+--                                            `updated_time`)
+-- VALUES ('2F02', '万利一矿', '10002', '2024-10-30', '2024', '10', '30', '140000001666', '6650采煤机', '1401010001',
+--         '滚筒采煤机', 600.00, 690.00, 601579.00, 600000.00, '2024-12-02 14:28:44', '2024-12-02 14:28:44');
+--
+-- INSERT INTO `data_center`.`ads_device_oee`(`org_code`, `org_name`, `level_code`, `date`, `year`, `month`, `day`,
+--                                            `asset_id`, `asset_name`, `device_type_no`, `device_type_name`,
+--                                            `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`,
+--                                            `updated_time`)
+-- VALUES ('2F06', '李家壕煤矿', '10006', '2024-11-30', '2024', '10', '30', '140000003886', '采煤机', '1401010001',
+--         '滚筒采煤机', 5100.00, 5280.00, 5938020.00, 5940000.00, '2024-12-02 14:28:44', '2024-12-02 14:28:44');
+-- INSERT INTO `data_center`.`ads_device_oee`(`org_code`, `org_name`, `level_code`, `date`, `year`, `month`, `day`,
+--                                            `asset_id`, `asset_name`, `device_type_no`, `device_type_name`,
+--                                            `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`,
+--                                            `updated_time`)
+-- VALUES ('2F02', '万利一矿', '10002', '2024-11-30', '2024', '10', '30', '140000000728', '采煤机', '1401010001',
+--         '滚筒采煤机', 352.00, 480.00, 596000.00, 704000.00, '2024-12-02 14:28:44', '2024-12-02 14:28:44');
+-- INSERT INTO `data_center`.`ads_device_oee`(`org_code`, `org_name`, `level_code`, `date`, `year`, `month`, `day`,
+--                                            `asset_id`, `asset_name`, `device_type_no`, `device_type_name`,
+--                                            `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`,
+--                                            `updated_time`)
+-- VALUES ('2F02', '万利一矿', '10002', '2024-11-30', '2024', '10', '30', '140000001666', '6650采煤机', '1401010001',
+--         '滚筒采煤机', 600.00, 690.00, 601579.00, 600000.00, '2024-12-02 14:28:44', '2024-12-02 14:28:44');
