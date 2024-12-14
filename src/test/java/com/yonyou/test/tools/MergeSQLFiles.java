@@ -8,7 +8,7 @@ import java.util.Date;
 public class MergeSQLFiles {
 
     public static void main(String args[]) {
-        String parentPath = "F:/demo/bnyc/SQL脚本/00_all";
+        String parentPath = "././SQL脚本/00_all";
 //        String[] inputFiles = {
 //                "./SQL脚本/00_all/xuefeng/ods建表语句-史磊修改20241107.sql",
 //                "./SQL脚本/00_all/90-ODS建表及切换语句.sql",
