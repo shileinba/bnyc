@@ -29,7 +29,9 @@ public class SQLController {
     public void download(HttpServletResponse response) throws IOException {
         // 指定要下载的文件
         //File file = ResourceUtils.getFile("classpath:2.zip");
+
         String fileName = mergeFile();
+
         File file = ResourceUtils.getFile(fileName);  // "./SQL脚本/00_all/mergedFile_20241211_145528.sql"
         //文件名编码，防止中文乱码
         String filename = URLEncoder.encode(file.getName(), "UTF-8");
@@ -48,44 +50,12 @@ public class SQLController {
     }
 
     private String mergeFile(){
-        String parentPath = "./SQL脚本/00_all";
-//        String[] inputFiles = {
-//                "./SQL脚本/00_all/xuefeng/ods建表语句-史磊修改20241107.sql",
-//                "./SQL脚本/00_all/90-ODS建表及切换语句.sql",
-//                "./SQL脚本/00_all/xuefeng/ads建表语句-史磊修改20241112.sql",
-//                "./SQL脚本/00_all/91-ADS表SQL语句.sql",
-//                "./SQL脚本/00_all/92-ADS表-资产.sql",
-//                "./SQL脚本/00_all/93-ADS表-预算.sql",
-//                "./SQL脚本/00_all/94-ADS表-全年预算.sql",
-//                "./SQL脚本/00_all/01-智能报告ADS.sql",
-//                "./SQL脚本/00_all/95-ADS表-剔除数据表.sql"
-//        }; // 相对路径的输入文件列表
-
-        String[] inputFiles = {
-                "/xuefeng/ods建表语句-史磊修改20241107.sql",
-                "/90-ODS建表及切换语句.sql",
-                "/xuefeng/ads建表语句-史磊修改20241112.sql",
-                "/91-ADS表SQL语句.sql",
-                "/92-ADS表-资产.sql",
-                "/93-ADS表-预算.sql",
-                "/94-ADS表-全年预算.sql",
-                "/01-智能报告ADS.sql",
-                "/95-ADS表-剔除数据表.sql"
-        }; // 绝对路径的输入文件列表
-
-//        String prefix = "/SQL脚本/00_all/";
-        String fileName = "/mergedFile_";
-        String dateStr = DateUtils.formatTime(new Date(),"yyyyMMdd_HHmmss");
-        String suffix = ".sql";
-        String outputFile = parentPath + fileName + dateStr + suffix; // 输出文件
-
+        String parentPath = "../webapps/bnyc_prd/sql_script";
         MergeFiles mf = new MergeFiles();
-//        mf.listCurrentPathFile();
-        mf.merge(parentPath,inputFiles, outputFile);
 
-        System.out.println("[success] generate new SQL named " + outputFile);
-
-        return outputFile;
+        String outputFilePathName = mf.merge(parentPath);
+        System.out.println("[success] generate new SQL named " + outputFilePathName);
+        return outputFilePathName;
     }
 
     @Operation(summary = "执行预算SQL",description = "执行预算SQL")

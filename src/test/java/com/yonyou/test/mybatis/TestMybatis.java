@@ -1,9 +1,8 @@
 package com.yonyou.test.mybatis;
 
 import com.yonyou.mapper.UserMapper;
-import com.yonyou.pojo.BcsData;
 import com.yonyou.pojo.User;
-import com.yonyou.test.tools.BCSDataProcessor;
+import com.yonyou.test.tools.TestBCSDataProcessor;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -12,7 +11,6 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 //import javax.annotation.Resources;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 public class TestMybatis {
@@ -37,7 +35,7 @@ public class TestMybatis {
         TestMybatis tb = new TestMybatis();
 
         // 2024-12-09 ： 获取bcs11月出现重复数据的表。
-        BCSDataProcessor bcsDataProcessor = new BCSDataProcessor();
+        TestBCSDataProcessor bcsDataProcessor = new TestBCSDataProcessor();
         List<String> repeatTables = bcsDataProcessor.getBCSRepeat(sqlSession);
 
 //        sqlSession = sqlSessionFactory.openSession();

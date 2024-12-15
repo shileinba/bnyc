@@ -107,6 +107,7 @@
                 <version>3.4.0</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <warSourceDirectory>${project.basedir}/src/main/sql_script</warSourceDirectory>
                 </configuration>
             </plugin>
         </plugins>

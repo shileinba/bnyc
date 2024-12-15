@@ -1378,1305 +1378,6 @@ select
       on 1 = 1
       where org not in ('GY2F00') and ucode like ('%_r')
       group by b.org_code, b.org_name, c.index_name, c.index_code,a.per, a.month;
-/*
--- 时间表
-CREATE TABLE data_center.ads_time_month (
-  year varchar(64) comment '年度',
-  month varchar(64) comment '月度',
-  month_ref varchar(64) comment '月度参考'
-) COMMENT='时间表';
-
-insert into data_center.ads_time_month values ('2024','2024-01','1');
-insert into data_center.ads_time_month values ('2024','2024-02','2');
-insert into data_center.ads_time_month values ('2024','2024-03','3');
-insert into data_center.ads_time_month values ('2024','2024-04','4');
-insert into data_center.ads_time_month values ('2024','2024-05','5');
-insert into data_center.ads_time_month values ('2024','2024-06','6');
-insert into data_center.ads_time_month values ('2024','2024-07','7');
-insert into data_center.ads_time_month values ('2024','2024-08','8');
-insert into data_center.ads_time_month values ('2024','2024-09','9');
-insert into data_center.ads_time_month values ('2024','2024-10','10');
-insert into data_center.ads_time_month values ('2024','2024-11','11');
-insert into data_center.ads_time_month values ('2024','2024-12','12');
-insert into data_center.ads_time_month values ('2025','2025-01','1');
-insert into data_center.ads_time_month values ('2025','2025-02','2');
-insert into data_center.ads_time_month values ('2025','2025-03','3');
-insert into data_center.ads_time_month values ('2025','2025-04','4');
-insert into data_center.ads_time_month values ('2025','2025-05','5');
-insert into data_center.ads_time_month values ('2025','2025-06','6');
-insert into data_center.ads_time_month values ('2025','2025-07','7');
-insert into data_center.ads_time_month values ('2025','2025-08','8');
-insert into data_center.ads_time_month values ('2025','2025-09','9');
-insert into data_center.ads_time_month values ('2025','2025-10','10');
-insert into data_center.ads_time_month values ('2025','2025-11','11');
-insert into data_center.ads_time_month values ('2025','2025-12','12');
-insert into data_center.ads_time_month values ('2026','2026-01','1');
-insert into data_center.ads_time_month values ('2026','2026-02','2');
-insert into data_center.ads_time_month values ('2026','2026-03','3');
-insert into data_center.ads_time_month values ('2026','2026-04','4');
-insert into data_center.ads_time_month values ('2026','2026-05','5');
-insert into data_center.ads_time_month values ('2026','2026-06','6');
-insert into data_center.ads_time_month values ('2026','2026-07','7');
-insert into data_center.ads_time_month values ('2026','2026-08','8');
-insert into data_center.ads_time_month values ('2026','2026-09','9');
-insert into data_center.ads_time_month values ('2026','2026-10','10');
-insert into data_center.ads_time_month values ('2026','2026-11','11');
-insert into data_center.ads_time_month values ('2026','2026-12','12');
-insert into data_center.ads_time_month values ('2027','2027-01','1');
-insert into data_center.ads_time_month values ('2027','2027-02','2');
-insert into data_center.ads_time_month values ('2027','2027-03','3');
-insert into data_center.ads_time_month values ('2027','2027-04','4');
-insert into data_center.ads_time_month values ('2027','2027-05','5');
-insert into data_center.ads_time_month values ('2027','2027-06','6');
-insert into data_center.ads_time_month values ('2027','2027-07','7');
-insert into data_center.ads_time_month values ('2027','2027-08','8');
-insert into data_center.ads_time_month values ('2027','2027-09','9');
-insert into data_center.ads_time_month values ('2027','2027-10','10');
-insert into data_center.ads_time_month values ('2027','2027-11','11');
-insert into data_center.ads_time_month values ('2027','2027-12','12');
-
-
--- 组织机构表
-drop table data_center.ads_orgnization;
-CREATE TABLE data_center.ads_orgnization (
-  f_org_code varchar(64) comment '总部机构编码',
-  f_org_name varchar(64) comment '总部机构名称',
-  org_code varchar(64) comment '机构编码',
-  org_name varchar(64) comment '机构名称',
-  level_code varchar(64) comment '权限编码',
-  rank_no int(10) comment '排序编码'
-) COMMENT='组织机构表';
-
-insert into data_center.ads_orgnization values ('GY2F00','包头能源','GY2F00','包头能源','100','1');
-insert into data_center.ads_orgnization values ('GY2F00','包头能源','2F00','能源本部',  '10000','8');
-insert into data_center.ads_orgnization values ('GY2F00','包头能源','2F01','运销分公司','10001','7');
-insert into data_center.ads_orgnization values ('GY2F00','包头能源','2F02','万利一矿',  '10002','3');
-insert into data_center.ads_orgnization values ('GY2F00','包头能源','2F04','水泉露天矿','10004','5');
-insert into data_center.ads_orgnization values ('GY2F00','包头能源','2F05','水泉选煤厂','10005','6');
-insert into data_center.ads_orgnization values ('GY2F00','包头能源','2F06','李家壕煤矿','10006','2');
-insert into data_center.ads_orgnization values ('GY2F00','包头能源','2F08','神山露天矿','10008','4');
-insert into data_center.ads_orgnization values ('GY2F00','包头能源','2F09','洗选分公司','10009','9');
-insert into data_center.ads_orgnization values ('GY2F00','包头能源','002300','矿业本部','10010','13');
-insert into data_center.ads_orgnization values ('GY2F00','包头能源','002303','公路分公司','10013','10');
-insert into data_center.ads_orgnization values ('GY2F00','包头能源','002305','集装站','10015','11');
-insert into data_center.ads_orgnization values ('GY2F00','包头能源','002301','建安公司','10011','12');
-insert into data_center.ads_orgnization values ('GY2F00','包头能源','002302','蒙格沁','10012','14');
-*/
-
-/*
--- 一级页面 商品煤经营驾驶舱
-drop table data_center.ads_coal_cockpit_month_1;
-CREATE TABLE data_center.ads_coal_cockpit_month_1 (
-  org_code varchar(64) comment '单位编码',
-  org_name varchar(64) comment '单位名称',
-  level_code varchar(64) comment '权限预留',
-  date varchar(64) comment '日期',
-  index_name varchar(64) comment '指标名称', -- 利润总额75，净利润77，自产煤利润90，外购煤利润91，EBITDA(利润总额 + 利息支出 即财务费用58 + 资产折旧 + 无形资产摊销)，产量93，自产煤产量94，外购煤产量95，销售量97，自产煤销量98，外购煤销量102，营业收入1，营业成本13，营业利润69，自产煤销售收入3，外购煤销售收入7，自产煤售价107，外购煤售价108，外购煤成本45，自产煤完全成本83，自产煤变动成本84，自产煤固定成本85，专项储备年初数111，年末数126，提取数114，使用数117，剥离量139，掘进进尺145
-  index_code varchar(64) comment '指标编码',
-  amount_acc decimal(15, 2) comment '本年累计数',
-  amount_month decimal(15, 2) comment '本月实际数',
-  amount_acc_form decimal(15, 2) comment '去年累计数',
-  amount_month_form decimal(15, 2) comment '去年同月实际数',
-  amount_month_form_hb decimal(15, 2) comment '本年上月实际数',
-  amount_pre decimal(15, 2) comment '本年预算数',
-  amount_month_pre decimal(15, 2) comment '本月预算数'
-) COMMENT='商品煤经营驾驶舱';
-*/
-
-truncate table data_center.ads_coal_cockpit_month_1;
-insert into data_center.ads_coal_cockpit_month_1
-select
-      b.org_code,
-      b.org_name,
-      b.level_code,
-      substr(a.date,1,7),
-      a.index_name,
-      a.index_code,
-      a.total_amount_acc,
-      a.total_amount,
-      a.total_amount_acc_lastyear,
-      a.total_amount_lastyear,
-      a.total_amount_lastmonth,
-      a.total_amount_pre,
-      a.total_amount_pre/12
-      from data_center.ods_coal_produce_hq a
-      left join data_center.ads_orgnization b
-      on a.org_code = b.org_code
-      where index_code in ('75','77','90','91','58','93','94','95','97','98','102','1','13','69','3','7','107','108','45','83','84','85','111','126','114','117','139','145','17','16','20','21','28','25','29','32','53');  -- 20241112 : 增加 20、21、32、53、25 指标
-
-insert into data_center.ads_coal_cockpit_month_1
-select
-      b.org_code,
-      b.org_name,
-      b.level_code,
-      substr(a.date,1,7),
-      a.index_name,
-      a.index_code,
-      a.total_amount_acc,
-      a.total_amount,
-      a.total_amount_acc_lastyear,
-      a.total_amount_lastyear,
-      a.total_amount_lastmonth,
-      a.total_amount_pre,
-      a.total_amount_pre/12
-      from data_center.ods_coal_produce_bo a
-      left join data_center.ads_orgnization b
-      on a.org_code = b.org_code
-      where index_code in ('75','77','90','91','58','93','94','95','97','98','102','1','13','69','3','7','107','108','45','83','84','85','111','126','114','117','139','145','17','16','20','21','28','25','29','32','53');  -- 20241112 : 增加 20、21、32、53、25 指标
-
--- 资产折旧，无形资产摊销
-insert into data_center.ads_coal_cockpit_month_1
-select
-      b.org_code,
-      b.org_name,
-      b.level_code,
-      substr(a.date,1,7),
-      '固定资产折旧',
-      '178',
-      a.total_amount/10000,
-      '0',
-      a.total_amount_lastyear/10000,
-      '0',
-      '0',
-      '0',
-      '0'
-      from data_center.ods_dep_and_amo_hq a
-      left join data_center.ads_orgnization b
-      on a.org_code = b.org_code
-      where index_code in ('2');
-
-insert into data_center.ads_coal_cockpit_month_1
-select
-      b.org_code,
-      b.org_name,
-      b.level_code,
-      substr(a.date,1,7),
-      '固定资产折旧',
-      '178',
-      a.total_amount/10000,
-      '0',
-      a.total_amount_lastyear/10000,
-      '0',
-      '0',
-      '0',
-      '0'
-      from data_center.ods_dep_and_amo_bo a
-      left join data_center.ads_orgnization b
-      on a.org_code = b.org_code
-      where index_code in ('2');
-
-insert into data_center.ads_coal_cockpit_month_1
-select
-      b.org_code,
-      b.org_name,
-      b.level_code,
-      substr(a.date,1,7),
-      '无形资产摊销',
-      '179',
-      a.total_amount/10000,
-      '0',
-      a.total_amount_lastyear/10000,
-      '0',
-      '0',
-      '0',
-      '0'
-      from data_center.ods_dep_and_amo_hq a
-      left join data_center.ads_orgnization b
-      on a.org_code = b.org_code
-      where index_code in ('2');
-
-insert into data_center.ads_coal_cockpit_month_1
-select
-      b.org_code,
-      b.org_name,
-      b.level_code,
-      substr(a.date,1,7),
-      '无形资产摊销',
-      '179',
-      a.total_amount/10000,
-      '0',
-      a.total_amount_lastyear/10000,
-      '0',
-      '0',
-      '0',
-      '0'
-      from data_center.ods_dep_and_amo_bo a
-      left join data_center.ads_orgnization b
-      on a.org_code = b.org_code
-      where index_code in ('2');
-
--- 资产总额
-insert into data_center.ads_coal_cockpit_month_1
-select
-      b.org_code,
-      b.org_name,
-      b.level_code,
-      substr(a.date,1,7),
-      '资产总额',
-      '176',
-      a.end_balance,
-      '0',
-      a.amount_acc_form,
-      '0',
-      '0',
-      '0',
-      '0'
-      from data_center.ods_asset_balance_hq a
-      left join data_center.ads_orgnization b
-      on a.org_code = b.org_code
-      where index_code in ('78');
-
-insert into data_center.ads_coal_cockpit_month_1
-select
-      b.org_code,
-      b.org_name,
-      b.level_code,
-      substr(a.date,1,7),
-      '资产总额',
-      '176',
-      a.end_balance,
-      '0',
-      a.amount_acc_form,
-      '0',
-      '0',
-      '0',
-      '0'
-      from data_center.ods_asset_balance_bo a
-      left join data_center.ads_orgnization b
-      on a.org_code = b.org_code
-      where index_code in ('78');
-
--- 资产负债率
-insert into data_center.ads_coal_cockpit_month_1
-select
-      b.org_code,
-      b.org_name,
-      b.level_code,
-      substr(a.date,1,7),
-      '资产负债率',
-      '177',
-      a.acc_year,
-      '0',
-      a.pre_last_year_month,
-      '0',
-      '0',
-      a.pre_year,
-      '0'
-      from data_center.ods_summary_index_hq a
-      left join data_center.ads_orgnization b
-      on a.org_code = b.org_code
-      where index_code in ('7');
-
-insert into data_center.ads_coal_cockpit_month_1
-select
-      b.org_code,
-      b.org_name,
-      b.level_code,
-      substr(a.date,1,7),
-      '资产负债率',
-      '177',
-      a.acc_year,
-      '0',
-      a.pre_last_year_month,
-      '0',
-      '0',
-      a.pre_year,
-      '0'
-      from data_center.ods_summary_index_bo a
-      left join data_center.ads_orgnization b
-      on a.org_code = b.org_code
-      where index_code in ('7');
-
-insert into data_center.ads_coal_cockpit_month_1
-select
-      a.org_code,
-      a.org_name,
-      a.level_code,
-      a.date,
-      '自产煤每吨完全成本',
-      '170',
-      case when coalesce(a.amount_acc,0) = 0 then 0 else coalesce(b.amount_acc,0)/coalesce(a.amount_acc,0) end,
-      case when coalesce(a.amount_month,0) = 0 then 0 else coalesce(b.amount_month,0)/coalesce(a.amount_month,0) end,
-      case when coalesce(a.amount_acc_form,0) = 0 then 0 else coalesce(b.amount_acc_form,0)/coalesce(a.amount_acc_form,0) end,
-      case when coalesce(a.amount_month_form,0) = 0 then 0 else coalesce(b.amount_month_form,0)/coalesce(a.amount_month_form,0) end,
-      case when coalesce(a.amount_month_form_hb,0) = 0 then 0 else coalesce(b.amount_month_form_hb,0)/coalesce(a.amount_month_form_hb,0) end,
-      case when coalesce(a.amount_pre,0) = 0 then 0 else coalesce(b.amount_pre,0)/coalesce(a.amount_pre,0) end,
-      case when coalesce(a.amount_month_pre,0) = 0 then 0 else coalesce(b.amount_month_pre,0)/coalesce(a.amount_month_pre,0) end       
-      from (select * from data_center.ads_coal_cockpit_month_1 where index_code = '94') a
-      left join (select * from data_center.ads_coal_cockpit_month_1 where index_code = '83') b
-      on a.org_code = b.org_code and a.date = b.date
-;
-
-insert into data_center.ads_coal_cockpit_month_1
-select
-      a.org_code,
-      a.org_name,
-      a.level_code,
-      a.date,
-      '自产煤每吨变动成本',
-      '171',
-      case when coalesce(a.amount_acc,0) = 0 then 0 else coalesce(b.amount_acc,0)/coalesce(a.amount_acc,0) end,
-      case when coalesce(a.amount_month,0) = 0 then 0 else coalesce(b.amount_month,0)/coalesce(a.amount_month,0) end,
-      case when coalesce(a.amount_acc_form,0) = 0 then 0 else coalesce(b.amount_acc_form,0)/coalesce(a.amount_acc_form,0) end,
-      case when coalesce(a.amount_month_form,0) = 0 then 0 else coalesce(b.amount_month_form,0)/coalesce(a.amount_month_form,0) end,
-      case when coalesce(a.amount_month_form_hb,0) = 0 then 0 else coalesce(b.amount_month_form_hb,0)/coalesce(a.amount_month_form_hb,0) end,
-      case when coalesce(a.amount_pre,0) = 0 then 0 else coalesce(b.amount_pre,0)/coalesce(a.amount_pre,0) end,
-      case when coalesce(a.amount_month_pre,0) = 0 then 0 else coalesce(b.amount_month_pre,0)/coalesce(a.amount_month_pre,0) end       
-      from (select * from data_center.ads_coal_cockpit_month_1 where index_code = '94') a
-      left join (select * from data_center.ads_coal_cockpit_month_1 where index_code = '84') b
-      on a.org_code = b.org_code and a.date = b.date
-;
-
-insert into data_center.ads_coal_cockpit_month_1
-select
-      a.org_code,
-      a.org_name,
-      a.level_code,
-      a.date,
-      '自产煤吨煤固定成本',
-      '174',
-      case when coalesce(a.amount_acc,0) = 0 then 0 else coalesce(b.amount_acc,0)/coalesce(a.amount_acc,0) end,
-      case when coalesce(a.amount_month,0) = 0 then 0 else coalesce(b.amount_month,0)/coalesce(a.amount_month,0) end,
-      case when coalesce(a.amount_acc_form,0) = 0 then 0 else coalesce(b.amount_acc_form,0)/coalesce(a.amount_acc_form,0) end,
-      case when coalesce(a.amount_month_form,0) = 0 then 0 else coalesce(b.amount_month_form,0)/coalesce(a.amount_month_form,0) end,
-      case when coalesce(a.amount_month_form_hb,0) = 0 then 0 else coalesce(b.amount_month_form_hb,0)/coalesce(a.amount_month_form_hb,0) end,
-      case when coalesce(a.amount_pre,0) = 0 then 0 else coalesce(b.amount_pre,0)/coalesce(a.amount_pre,0) end,
-      case when coalesce(a.amount_month_pre,0) = 0 then 0 else coalesce(b.amount_month_pre,0)/coalesce(a.amount_month_pre,0) end       
-      from (select * from data_center.ads_coal_cockpit_month_1 where index_code = '94') a
-      left join (select * from data_center.ads_coal_cockpit_month_1 where index_code = '85') b
-      on a.org_code = b.org_code and a.date = b.date
-;
-
-insert into data_center.ads_coal_cockpit_month_1
-select
-      a.org_code,
-      a.org_name,
-      a.level_code,
-      a.date,
-      '外购煤吨煤成本',
-      '175',
-      case when coalesce(a.amount_acc,0) = 0 then 0 else coalesce(b.amount_acc,0)/coalesce(a.amount_acc,0) end,
-      case when coalesce(a.amount_month,0) = 0 then 0 else coalesce(b.amount_month,0)/coalesce(a.amount_month,0) end,
-      case when coalesce(a.amount_acc_form,0) = 0 then 0 else coalesce(b.amount_acc_form,0)/coalesce(a.amount_acc_form,0) end,
-      case when coalesce(a.amount_month_form,0) = 0 then 0 else coalesce(b.amount_month_form,0)/coalesce(a.amount_month_form,0) end,
-      case when coalesce(a.amount_month_form_hb,0) = 0 then 0 else coalesce(b.amount_month_form_hb,0)/coalesce(a.amount_month_form_hb,0) end,
-      case when coalesce(a.amount_pre,0) = 0 then 0 else coalesce(b.amount_pre,0)/coalesce(a.amount_pre,0) end,
-      case when coalesce(a.amount_month_pre,0) = 0 then 0 else coalesce(b.amount_month_pre,0)/coalesce(a.amount_month_pre,0) end       
-      from (select * from data_center.ads_coal_cockpit_month_1 where index_code = '95') a
-      left join (select * from data_center.ads_coal_cockpit_month_1 where index_code = '45') b
-      on a.org_code = b.org_code and a.date = b.date
-;
-
-insert into data_center.ads_coal_cockpit_month_1
-select
-      a.org_code,
-      a.org_name,
-      a.level_code,
-      a.date,
-      'EBITDA',
-      '172',
-      coalesce(b.amount_acc,0) + coalesce(a.amount_acc,0) + coalesce(c.amount_acc,0) + coalesce(d.amount_acc,0),
-      coalesce(b.amount_month,0) + coalesce(a.amount_month,0) + coalesce(c.amount_month,0) + coalesce(d.amount_month,0),
-      coalesce(b.amount_acc_form,0) + coalesce(a.amount_acc_form,0) + coalesce(c.amount_acc_form,0) + coalesce(d.amount_acc_form,0),
-      coalesce(b.amount_month_form,0) + coalesce(a.amount_month_form,0) + coalesce(c.amount_month_form,0) + coalesce(d.amount_month_form,0),
-      coalesce(b.amount_month_form_hb,0) + coalesce(a.amount_month_form_hb,0) + coalesce(c.amount_month_form_hb,0) + coalesce(d.amount_month_form_hb,0),
-      coalesce(b.amount_pre,0) + coalesce(a.amount_pre,0) + coalesce(c.amount_pre,0) + coalesce(d.amount_pre,0),
-      coalesce(b.amount_month_pre,0) + coalesce(a.amount_month_pre,0) + coalesce(c.amount_month_pre,0) + coalesce(d.amount_month_pre,0)
-      from (select * from data_center.ads_coal_cockpit_month_1 where index_code = '75') a     -- 利润总额
-      left join (select * from data_center.ads_coal_cockpit_month_1 where index_code = '58') b    -- 利息支出 ，即财务费用指标
-      on a.org_code = b.org_code and a.date = b.date
-      left join (select * from data_center.ads_coal_cockpit_month_1 where index_code = '178') c
-      on a.org_code = c.org_code and a.date = c.date
-      left join (select * from data_center.ads_coal_cockpit_month_1 where index_code = '179') d
-      on a.org_code = d.org_code and a.date = d.date     
-;
-
--- 包能，运销取结算汇总
-insert into data_center.ads_coal_cockpit_month_1
-select
-      b.org_code,
-      b.org_name,
-      b.level_code,
-      substr(a.date,1,7),
-      '车板价',
-      '173',
-      a.price_taxex_acc,
-      a.price_taxex_month,
-      '0',
-      '0',
-      '0',
-      '0',
-      '0'
-      from data_center.ods_coal_settlement a
-      left join data_center.ads_orgnization b
-      on a.org_code = b.org_code
-      where index_code in ('31','32');
-
--- 四大煤矿取0105
-insert into data_center.ads_coal_cockpit_month_1
-select
-      b.org_code,
-      b.org_name,
-      b.level_code,
-      substr(a.date,1,7),
-      '车板价',
-      '173',
-      a.unit_price_acc,
-      a.unit_price,
-      a.unit_price_acc_lastyear,
-      a.unit_price_lastyear,
-      a.unit_price_lastmonth,
-      a.unit_price_pre,
-      '0'
-      from data_center.ods_coal_produce_bo a
-      left join data_center.ads_orgnization b
-      on a.org_code = b.org_code
-      where index_code in ('2')
-      and b.org_name in ('万利一矿','水泉露天矿','李家壕煤矿','神山露天矿');
-
--- 洗选取0105
-insert into data_center.ads_coal_cockpit_month_1
-select
-      b.org_code,
-      b.org_name,
-      b.level_code,
-      substr(a.date,1,7),
-      '车板价',
-      '173',
-      a.unit_price_acc,
-      a.unit_price,
-      a.unit_price_acc_lastyear,
-      a.unit_price_lastyear,
-      a.unit_price_lastmonth,
-      a.unit_price_pre,
-      '0'
-      from data_center.ods_coal_produce_bo a
-      left join data_center.ads_orgnization b
-      on a.org_code = b.org_code
-      where index_code in ('7')
-      and b.org_name in ('洗选分公司');
-
-update data_center.ads_coal_cockpit_month_1
-   set amount_acc = '255.7' where date = '2024-09' and org_code = 'GY2F00' and index_code = '170';
-update data_center.ads_coal_cockpit_month_1
-   set amount_acc = '252.44' where date = '2024-08' and org_code = 'GY2F00' and index_code = '170';
-update data_center.ads_coal_cockpit_month_1
-   set amount_acc = '256.56' where date = '2024-07' and org_code = 'GY2F00' and index_code = '170';
-update data_center.ads_coal_cockpit_month_1
-   set amount_acc = '232.37' where date = '2024-06' and org_code = 'GY2F00' and index_code = '170';
-
-
-
-/*
--- 二级页面 商品煤销售收入分析
-drop table data_center.ads_coal_income_month_2;
-CREATE TABLE data_center.ads_coal_income_month_2 (
-  org_code varchar(64) comment '单位编码',
-  org_name varchar(64) comment '单位名称',
-  level_code varchar(64) comment '权限预留',
-  date varchar(64) comment '日期',
-  index_name varchar(64) comment '指标名称', -- 自产煤，外购煤，公路收费
-  index_code varchar(64) comment '指标编码',
-  amount_acc decimal(15, 2) comment '本年累计数',
-  amount_month decimal(15, 2) comment '本月实际数',
-  amount_acc_form decimal(15, 2) comment '去年累计数',
-  amount_month_form decimal(15, 2) comment '去年同月实际数',
-  amount_month_form_hb decimal(15, 2) comment '本年上月实际数',  
-  amount_pre decimal(15, 2) comment '本年预算数',
-  amount_month_pre decimal(15, 2) comment '本月预算数'  
-) COMMENT='商品煤销售收入分析';
-*/
-
-truncate table data_center.ads_coal_income_month_2;
-insert into data_center.ads_coal_income_month_2
-select
-      b.org_code,
-      b.org_name,
-      b.level_code,
-      substr(a.date,1,7),
-      a.index_name,
-      a.index_code,
-      a.total_amount_acc,
-      a.total_amount,
-      a.total_amount_acc_lastyear,
-      a.total_amount_lastyear,
-      a.total_amount_lastmonth,
-      a.total_amount_pre,
-      a.total_amount_pre/12
-      from data_center.ods_coal_produce_hq a
-      left join data_center.ads_orgnization b
-      on a.org_code = b.org_code
-      where index_code in ('3','7')
-      and b.org_name <> '运销分公司';
-
-insert into data_center.ads_coal_income_month_2
-select
-      b.org_code,
-      b.org_name,
-      b.level_code,
-      substr(a.date,1,7),
-      a.index_name,
-      a.index_code,
-      a.total_amount_acc,
-      a.total_amount,
-      a.total_amount_acc_lastyear,
-      a.total_amount_lastyear,
-      a.total_amount_lastmonth,
-      a.total_amount_pre,
-      a.total_amount_pre/12
-      from data_center.ods_coal_produce_bo a
-      left join data_center.ads_orgnization b
-      on a.org_code = b.org_code
-      where index_code in ('3','7')
-      and b.org_name <> '运销分公司';
-
--- 插入公路收费
-insert into data_center.ads_coal_income_month_2
-select
-      b.org_code,
-      b.org_name,
-      b.level_code,
-      substr(a.date,1,7),
-      a.index_name,
-      a.index_code,
-      a.total_amount_acc,
-      a.total_amount,
-      a.total_amount_acc_lastyear,
-      a.total_amount_lastyear,
-      a.total_amount_lastmonth,
-      a.total_amount_pre,
-      a.total_amount_pre/12
-      from data_center.ods_coal_produce_bo a
-      left join data_center.ads_orgnization b
-      on a.org_code = b.org_code
-      where index_code in ('2')
-      and b.org_name = '公路分公司';
-
--- 插入包能 公路收费
-insert into data_center.ads_coal_income_month_2
-select
-      'GY2F00',
-      '包头能源',
-      '100',
-      substr(a.date,1,7),
-      a.index_name,
-      a.index_code,
-      a.total_amount_acc,
-      a.total_amount,
-      a.total_amount_acc_lastyear,
-      a.total_amount_lastyear,
-      a.total_amount_lastmonth,
-      a.total_amount_pre,
-      a.total_amount_pre/12
-      from data_center.ods_coal_produce_bo a
-      left join data_center.ads_orgnization b
-      on a.org_code = b.org_code
-      where index_code in ('2')
-      and b.org_name = '公路分公司';
-
--- 插入运销
-insert into data_center.ads_coal_income_month_2
-select
-      b.org_code,
-      b.org_name,
-      b.level_code,
-      substr(a.date,1,7),
-      '2.外购煤销售收入',
-      '7',
-      a.total_acc/10000,
-      a.total_month/10000,
-      '0',
-      '0',
-      '0',
-      '0',
-      '0'
-      from data_center.ods_coal_settlement a
-      left join data_center.ads_orgnization b
-      on a.org_code = b.org_code
-      where index_code in ('31');
-
-
-/*
--- 二级页面 商品煤产量与销量分析
-drop table data_center.ads_coal_yield_sales_month_2;
-CREATE TABLE data_center.ads_coal_yield_sales_month_2 (
-  org_code varchar(64) comment '单位编码',
-  org_name varchar(64) comment '单位名称',
-  level_code varchar(64) comment '权限预留',
-  date varchar(64) comment '日期',
-  index_name varchar(64) comment '指标名称', -- 商品煤量，自产煤量，外购煤量，商品煤销量，自产煤销量，外购煤销量
-  index_code varchar(64) comment '指标编码',
-  amount_acc decimal(15, 2) comment '本年累计数',
-  amount_month decimal(15, 2) comment '本月实际数',
-  amount_acc_form decimal(15, 2) comment '去年累计数',
-  amount_month_form decimal(15, 2) comment '去年同月实际数',
-  amount_month_form_hb decimal(15, 2) comment '本年上月实际数',  
-  amount_pre decimal(15, 2) comment '本年预算数',
-  amount_month_pre decimal(15, 2) comment '本月预算数'  
-) COMMENT='商品煤产量与销量分析';
-*/
-
-truncate table data_center.ads_coal_yield_sales_month_2;
-insert into data_center.ads_coal_yield_sales_month_2
-select
-      b.org_code,
-      b.org_name,
-      b.level_code,
-      substr(a.date,1,7),
-      a.index_name,
-      a.index_code,
-      a.total_amount_acc,
-      a.total_amount,
-      a.total_amount_acc_lastyear,
-      a.total_amount_lastyear,
-      a.total_amount_lastmonth,
-      a.total_amount_pre,
-      a.total_amount_pre/12
-      from data_center.ods_coal_produce_hq a
-      left join data_center.ads_orgnization b
-      on a.org_code = b.org_code
-      where index_code in ('93','94','95','97','98','102')
-      and b.org_name <> '运销分公司';
-
-insert into data_center.ads_coal_yield_sales_month_2
-select
-      b.org_code,
-      b.org_name,
-      b.level_code,
-      substr(a.date,1,7),
-      a.index_name,
-      a.index_code,
-      a.total_amount_acc,
-      a.total_amount,
-      a.total_amount_acc_lastyear,
-      a.total_amount_lastyear,
-      a.total_amount_lastmonth,
-      a.total_amount_pre,
-      a.total_amount_pre/12
-      from data_center.ods_coal_produce_bo a
-      left join data_center.ads_orgnization b
-      on a.org_code = b.org_code
-      where index_code in ('93','94','95','97','98','102')
-      and b.org_name <> '运销分公司';
-
--- 插入运销
-insert into data_center.ads_coal_yield_sales_month_2
-select
-      b.org_code,
-      b.org_name,
-      b.level_code,
-      substr(a.date,1,7),
-      '一、产量',
-      '93',
-      a.amount_acc/10000,
-      a.amount_month/10000,
-      '0',
-      '0',
-      '0',
-      '0',
-      '0'
-      from data_center.ods_coal_settlement a
-      left join data_center.ads_orgnization b
-      on a.org_code = b.org_code
-      where index_code in ('31');
-
-insert into data_center.ads_coal_yield_sales_month_2
-select
-      b.org_code,
-      b.org_name,
-      b.level_code,
-      substr(a.date,1,7),
-      '外购煤量',
-      '95',
-      a.amount_acc/10000,
-      a.amount_month/10000,
-      '0',
-      '0',
-      '0',
-      '0',
-      '0'
-      from data_center.ods_coal_settlement a
-      left join data_center.ads_orgnization b
-      on a.org_code = b.org_code
-      where index_code in ('31');
-
-insert into data_center.ads_coal_yield_sales_month_2
-select
-      b.org_code,
-      b.org_name,
-      b.level_code,
-      substr(a.date,1,7),
-      '二、销售量',
-      '97',
-      a.amount_acc/10000,
-      a.amount_month/10000,
-      '0',
-      '0',
-      '0',
-      '0',
-      '0'
-      from data_center.ods_coal_settlement a
-      left join data_center.ads_orgnization b
-      on a.org_code = b.org_code
-      where index_code in ('31');
-
-insert into data_center.ads_coal_yield_sales_month_2
-select
-      b.org_code,
-      b.org_name,
-      b.level_code,
-      substr(a.date,1,7),
-      '外购煤销量',
-      '102',
-      a.amount_acc/10000,
-      a.amount_month/10000,
-      '0',
-      '0',
-      '0',
-      '0',
-      '0'
-      from data_center.ods_coal_settlement a
-      left join data_center.ads_orgnization b
-      on a.org_code = b.org_code
-      where index_code in ('31');
-
-/*
--- 二级页面 商品煤销售单价分析
-drop table data_center.ads_coal_sale_price_month_2;
-CREATE TABLE data_center.ads_coal_sale_price_month_2 (
-  org_code varchar(64) comment '单位编码',
-  org_name varchar(64) comment '单位名称',
-  level_code varchar(64) comment '权限预留',
-  date varchar(64) comment '日期',
-  index_name varchar(64) comment '指标名称', -- 自产煤售价，外购煤售价
-  index_code varchar(64) comment '指标编码',
-  amount_acc decimal(15, 2) comment '本年累计数',
-  amount_month decimal(15, 2) comment '本月实际数',
-  amount_acc_form decimal(15, 2) comment '去年累计数',
-  amount_month_form decimal(15, 2) comment '去年同月实际数',
-  amount_month_form_hb decimal(15, 2) comment '本年上月实际数',  
-  amount_pre decimal(15, 2) comment '本年预算数',
-  amount_month_pre decimal(15, 2) comment '本月预算数'  
-) COMMENT='商品煤销售单价分析';
-*/
-
-truncate table data_center.ads_coal_sale_price_month_2;
-insert into data_center.ads_coal_sale_price_month_2
-select
-      b.org_code,
-      b.org_name,
-      b.level_code,
-      substr(a.date,1,7),
-      a.index_name,
-      a.index_code,
-      a.total_amount_acc,
-      a.total_amount,
-      a.total_amount_acc_lastyear,
-      a.total_amount_lastyear,
-      a.total_amount_lastmonth,
-      a.total_amount_pre,
-      a.total_amount_pre
-      from data_center.ods_coal_produce_hq a
-      left join data_center.ads_orgnization b
-      on a.org_code = b.org_code
-      where index_code in ('107','108');
-
-insert into data_center.ads_coal_sale_price_month_2
-select
-      b.org_code,
-      b.org_name,
-      b.level_code,
-      substr(a.date,1,7),
-      a.index_name,
-      a.index_code,
-      a.total_amount_acc,
-      a.total_amount,
-      a.total_amount_acc_lastyear,
-      a.total_amount_lastyear,
-      a.total_amount_lastmonth,
-      a.total_amount_pre,
-      a.total_amount_pre
-      from data_center.ods_coal_produce_bo a
-      left join data_center.ads_orgnization b
-      on a.org_code = b.org_code
-      where index_code in ('107','108');
-
--- 包能，运销取结算汇总
-insert into data_center.ads_coal_sale_price_month_2
-select
-      b.org_code,
-      b.org_name,
-      b.level_code,
-      substr(a.date,1,7),
-      '车板价',
-      '173',
-      a.price_taxex_acc,
-      a.price_taxex_month,
-      '0',
-      '0',
-      '0',
-      '0',
-      '0'
-      from data_center.ods_coal_settlement a
-      left join data_center.ads_orgnization b
-      on a.org_code = b.org_code
-      where index_code in ('31','32');
-
--- 四大煤矿、洗选取0105
-insert into data_center.ads_coal_sale_price_month_2
-select
-      b.org_code,
-      b.org_name,
-      b.level_code,
-      substr(a.date,1,7),
-      '车板价',
-      '173',
-      a.unit_price_acc,
-      a.unit_price,
-      a.unit_price_acc_lastyear,
-      a.unit_price_lastyear,
-      a.unit_price_lastmonth,
-      a.unit_price_pre,
-      '0'
-      from data_center.ods_coal_produce_bo a
-      left join data_center.ads_orgnization b
-      on a.org_code = b.org_code
-      where index_code in ('2')
-      and b.org_name in ('万利一矿','水泉露天矿','李家壕煤矿','神山露天矿','洗选分公司');
-
-
-/*
--- 二级页面 商品煤营业成本分析
-drop table data_center.ads_coal_operating_cost_month_2;
-CREATE TABLE data_center.ads_coal_operating_cost_month_2 (
-  org_code varchar(64) comment '单位编码',
-  org_name varchar(64) comment '单位名称',
-  level_code varchar(64) comment '权限预留',
-  date varchar(64) comment '日期',
-  index_name varchar(64) comment '指标名称', -- 自产煤固定成本，自产煤变动成本，自产煤完全成本，外购煤主营业务成本
-  index_code varchar(64) comment '指标编码',
-  amount_acc decimal(15, 2) comment '本年累计数',
-  amount_month decimal(15, 2) comment '本月实际数',
-  amount_acc_form decimal(15, 2) comment '去年累计数',
-  amount_month_form decimal(15, 2) comment '去年同月实际数',
-  amount_month_form_hb decimal(15, 2) comment '本年上月实际数',
-  amount_pre decimal(15, 2) comment '本年预算数',
-  amount_month_pre decimal(15, 2) comment '本月预算数'
-) COMMENT='商品煤营业成本分析';
-*/
-
-truncate table data_center.ads_coal_operating_cost_month_2;
-insert into data_center.ads_coal_operating_cost_month_2
-select
-      b.org_code,
-      b.org_name,
-      b.level_code,
-      substr(a.date,1,7),
-      a.index_name,
-      a.index_code,
-      a.total_amount_acc,
-      a.total_amount,
-      a.total_amount_acc_lastyear,
-      a.total_amount_lastyear,
-      a.total_amount_lastmonth,
-      a.total_amount_pre,
-      a.total_amount_pre/12
-      from data_center.ods_coal_produce_hq a
-      left join data_center.ads_orgnization b
-      on a.org_code = b.org_code
-      where index_code in ('83','45','84','85','94','102');
-
-insert into data_center.ads_coal_operating_cost_month_2
-select
-      b.org_code,
-      b.org_name,
-      b.level_code,
-      substr(a.date,1,7),
-      a.index_name,
-      a.index_code,
-      a.total_amount_acc,
-      a.total_amount,
-      a.total_amount_acc_lastyear,
-      a.total_amount_lastyear,
-      a.total_amount_lastmonth,
-      a.total_amount_pre,
-      a.total_amount_pre/12
-      from data_center.ods_coal_produce_bo a
-      left join data_center.ads_orgnization b
-      on a.org_code = b.org_code
-      where index_code in ('83','45','84','85','94','102');
-
-insert into data_center.ads_coal_operating_cost_month_2
-select
-      a.org_code,
-      a.org_name,
-      a.level_code,
-      a.date,
-      '自产煤每吨完全成本',
-      '170',
-      case when coalesce(a.amount_acc,0) = 0 then 0 else coalesce(b.amount_acc,0)/coalesce(a.amount_acc,0) end,
-      case when coalesce(a.amount_month,0) = 0 then 0 else coalesce(b.amount_month,0)/coalesce(a.amount_month,0) end,
-      case when coalesce(a.amount_acc_form,0) = 0 then 0 else coalesce(b.amount_acc_form,0)/coalesce(a.amount_acc_form,0) end,
-      case when coalesce(a.amount_month_form,0) = 0 then 0 else coalesce(b.amount_month_form,0)/coalesce(a.amount_month_form,0) end,
-      '0',
-      case when coalesce(a.amount_pre,0) = 0 then 0 else coalesce(b.amount_pre,0)/coalesce(a.amount_pre,0) end,
-      case when coalesce(a.amount_month_pre,0) = 0 then 0 else coalesce(b.amount_month_pre,0)/coalesce(a.amount_month_pre,0) end   
-      from (select * from data_center.ads_coal_operating_cost_month_2 where index_code = '94') a
-      left join (select * from data_center.ads_coal_operating_cost_month_2 where index_code = '83') b
-      on a.org_code = b.org_code and a.date = b.date
-;
-
-insert into data_center.ads_coal_operating_cost_month_2
-select
-      a.org_code,
-      a.org_name,
-      a.level_code,
-      a.date,
-      '自产煤每吨变动成本',
-      '171',
-      case when coalesce(a.amount_acc,0) = 0 then 0 else coalesce(b.amount_acc,0)/coalesce(a.amount_acc,0) end,
-      case when coalesce(a.amount_month,0) = 0 then 0 else coalesce(b.amount_month,0)/coalesce(a.amount_month,0) end,
-      case when coalesce(a.amount_acc_form,0) = 0 then 0 else coalesce(b.amount_acc_form,0)/coalesce(a.amount_acc_form,0) end,
-      case when coalesce(a.amount_month_form,0) = 0 then 0 else coalesce(b.amount_month_form,0)/coalesce(a.amount_month_form,0) end,
-      '0',
-      case when coalesce(a.amount_pre,0) = 0 then 0 else coalesce(b.amount_pre,0)/coalesce(a.amount_pre,0) end,
-      case when coalesce(a.amount_month_pre,0) = 0 then 0 else coalesce(b.amount_month_pre,0)/coalesce(a.amount_month_pre,0) end   
-      from (select * from data_center.ads_coal_operating_cost_month_2 where index_code = '94') a
-      left join (select * from data_center.ads_coal_operating_cost_month_2 where index_code = '84') b
-      on a.org_code = b.org_code and a.date = b.date
-;
-
-insert into data_center.ads_coal_operating_cost_month_2
-select
-      a.org_code,
-      a.org_name,
-      a.level_code,
-      a.date,
-      '自产煤每吨固定成本',
-      '172',
-      case when coalesce(a.amount_acc,0) = 0 then 0 else coalesce(b.amount_acc,0)/coalesce(a.amount_acc,0) end,
-      case when coalesce(a.amount_month,0) = 0 then 0 else coalesce(b.amount_month,0)/coalesce(a.amount_month,0) end,
-      case when coalesce(a.amount_acc_form,0) = 0 then 0 else coalesce(b.amount_acc_form,0)/coalesce(a.amount_acc_form,0) end,
-      case when coalesce(a.amount_month_form,0) = 0 then 0 else coalesce(b.amount_month_form,0)/coalesce(a.amount_month_form,0) end,
-      '0',
-      case when coalesce(a.amount_pre,0) = 0 then 0 else coalesce(b.amount_pre,0)/coalesce(a.amount_pre,0) end,
-      case when coalesce(a.amount_month_pre,0) = 0 then 0 else coalesce(b.amount_month_pre,0)/coalesce(a.amount_month_pre,0) end   
-      from (select * from data_center.ads_coal_operating_cost_month_2 where index_code = '94') a
-      left join (select * from data_center.ads_coal_operating_cost_month_2 where index_code = '85') b
-      on a.org_code = b.org_code and a.date = b.date
-;
-
-insert into data_center.ads_coal_operating_cost_month_2
-select
-      a.org_code,
-      a.org_name,
-      a.level_code,
-      a.date,
-      '外购煤每吨成本',
-      '173',
-      case when coalesce(a.amount_acc,0) = 0 then 0 else coalesce(b.amount_acc,0)/coalesce(a.amount_acc,0) end,
-      case when coalesce(a.amount_month,0) = 0 then 0 else coalesce(b.amount_month,0)/coalesce(a.amount_month,0) end,
-      case when coalesce(a.amount_acc_form,0) = 0 then 0 else coalesce(b.amount_acc_form,0)/coalesce(a.amount_acc_form,0) end,
-      case when coalesce(a.amount_month_form,0) = 0 then 0 else coalesce(b.amount_month_form,0)/coalesce(a.amount_month_form,0) end,
-      '0',
-      case when coalesce(a.amount_pre,0) = 0 then 0 else coalesce(b.amount_pre,0)/coalesce(a.amount_pre,0) end,
-      case when coalesce(a.amount_month_pre,0) = 0 then 0 else coalesce(b.amount_month_pre,0)/coalesce(a.amount_month_pre,0) end   
-      from (select * from data_center.ads_coal_operating_cost_month_2 where index_code = '102') a
-      left join (select * from data_center.ads_coal_operating_cost_month_2 where index_code = '45') b
-      on a.org_code = b.org_code and a.date = b.date
-;
-
-/*
--- 二级页面 商品煤利润情况分析
-drop table data_center.ads_coal_profit_month_2;
-CREATE TABLE data_center.ads_coal_profit_month_2 (
-  org_code varchar(64) comment '单位编码',
-  org_name varchar(64) comment '单位名称',
-  level_code varchar(64) comment '权限预留',
-  date varchar(64) comment '日期',
-  index_name varchar(64) comment '指标名称', -- 利润总额，自产煤利润，外购煤利润，净利润
-  index_code varchar(64) comment '指标编码',
-  amount_acc decimal(15, 2) comment '本年累计数',
-  amount_month decimal(15, 2) comment '本月实际数',
-  amount_acc_form decimal(15, 2) comment '去年累计数',
-  amount_month_form decimal(15, 2) comment '去年同月实际数',
-  amount_month_form_hb decimal(15, 2) comment '本年上月实际数',
-  amount_pre decimal(15, 2) comment '本年预算数',
-  amount_month_pre decimal(15, 2) comment '本月预算数'
-) COMMENT='商品煤利润情况分析';
-*/
-
-truncate table data_center.ads_coal_profit_month_2;
-insert into data_center.ads_coal_profit_month_2
-select
-      b.org_code,
-      b.org_name,
-      b.level_code,
-      substr(a.date,1,7),
-      a.index_name,
-      a.index_code,
-      a.total_amount_acc,
-      a.total_amount,
-      a.total_amount_acc_lastyear,
-      a.total_amount_lastyear,
-      a.total_amount_lastmonth,
-      a.total_amount_pre,
-      a.total_amount_pre/12
-      from data_center.ods_coal_produce_hq a
-      left join data_center.ads_orgnization b
-      on a.org_code = b.org_code
-      where index_code in ('75','77','90','91');
-
-insert into data_center.ads_coal_profit_month_2
-select
-      b.org_code,
-      b.org_name,
-      b.level_code,
-      substr(a.date,1,7),
-      a.index_name,
-      a.index_code,
-      a.total_amount_acc,
-      a.total_amount,
-      a.total_amount_acc_lastyear,
-      a.total_amount_lastyear,
-      a.total_amount_lastmonth,
-      a.total_amount_pre,
-      a.total_amount_pre/12
-      from data_center.ods_coal_produce_bo a
-      left join data_center.ads_orgnization b
-      on a.org_code = b.org_code
-      where index_code in ('75','77','90','91');
-
-/*
--- 二级页面 不同燃值商品煤分析
-drop table data_center.ads_coal_fuel_value_month_2;
-CREATE TABLE data_center.ads_coal_fuel_value_month_2 (
-  org_code varchar(64) comment '单位编码',
-  org_name varchar(64) comment '单位名称',
-  level_code varchar(64) comment '权限预留',
-  date varchar(64) comment '日期',
-  index_name varchar(64) comment '指标名称', -- 5000合计，4500合计，3800合计，煤矸石合计
-  index_code varchar(64) comment '指标编码',
-  amount_month decimal(15, 2) comment '本月结算数量',
-  price_taxex_month decimal(15, 2) comment '本月不含税单价', 
-  income_taxex_month decimal(15, 2) comment '本月不含税销售收入',
-  amount_acc decimal(15, 2) comment '累计结算数量',
-  price_taxex_acc decimal(15, 2) comment '累计不含税单价', 
-  income_taxex_acc decimal(15, 2) comment '累计不含税销售收入'
-) COMMENT='不同燃值商品煤分析';
-*/
-
-truncate table data_center.ads_coal_fuel_value_month_2;
-insert into data_center.ads_coal_fuel_value_month_2
-select
-      b.org_code,
-      b.org_name,
-      b.level_code,
-      substr(a.date,1,7),
-      a.index_name,
-      a.index_code,
-      a.amount_month,
-      a.price_taxex_month,
-      a.income_taxex_month,
-      a.amount_acc,
-      a.price_taxex_acc,
-      a.income_taxex_acc
-      from data_center.ods_coal_settlement a
-      left join data_center.ads_orgnization b
-      on a.org_code = b.org_code
-      where index_code in ('37','38','39','40','41','42','43','44','45','46');
-
-/*
--- 二级页面 商品煤按区域销售分析
-drop table data_center.ads_coal_sale_area_month_2;
-CREATE TABLE data_center.ads_coal_sale_area_month_2 (
-  org_code varchar(64) comment '单位编码',
-  org_name varchar(64) comment '单位名称',
-  level_code varchar(64) comment '权限预留',
-  date varchar(64) comment '日期',
-  index_name varchar(64) comment '指标名称', -- 区内，区外，神混5000煤种(区外），神混4500煤种(区外），神混4500煤种(区内），神混3800煤种(区内），贫瘦3800煤种（区内）
-  index_code varchar(64) comment '指标编码',
-  amount_month decimal(15, 2) comment '本月结算数量',
-  price_taxex_month decimal(15, 2) comment '本月不含税单价', 
-  income_taxex_month decimal(15, 2) comment '本月不含税销售收入',
-  amount_acc decimal(15, 2) comment '累计结算数量',
-  price_taxex_acc decimal(15, 2) comment '累计不含税单价', 
-  income_taxex_acc decimal(15, 2) comment '累计不含税销售收入'
-) COMMENT='商品煤按区域销售分析';
-*/
-
-truncate table data_center.ads_coal_sale_area_month_2;
-insert into data_center.ads_coal_sale_area_month_2
-select
-      b.org_code,
-      b.org_name,
-      b.level_code,
-      substr(a.date,1,7),
-      a.index_name,
-      a.index_code,
-      a.amount_month,
-      a.price_taxex_month,
-      a.income_taxex_month,
-      a.amount_acc,
-      a.price_taxex_acc,
-      a.income_taxex_acc
-      from data_center.ods_coal_settlement a
-      left join data_center.ads_orgnization b
-      on a.org_code = b.org_code      
-      where index_code in ('35','36','1','4','7','8','10','13','14','16','17','20');
-
-/*
--- 二级页面 经济增加值
-drop table data_center.ads_eva_month_2;
-CREATE TABLE data_center.ads_eva_month_2 (
-  org_code varchar(64) comment '单位编码',
-  org_name varchar(64) comment '单位名称',
-  level_code varchar(64) comment '权限预留',
-  date varchar(64) comment '日期',
-  index_name varchar(64) comment '指标名称', -- 经济增加值19，税后净营业利润1，平均资本成本率14，调整后资本10，净利润2，平均所有者权益11，利息支出3，研究开发费4，平均带息负债12，平均在建工程13
-  index_code varchar(64) comment '指标编码',
-  amount_pre decimal(15, 2) comment '本年预算',  
-  amount_acc decimal(15, 2) comment '本年累计',
-  amount_acc_pre decimal(15, 2) comment '上年同期累计总额',
-  amount_vs_lastyear decimal(15, 2) comment '同比',
-  amount_vs_pre decimal(15, 2) comment '进度比'
-) COMMENT='经济增加值分析';
-*/
-
-truncate table data_center.ads_eva_month_2;
-insert into data_center.ads_eva_month_2
-select
-      b.org_code,
-      b.org_name,
-      b.level_code,
-      substr(a.date,1,7),
-      a.index_name,
-      a.index_code,
-      a.amount_pre,
-      a.amount_acc,
-      a.amount_acc_pre,
-      a.amount_vs_lastyear,
-      a.amount_vs_pre
-      from data_center.ods_eva_hq a
-      left join data_center.ads_orgnization b
-      on a.org_code = b.org_code      
-      where index_code in ('19','1','14','10','2','11','3','4','12','13');
-
-insert into data_center.ads_eva_month_2
-select
-      b.org_code,
-      b.org_name,
-      b.level_code,
-      substr(a.date,1,7),
-      a.index_name,
-      a.index_code,
-      a.amount_pre,
-      a.amount_acc,
-      a.amount_acc_pre,
-      a.amount_vs_lastyear,
-      a.amount_vs_pre
-      from data_center.ods_eva_bo a
-      left join data_center.ads_orgnization b
-      on a.org_code = b.org_code    
-      where index_code in ('19','1','14','10','2','11','3','4','12','13');
-
-/*
--- 二级页面 专项储备
-drop table data_center.ads_special_reserve_month_2;
-CREATE TABLE data_center.ads_special_reserve_month_2 (
-  org_code varchar(64) comment '单位编码',
-  org_name varchar(64) comment '单位名称',
-  level_code varchar(64) comment '权限预留',
-  date varchar(64) comment '日期',
-  reserve decimal(15, 2) comment '本年储备结余',  
-  reserve_pre decimal(15, 2) comment '本年储备结余预算',
-  extract_safe decimal(15, 2) comment '本年安全费提取',  
-  extract_safe_pre decimal(15, 2) comment '本年安全费提取预算',
-  use_safe decimal(15, 2) comment '本年安全费使用',  
-  use_safe_pre decimal(15, 2) comment '本年安全费使用预算',
-  extract_maintain decimal(15, 2) comment '本年维简费提取',  
-  extract_maintain_pre decimal(15, 2) comment '本年维简费提取预算',
-  use_maintain decimal(15, 2) comment '本年维简费使用',  
-  use_maintain_pre decimal(15, 2) comment '本年维简费使用预算'
-) COMMENT='专项储备情况--二级页面';
-*/
-
-truncate table data_center.ads_special_reserve_month_2;
-insert into data_center.ads_special_reserve_month_2
-select 
-      org_code,
-      org_name,
-      level_code,
-      date1,
-      sum(reserve),
-      sum(reserve_pre),
-      sum(extract_safe),
-      sum(extract_safe_pre),
-      sum(use_safe),
-      sum(use_safe_pre),
-      sum(extract_maintain),
-      sum(extract_maintain_pre),
-      sum(use_maintain),
-      sum(use_maintain_pre)
-      from
-      (select
-      b.org_code,
-      b.org_name,
-      b.level_code,
-      substr(a.date,1,7) as date1,
-      case when a.index_code = '126' then a.total_amount_acc else '0' end as reserve,
-      case when a.index_code = '126' then a.total_amount_pre else '0' end as reserve_pre,
-      case when a.index_code = '116' then a.total_amount_acc else '0' end as extract_safe,
-      case when a.index_code = '116' then a.total_amount_pre else '0' end as extract_safe_pre,
-      case when a.index_code = '119' then a.total_amount_acc else '0' end as use_safe,
-      case when a.index_code = '119' then a.total_amount_pre else '0' end as use_safe_pre,
-      case when a.index_code = '115' then a.total_amount_acc else '0' end as extract_maintain,
-      case when a.index_code = '115' then a.total_amount_pre else '0' end as extract_maintain_pre,
-      case when a.index_code = '118' then a.total_amount_acc else '0' end as use_maintain,
-      case when a.index_code = '118' then a.total_amount_pre else '0' end as use_maintain_pre
-      from data_center.ods_coal_produce_hq a
-      left join data_center.ads_orgnization b
-      on a.org_code = b.org_code) a
-      group by org_code, org_name, level_code, date1;
-
-
-insert into data_center.ads_special_reserve_month_2   
-select 
-      org_code,
-      org_name,
-      level_code,
-      date1,
-      sum(reserve),
-      sum(reserve_pre),
-      sum(extract_safe),
-      sum(extract_safe_pre),
-      sum(use_safe),
-      sum(use_safe_pre),
-      sum(extract_maintain),
-      sum(extract_maintain_pre),
-      sum(use_maintain),
-      sum(use_maintain_pre)
-      from
-      (select
-      b.org_code,
-      b.org_name,
-      b.level_code,
-      substr(a.date,1,7) as date1,
-      case when a.index_code = '126' then a.total_amount_acc else '0' end as reserve,
-      case when a.index_code = '126' then a.total_amount_pre else '0' end as reserve_pre,
-      case when a.index_code = '116' then a.total_amount_acc else '0' end as extract_safe,
-      case when a.index_code = '116' then a.total_amount_pre else '0' end as extract_safe_pre,
-      case when a.index_code = '119' then a.total_amount_acc else '0' end as use_safe,
-      case when a.index_code = '119' then a.total_amount_pre else '0' end as use_safe_pre,
-      case when a.index_code = '115' then a.total_amount_acc else '0' end as extract_maintain,
-      case when a.index_code = '115' then a.total_amount_pre else '0' end as extract_maintain_pre,
-      case when a.index_code = '118' then a.total_amount_acc else '0' end as use_maintain,
-      case when a.index_code = '118' then a.total_amount_pre else '0' end as use_maintain_pre
-      from data_center.ods_coal_produce_bo a
-      left join data_center.ads_orgnization b
-      on a.org_code = b.org_code) a
-      group by org_code, org_name, level_code, date1;
-
 /* -- 现金流量表 YZB0003
 drop table data_center.ods_cash_flow_ref;
 CREATE TABLE data_center.ods_cash_flow_ref (
@@ -12138,6 +10839,1305 @@ values('GY2F00','包头能源','2024-09-30','区外5000合计','49',610610.27  ,
 insert into ods_coal_settlement(org_code,org_name,date,index_name,index_code,amount_acc,price_taxex_acc,income_taxex_acc)
 values('GY2F00','包头能源','2024-09-30','区外4500合计','50',9537121.41  , 354.91 ,3384778032.33  );
 **/
+/*
+-- 时间表
+CREATE TABLE data_center.ads_time_month (
+  year varchar(64) comment '年度',
+  month varchar(64) comment '月度',
+  month_ref varchar(64) comment '月度参考'
+) COMMENT='时间表';
+
+insert into data_center.ads_time_month values ('2024','2024-01','1');
+insert into data_center.ads_time_month values ('2024','2024-02','2');
+insert into data_center.ads_time_month values ('2024','2024-03','3');
+insert into data_center.ads_time_month values ('2024','2024-04','4');
+insert into data_center.ads_time_month values ('2024','2024-05','5');
+insert into data_center.ads_time_month values ('2024','2024-06','6');
+insert into data_center.ads_time_month values ('2024','2024-07','7');
+insert into data_center.ads_time_month values ('2024','2024-08','8');
+insert into data_center.ads_time_month values ('2024','2024-09','9');
+insert into data_center.ads_time_month values ('2024','2024-10','10');
+insert into data_center.ads_time_month values ('2024','2024-11','11');
+insert into data_center.ads_time_month values ('2024','2024-12','12');
+insert into data_center.ads_time_month values ('2025','2025-01','1');
+insert into data_center.ads_time_month values ('2025','2025-02','2');
+insert into data_center.ads_time_month values ('2025','2025-03','3');
+insert into data_center.ads_time_month values ('2025','2025-04','4');
+insert into data_center.ads_time_month values ('2025','2025-05','5');
+insert into data_center.ads_time_month values ('2025','2025-06','6');
+insert into data_center.ads_time_month values ('2025','2025-07','7');
+insert into data_center.ads_time_month values ('2025','2025-08','8');
+insert into data_center.ads_time_month values ('2025','2025-09','9');
+insert into data_center.ads_time_month values ('2025','2025-10','10');
+insert into data_center.ads_time_month values ('2025','2025-11','11');
+insert into data_center.ads_time_month values ('2025','2025-12','12');
+insert into data_center.ads_time_month values ('2026','2026-01','1');
+insert into data_center.ads_time_month values ('2026','2026-02','2');
+insert into data_center.ads_time_month values ('2026','2026-03','3');
+insert into data_center.ads_time_month values ('2026','2026-04','4');
+insert into data_center.ads_time_month values ('2026','2026-05','5');
+insert into data_center.ads_time_month values ('2026','2026-06','6');
+insert into data_center.ads_time_month values ('2026','2026-07','7');
+insert into data_center.ads_time_month values ('2026','2026-08','8');
+insert into data_center.ads_time_month values ('2026','2026-09','9');
+insert into data_center.ads_time_month values ('2026','2026-10','10');
+insert into data_center.ads_time_month values ('2026','2026-11','11');
+insert into data_center.ads_time_month values ('2026','2026-12','12');
+insert into data_center.ads_time_month values ('2027','2027-01','1');
+insert into data_center.ads_time_month values ('2027','2027-02','2');
+insert into data_center.ads_time_month values ('2027','2027-03','3');
+insert into data_center.ads_time_month values ('2027','2027-04','4');
+insert into data_center.ads_time_month values ('2027','2027-05','5');
+insert into data_center.ads_time_month values ('2027','2027-06','6');
+insert into data_center.ads_time_month values ('2027','2027-07','7');
+insert into data_center.ads_time_month values ('2027','2027-08','8');
+insert into data_center.ads_time_month values ('2027','2027-09','9');
+insert into data_center.ads_time_month values ('2027','2027-10','10');
+insert into data_center.ads_time_month values ('2027','2027-11','11');
+insert into data_center.ads_time_month values ('2027','2027-12','12');
+
+
+-- 组织机构表
+drop table data_center.ads_orgnization;
+CREATE TABLE data_center.ads_orgnization (
+  f_org_code varchar(64) comment '总部机构编码',
+  f_org_name varchar(64) comment '总部机构名称',
+  org_code varchar(64) comment '机构编码',
+  org_name varchar(64) comment '机构名称',
+  level_code varchar(64) comment '权限编码',
+  rank_no int(10) comment '排序编码'
+) COMMENT='组织机构表';
+
+insert into data_center.ads_orgnization values ('GY2F00','包头能源','GY2F00','包头能源','100','1');
+insert into data_center.ads_orgnization values ('GY2F00','包头能源','2F00','能源本部',  '10000','8');
+insert into data_center.ads_orgnization values ('GY2F00','包头能源','2F01','运销分公司','10001','7');
+insert into data_center.ads_orgnization values ('GY2F00','包头能源','2F02','万利一矿',  '10002','3');
+insert into data_center.ads_orgnization values ('GY2F00','包头能源','2F04','水泉露天矿','10004','5');
+insert into data_center.ads_orgnization values ('GY2F00','包头能源','2F05','水泉选煤厂','10005','6');
+insert into data_center.ads_orgnization values ('GY2F00','包头能源','2F06','李家壕煤矿','10006','2');
+insert into data_center.ads_orgnization values ('GY2F00','包头能源','2F08','神山露天矿','10008','4');
+insert into data_center.ads_orgnization values ('GY2F00','包头能源','2F09','洗选分公司','10009','9');
+insert into data_center.ads_orgnization values ('GY2F00','包头能源','002300','矿业本部','10010','13');
+insert into data_center.ads_orgnization values ('GY2F00','包头能源','002303','公路分公司','10013','10');
+insert into data_center.ads_orgnization values ('GY2F00','包头能源','002305','集装站','10015','11');
+insert into data_center.ads_orgnization values ('GY2F00','包头能源','002301','建安公司','10011','12');
+insert into data_center.ads_orgnization values ('GY2F00','包头能源','002302','蒙格沁','10012','14');
+*/
+
+/*
+-- 一级页面 商品煤经营驾驶舱
+drop table data_center.ads_coal_cockpit_month_1;
+CREATE TABLE data_center.ads_coal_cockpit_month_1 (
+  org_code varchar(64) comment '单位编码',
+  org_name varchar(64) comment '单位名称',
+  level_code varchar(64) comment '权限预留',
+  date varchar(64) comment '日期',
+  index_name varchar(64) comment '指标名称', -- 利润总额75，净利润77，自产煤利润90，外购煤利润91，EBITDA(利润总额 + 利息支出 即财务费用58 + 资产折旧 + 无形资产摊销)，产量93，自产煤产量94，外购煤产量95，销售量97，自产煤销量98，外购煤销量102，营业收入1，营业成本13，营业利润69，自产煤销售收入3，外购煤销售收入7，自产煤售价107，外购煤售价108，外购煤成本45，自产煤完全成本83，自产煤变动成本84，自产煤固定成本85，专项储备年初数111，年末数126，提取数114，使用数117，剥离量139，掘进进尺145
+  index_code varchar(64) comment '指标编码',
+  amount_acc decimal(15, 2) comment '本年累计数',
+  amount_month decimal(15, 2) comment '本月实际数',
+  amount_acc_form decimal(15, 2) comment '去年累计数',
+  amount_month_form decimal(15, 2) comment '去年同月实际数',
+  amount_month_form_hb decimal(15, 2) comment '本年上月实际数',
+  amount_pre decimal(15, 2) comment '本年预算数',
+  amount_month_pre decimal(15, 2) comment '本月预算数'
+) COMMENT='商品煤经营驾驶舱';
+*/
+
+truncate table data_center.ads_coal_cockpit_month_1;
+insert into data_center.ads_coal_cockpit_month_1
+select
+      b.org_code,
+      b.org_name,
+      b.level_code,
+      substr(a.date,1,7),
+      a.index_name,
+      a.index_code,
+      a.total_amount_acc,
+      a.total_amount,
+      a.total_amount_acc_lastyear,
+      a.total_amount_lastyear,
+      a.total_amount_lastmonth,
+      a.total_amount_pre,
+      a.total_amount_pre/12
+      from data_center.ods_coal_produce_hq a
+      left join data_center.ads_orgnization b
+      on a.org_code = b.org_code
+      where index_code in ('75','77','90','91','58','93','94','95','97','98','102','1','13','69','3','7','107','108','45','83','84','85','111','126','114','117','139','145','17','16','20','21','28','25','29','32','53');  -- 20241112 : 增加 20、21、32、53、25 指标
+
+insert into data_center.ads_coal_cockpit_month_1
+select
+      b.org_code,
+      b.org_name,
+      b.level_code,
+      substr(a.date,1,7),
+      a.index_name,
+      a.index_code,
+      a.total_amount_acc,
+      a.total_amount,
+      a.total_amount_acc_lastyear,
+      a.total_amount_lastyear,
+      a.total_amount_lastmonth,
+      a.total_amount_pre,
+      a.total_amount_pre/12
+      from data_center.ods_coal_produce_bo a
+      left join data_center.ads_orgnization b
+      on a.org_code = b.org_code
+      where index_code in ('75','77','90','91','58','93','94','95','97','98','102','1','13','69','3','7','107','108','45','83','84','85','111','126','114','117','139','145','17','16','20','21','28','25','29','32','53');  -- 20241112 : 增加 20、21、32、53、25 指标
+
+-- 资产折旧，无形资产摊销
+insert into data_center.ads_coal_cockpit_month_1
+select
+      b.org_code,
+      b.org_name,
+      b.level_code,
+      substr(a.date,1,7),
+      '固定资产折旧',
+      '178',
+      a.total_amount/10000,
+      '0',
+      a.total_amount_lastyear/10000,
+      '0',
+      '0',
+      '0',
+      '0'
+      from data_center.ods_dep_and_amo_hq a
+      left join data_center.ads_orgnization b
+      on a.org_code = b.org_code
+      where index_code in ('2');
+
+insert into data_center.ads_coal_cockpit_month_1
+select
+      b.org_code,
+      b.org_name,
+      b.level_code,
+      substr(a.date,1,7),
+      '固定资产折旧',
+      '178',
+      a.total_amount/10000,
+      '0',
+      a.total_amount_lastyear/10000,
+      '0',
+      '0',
+      '0',
+      '0'
+      from data_center.ods_dep_and_amo_bo a
+      left join data_center.ads_orgnization b
+      on a.org_code = b.org_code
+      where index_code in ('2');
+
+insert into data_center.ads_coal_cockpit_month_1
+select
+      b.org_code,
+      b.org_name,
+      b.level_code,
+      substr(a.date,1,7),
+      '无形资产摊销',
+      '179',
+      a.total_amount/10000,
+      '0',
+      a.total_amount_lastyear/10000,
+      '0',
+      '0',
+      '0',
+      '0'
+      from data_center.ods_dep_and_amo_hq a
+      left join data_center.ads_orgnization b
+      on a.org_code = b.org_code
+      where index_code in ('2');
+
+insert into data_center.ads_coal_cockpit_month_1
+select
+      b.org_code,
+      b.org_name,
+      b.level_code,
+      substr(a.date,1,7),
+      '无形资产摊销',
+      '179',
+      a.total_amount/10000,
+      '0',
+      a.total_amount_lastyear/10000,
+      '0',
+      '0',
+      '0',
+      '0'
+      from data_center.ods_dep_and_amo_bo a
+      left join data_center.ads_orgnization b
+      on a.org_code = b.org_code
+      where index_code in ('2');
+
+-- 资产总额
+insert into data_center.ads_coal_cockpit_month_1
+select
+      b.org_code,
+      b.org_name,
+      b.level_code,
+      substr(a.date,1,7),
+      '资产总额',
+      '176',
+      a.end_balance,
+      '0',
+      a.amount_acc_form,
+      '0',
+      '0',
+      '0',
+      '0'
+      from data_center.ods_asset_balance_hq a
+      left join data_center.ads_orgnization b
+      on a.org_code = b.org_code
+      where index_code in ('78');
+
+insert into data_center.ads_coal_cockpit_month_1
+select
+      b.org_code,
+      b.org_name,
+      b.level_code,
+      substr(a.date,1,7),
+      '资产总额',
+      '176',
+      a.end_balance,
+      '0',
+      a.amount_acc_form,
+      '0',
+      '0',
+      '0',
+      '0'
+      from data_center.ods_asset_balance_bo a
+      left join data_center.ads_orgnization b
+      on a.org_code = b.org_code
+      where index_code in ('78');
+
+-- 资产负债率
+insert into data_center.ads_coal_cockpit_month_1
+select
+      b.org_code,
+      b.org_name,
+      b.level_code,
+      substr(a.date,1,7),
+      '资产负债率',
+      '177',
+      a.acc_year,
+      '0',
+      a.pre_last_year_month,
+      '0',
+      '0',
+      a.pre_year,
+      '0'
+      from data_center.ods_summary_index_hq a
+      left join data_center.ads_orgnization b
+      on a.org_code = b.org_code
+      where index_code in ('7');
+
+insert into data_center.ads_coal_cockpit_month_1
+select
+      b.org_code,
+      b.org_name,
+      b.level_code,
+      substr(a.date,1,7),
+      '资产负债率',
+      '177',
+      a.acc_year,
+      '0',
+      a.pre_last_year_month,
+      '0',
+      '0',
+      a.pre_year,
+      '0'
+      from data_center.ods_summary_index_bo a
+      left join data_center.ads_orgnization b
+      on a.org_code = b.org_code
+      where index_code in ('7');
+
+insert into data_center.ads_coal_cockpit_month_1
+select
+      a.org_code,
+      a.org_name,
+      a.level_code,
+      a.date,
+      '自产煤每吨完全成本',
+      '170',
+      case when coalesce(a.amount_acc,0) = 0 then 0 else coalesce(b.amount_acc,0)/coalesce(a.amount_acc,0) end,
+      case when coalesce(a.amount_month,0) = 0 then 0 else coalesce(b.amount_month,0)/coalesce(a.amount_month,0) end,
+      case when coalesce(a.amount_acc_form,0) = 0 then 0 else coalesce(b.amount_acc_form,0)/coalesce(a.amount_acc_form,0) end,
+      case when coalesce(a.amount_month_form,0) = 0 then 0 else coalesce(b.amount_month_form,0)/coalesce(a.amount_month_form,0) end,
+      case when coalesce(a.amount_month_form_hb,0) = 0 then 0 else coalesce(b.amount_month_form_hb,0)/coalesce(a.amount_month_form_hb,0) end,
+      case when coalesce(a.amount_pre,0) = 0 then 0 else coalesce(b.amount_pre,0)/coalesce(a.amount_pre,0) end,
+      case when coalesce(a.amount_month_pre,0) = 0 then 0 else coalesce(b.amount_month_pre,0)/coalesce(a.amount_month_pre,0) end       
+      from (select * from data_center.ads_coal_cockpit_month_1 where index_code = '94') a
+      left join (select * from data_center.ads_coal_cockpit_month_1 where index_code = '83') b
+      on a.org_code = b.org_code and a.date = b.date
+;
+
+insert into data_center.ads_coal_cockpit_month_1
+select
+      a.org_code,
+      a.org_name,
+      a.level_code,
+      a.date,
+      '自产煤每吨变动成本',
+      '171',
+      case when coalesce(a.amount_acc,0) = 0 then 0 else coalesce(b.amount_acc,0)/coalesce(a.amount_acc,0) end,
+      case when coalesce(a.amount_month,0) = 0 then 0 else coalesce(b.amount_month,0)/coalesce(a.amount_month,0) end,
+      case when coalesce(a.amount_acc_form,0) = 0 then 0 else coalesce(b.amount_acc_form,0)/coalesce(a.amount_acc_form,0) end,
+      case when coalesce(a.amount_month_form,0) = 0 then 0 else coalesce(b.amount_month_form,0)/coalesce(a.amount_month_form,0) end,
+      case when coalesce(a.amount_month_form_hb,0) = 0 then 0 else coalesce(b.amount_month_form_hb,0)/coalesce(a.amount_month_form_hb,0) end,
+      case when coalesce(a.amount_pre,0) = 0 then 0 else coalesce(b.amount_pre,0)/coalesce(a.amount_pre,0) end,
+      case when coalesce(a.amount_month_pre,0) = 0 then 0 else coalesce(b.amount_month_pre,0)/coalesce(a.amount_month_pre,0) end       
+      from (select * from data_center.ads_coal_cockpit_month_1 where index_code = '94') a
+      left join (select * from data_center.ads_coal_cockpit_month_1 where index_code = '84') b
+      on a.org_code = b.org_code and a.date = b.date
+;
+
+insert into data_center.ads_coal_cockpit_month_1
+select
+      a.org_code,
+      a.org_name,
+      a.level_code,
+      a.date,
+      '自产煤吨煤固定成本',
+      '174',
+      case when coalesce(a.amount_acc,0) = 0 then 0 else coalesce(b.amount_acc,0)/coalesce(a.amount_acc,0) end,
+      case when coalesce(a.amount_month,0) = 0 then 0 else coalesce(b.amount_month,0)/coalesce(a.amount_month,0) end,
+      case when coalesce(a.amount_acc_form,0) = 0 then 0 else coalesce(b.amount_acc_form,0)/coalesce(a.amount_acc_form,0) end,
+      case when coalesce(a.amount_month_form,0) = 0 then 0 else coalesce(b.amount_month_form,0)/coalesce(a.amount_month_form,0) end,
+      case when coalesce(a.amount_month_form_hb,0) = 0 then 0 else coalesce(b.amount_month_form_hb,0)/coalesce(a.amount_month_form_hb,0) end,
+      case when coalesce(a.amount_pre,0) = 0 then 0 else coalesce(b.amount_pre,0)/coalesce(a.amount_pre,0) end,
+      case when coalesce(a.amount_month_pre,0) = 0 then 0 else coalesce(b.amount_month_pre,0)/coalesce(a.amount_month_pre,0) end       
+      from (select * from data_center.ads_coal_cockpit_month_1 where index_code = '94') a
+      left join (select * from data_center.ads_coal_cockpit_month_1 where index_code = '85') b
+      on a.org_code = b.org_code and a.date = b.date
+;
+
+insert into data_center.ads_coal_cockpit_month_1
+select
+      a.org_code,
+      a.org_name,
+      a.level_code,
+      a.date,
+      '外购煤吨煤成本',
+      '175',
+      case when coalesce(a.amount_acc,0) = 0 then 0 else coalesce(b.amount_acc,0)/coalesce(a.amount_acc,0) end,
+      case when coalesce(a.amount_month,0) = 0 then 0 else coalesce(b.amount_month,0)/coalesce(a.amount_month,0) end,
+      case when coalesce(a.amount_acc_form,0) = 0 then 0 else coalesce(b.amount_acc_form,0)/coalesce(a.amount_acc_form,0) end,
+      case when coalesce(a.amount_month_form,0) = 0 then 0 else coalesce(b.amount_month_form,0)/coalesce(a.amount_month_form,0) end,
+      case when coalesce(a.amount_month_form_hb,0) = 0 then 0 else coalesce(b.amount_month_form_hb,0)/coalesce(a.amount_month_form_hb,0) end,
+      case when coalesce(a.amount_pre,0) = 0 then 0 else coalesce(b.amount_pre,0)/coalesce(a.amount_pre,0) end,
+      case when coalesce(a.amount_month_pre,0) = 0 then 0 else coalesce(b.amount_month_pre,0)/coalesce(a.amount_month_pre,0) end       
+      from (select * from data_center.ads_coal_cockpit_month_1 where index_code = '95') a
+      left join (select * from data_center.ads_coal_cockpit_month_1 where index_code = '45') b
+      on a.org_code = b.org_code and a.date = b.date
+;
+
+insert into data_center.ads_coal_cockpit_month_1
+select
+      a.org_code,
+      a.org_name,
+      a.level_code,
+      a.date,
+      'EBITDA',
+      '172',
+      coalesce(b.amount_acc,0) + coalesce(a.amount_acc,0) + coalesce(c.amount_acc,0) + coalesce(d.amount_acc,0),
+      coalesce(b.amount_month,0) + coalesce(a.amount_month,0) + coalesce(c.amount_month,0) + coalesce(d.amount_month,0),
+      coalesce(b.amount_acc_form,0) + coalesce(a.amount_acc_form,0) + coalesce(c.amount_acc_form,0) + coalesce(d.amount_acc_form,0),
+      coalesce(b.amount_month_form,0) + coalesce(a.amount_month_form,0) + coalesce(c.amount_month_form,0) + coalesce(d.amount_month_form,0),
+      coalesce(b.amount_month_form_hb,0) + coalesce(a.amount_month_form_hb,0) + coalesce(c.amount_month_form_hb,0) + coalesce(d.amount_month_form_hb,0),
+      coalesce(b.amount_pre,0) + coalesce(a.amount_pre,0) + coalesce(c.amount_pre,0) + coalesce(d.amount_pre,0),
+      coalesce(b.amount_month_pre,0) + coalesce(a.amount_month_pre,0) + coalesce(c.amount_month_pre,0) + coalesce(d.amount_month_pre,0)
+      from (select * from data_center.ads_coal_cockpit_month_1 where index_code = '75') a     -- 利润总额
+      left join (select * from data_center.ads_coal_cockpit_month_1 where index_code = '58') b    -- 利息支出 ，即财务费用指标
+      on a.org_code = b.org_code and a.date = b.date
+      left join (select * from data_center.ads_coal_cockpit_month_1 where index_code = '178') c
+      on a.org_code = c.org_code and a.date = c.date
+      left join (select * from data_center.ads_coal_cockpit_month_1 where index_code = '179') d
+      on a.org_code = d.org_code and a.date = d.date     
+;
+
+-- 包能，运销取结算汇总
+insert into data_center.ads_coal_cockpit_month_1
+select
+      b.org_code,
+      b.org_name,
+      b.level_code,
+      substr(a.date,1,7),
+      '车板价',
+      '173',
+      a.price_taxex_acc,
+      a.price_taxex_month,
+      '0',
+      '0',
+      '0',
+      '0',
+      '0'
+      from data_center.ods_coal_settlement a
+      left join data_center.ads_orgnization b
+      on a.org_code = b.org_code
+      where index_code in ('31','32');
+
+-- 四大煤矿取0105
+insert into data_center.ads_coal_cockpit_month_1
+select
+      b.org_code,
+      b.org_name,
+      b.level_code,
+      substr(a.date,1,7),
+      '车板价',
+      '173',
+      a.unit_price_acc,
+      a.unit_price,
+      a.unit_price_acc_lastyear,
+      a.unit_price_lastyear,
+      a.unit_price_lastmonth,
+      a.unit_price_pre,
+      '0'
+      from data_center.ods_coal_produce_bo a
+      left join data_center.ads_orgnization b
+      on a.org_code = b.org_code
+      where index_code in ('2')
+      and b.org_name in ('万利一矿','水泉露天矿','李家壕煤矿','神山露天矿');
+
+-- 洗选取0105
+insert into data_center.ads_coal_cockpit_month_1
+select
+      b.org_code,
+      b.org_name,
+      b.level_code,
+      substr(a.date,1,7),
+      '车板价',
+      '173',
+      a.unit_price_acc,
+      a.unit_price,
+      a.unit_price_acc_lastyear,
+      a.unit_price_lastyear,
+      a.unit_price_lastmonth,
+      a.unit_price_pre,
+      '0'
+      from data_center.ods_coal_produce_bo a
+      left join data_center.ads_orgnization b
+      on a.org_code = b.org_code
+      where index_code in ('7')
+      and b.org_name in ('洗选分公司');
+
+update data_center.ads_coal_cockpit_month_1
+   set amount_acc = '255.7' where date = '2024-09' and org_code = 'GY2F00' and index_code = '170';
+update data_center.ads_coal_cockpit_month_1
+   set amount_acc = '252.44' where date = '2024-08' and org_code = 'GY2F00' and index_code = '170';
+update data_center.ads_coal_cockpit_month_1
+   set amount_acc = '256.56' where date = '2024-07' and org_code = 'GY2F00' and index_code = '170';
+update data_center.ads_coal_cockpit_month_1
+   set amount_acc = '232.37' where date = '2024-06' and org_code = 'GY2F00' and index_code = '170';
+
+
+
+/*
+-- 二级页面 商品煤销售收入分析
+drop table data_center.ads_coal_income_month_2;
+CREATE TABLE data_center.ads_coal_income_month_2 (
+  org_code varchar(64) comment '单位编码',
+  org_name varchar(64) comment '单位名称',
+  level_code varchar(64) comment '权限预留',
+  date varchar(64) comment '日期',
+  index_name varchar(64) comment '指标名称', -- 自产煤，外购煤，公路收费
+  index_code varchar(64) comment '指标编码',
+  amount_acc decimal(15, 2) comment '本年累计数',
+  amount_month decimal(15, 2) comment '本月实际数',
+  amount_acc_form decimal(15, 2) comment '去年累计数',
+  amount_month_form decimal(15, 2) comment '去年同月实际数',
+  amount_month_form_hb decimal(15, 2) comment '本年上月实际数',  
+  amount_pre decimal(15, 2) comment '本年预算数',
+  amount_month_pre decimal(15, 2) comment '本月预算数'  
+) COMMENT='商品煤销售收入分析';
+*/
+
+truncate table data_center.ads_coal_income_month_2;
+insert into data_center.ads_coal_income_month_2
+select
+      b.org_code,
+      b.org_name,
+      b.level_code,
+      substr(a.date,1,7),
+      a.index_name,
+      a.index_code,
+      a.total_amount_acc,
+      a.total_amount,
+      a.total_amount_acc_lastyear,
+      a.total_amount_lastyear,
+      a.total_amount_lastmonth,
+      a.total_amount_pre,
+      a.total_amount_pre/12
+      from data_center.ods_coal_produce_hq a
+      left join data_center.ads_orgnization b
+      on a.org_code = b.org_code
+      where index_code in ('3','7')
+      and b.org_name <> '运销分公司';
+
+insert into data_center.ads_coal_income_month_2
+select
+      b.org_code,
+      b.org_name,
+      b.level_code,
+      substr(a.date,1,7),
+      a.index_name,
+      a.index_code,
+      a.total_amount_acc,
+      a.total_amount,
+      a.total_amount_acc_lastyear,
+      a.total_amount_lastyear,
+      a.total_amount_lastmonth,
+      a.total_amount_pre,
+      a.total_amount_pre/12
+      from data_center.ods_coal_produce_bo a
+      left join data_center.ads_orgnization b
+      on a.org_code = b.org_code
+      where index_code in ('3','7')
+      and b.org_name <> '运销分公司';
+
+-- 插入公路收费
+insert into data_center.ads_coal_income_month_2
+select
+      b.org_code,
+      b.org_name,
+      b.level_code,
+      substr(a.date,1,7),
+      a.index_name,
+      a.index_code,
+      a.total_amount_acc,
+      a.total_amount,
+      a.total_amount_acc_lastyear,
+      a.total_amount_lastyear,
+      a.total_amount_lastmonth,
+      a.total_amount_pre,
+      a.total_amount_pre/12
+      from data_center.ods_coal_produce_bo a
+      left join data_center.ads_orgnization b
+      on a.org_code = b.org_code
+      where index_code in ('2')
+      and b.org_name = '公路分公司';
+
+-- 插入包能 公路收费
+insert into data_center.ads_coal_income_month_2
+select
+      'GY2F00',
+      '包头能源',
+      '100',
+      substr(a.date,1,7),
+      a.index_name,
+      a.index_code,
+      a.total_amount_acc,
+      a.total_amount,
+      a.total_amount_acc_lastyear,
+      a.total_amount_lastyear,
+      a.total_amount_lastmonth,
+      a.total_amount_pre,
+      a.total_amount_pre/12
+      from data_center.ods_coal_produce_bo a
+      left join data_center.ads_orgnization b
+      on a.org_code = b.org_code
+      where index_code in ('2')
+      and b.org_name = '公路分公司';
+
+-- 插入运销
+insert into data_center.ads_coal_income_month_2
+select
+      b.org_code,
+      b.org_name,
+      b.level_code,
+      substr(a.date,1,7),
+      '2.外购煤销售收入',
+      '7',
+      a.total_acc/10000,
+      a.total_month/10000,
+      '0',
+      '0',
+      '0',
+      '0',
+      '0'
+      from data_center.ods_coal_settlement a
+      left join data_center.ads_orgnization b
+      on a.org_code = b.org_code
+      where index_code in ('31');
+
+
+/*
+-- 二级页面 商品煤产量与销量分析
+drop table data_center.ads_coal_yield_sales_month_2;
+CREATE TABLE data_center.ads_coal_yield_sales_month_2 (
+  org_code varchar(64) comment '单位编码',
+  org_name varchar(64) comment '单位名称',
+  level_code varchar(64) comment '权限预留',
+  date varchar(64) comment '日期',
+  index_name varchar(64) comment '指标名称', -- 商品煤量，自产煤量，外购煤量，商品煤销量，自产煤销量，外购煤销量
+  index_code varchar(64) comment '指标编码',
+  amount_acc decimal(15, 2) comment '本年累计数',
+  amount_month decimal(15, 2) comment '本月实际数',
+  amount_acc_form decimal(15, 2) comment '去年累计数',
+  amount_month_form decimal(15, 2) comment '去年同月实际数',
+  amount_month_form_hb decimal(15, 2) comment '本年上月实际数',  
+  amount_pre decimal(15, 2) comment '本年预算数',
+  amount_month_pre decimal(15, 2) comment '本月预算数'  
+) COMMENT='商品煤产量与销量分析';
+*/
+
+truncate table data_center.ads_coal_yield_sales_month_2;
+insert into data_center.ads_coal_yield_sales_month_2
+select
+      b.org_code,
+      b.org_name,
+      b.level_code,
+      substr(a.date,1,7),
+      a.index_name,
+      a.index_code,
+      a.total_amount_acc,
+      a.total_amount,
+      a.total_amount_acc_lastyear,
+      a.total_amount_lastyear,
+      a.total_amount_lastmonth,
+      a.total_amount_pre,
+      a.total_amount_pre/12
+      from data_center.ods_coal_produce_hq a
+      left join data_center.ads_orgnization b
+      on a.org_code = b.org_code
+      where index_code in ('93','94','95','97','98','102')
+      and b.org_name <> '运销分公司';
+
+insert into data_center.ads_coal_yield_sales_month_2
+select
+      b.org_code,
+      b.org_name,
+      b.level_code,
+      substr(a.date,1,7),
+      a.index_name,
+      a.index_code,
+      a.total_amount_acc,
+      a.total_amount,
+      a.total_amount_acc_lastyear,
+      a.total_amount_lastyear,
+      a.total_amount_lastmonth,
+      a.total_amount_pre,
+      a.total_amount_pre/12
+      from data_center.ods_coal_produce_bo a
+      left join data_center.ads_orgnization b
+      on a.org_code = b.org_code
+      where index_code in ('93','94','95','97','98','102')
+      and b.org_name <> '运销分公司';
+
+-- 插入运销
+insert into data_center.ads_coal_yield_sales_month_2
+select
+      b.org_code,
+      b.org_name,
+      b.level_code,
+      substr(a.date,1,7),
+      '一、产量',
+      '93',
+      a.amount_acc/10000,
+      a.amount_month/10000,
+      '0',
+      '0',
+      '0',
+      '0',
+      '0'
+      from data_center.ods_coal_settlement a
+      left join data_center.ads_orgnization b
+      on a.org_code = b.org_code
+      where index_code in ('31');
+
+insert into data_center.ads_coal_yield_sales_month_2
+select
+      b.org_code,
+      b.org_name,
+      b.level_code,
+      substr(a.date,1,7),
+      '外购煤量',
+      '95',
+      a.amount_acc/10000,
+      a.amount_month/10000,
+      '0',
+      '0',
+      '0',
+      '0',
+      '0'
+      from data_center.ods_coal_settlement a
+      left join data_center.ads_orgnization b
+      on a.org_code = b.org_code
+      where index_code in ('31');
+
+insert into data_center.ads_coal_yield_sales_month_2
+select
+      b.org_code,
+      b.org_name,
+      b.level_code,
+      substr(a.date,1,7),
+      '二、销售量',
+      '97',
+      a.amount_acc/10000,
+      a.amount_month/10000,
+      '0',
+      '0',
+      '0',
+      '0',
+      '0'
+      from data_center.ods_coal_settlement a
+      left join data_center.ads_orgnization b
+      on a.org_code = b.org_code
+      where index_code in ('31');
+
+insert into data_center.ads_coal_yield_sales_month_2
+select
+      b.org_code,
+      b.org_name,
+      b.level_code,
+      substr(a.date,1,7),
+      '外购煤销量',
+      '102',
+      a.amount_acc/10000,
+      a.amount_month/10000,
+      '0',
+      '0',
+      '0',
+      '0',
+      '0'
+      from data_center.ods_coal_settlement a
+      left join data_center.ads_orgnization b
+      on a.org_code = b.org_code
+      where index_code in ('31');
+
+/*
+-- 二级页面 商品煤销售单价分析
+drop table data_center.ads_coal_sale_price_month_2;
+CREATE TABLE data_center.ads_coal_sale_price_month_2 (
+  org_code varchar(64) comment '单位编码',
+  org_name varchar(64) comment '单位名称',
+  level_code varchar(64) comment '权限预留',
+  date varchar(64) comment '日期',
+  index_name varchar(64) comment '指标名称', -- 自产煤售价，外购煤售价
+  index_code varchar(64) comment '指标编码',
+  amount_acc decimal(15, 2) comment '本年累计数',
+  amount_month decimal(15, 2) comment '本月实际数',
+  amount_acc_form decimal(15, 2) comment '去年累计数',
+  amount_month_form decimal(15, 2) comment '去年同月实际数',
+  amount_month_form_hb decimal(15, 2) comment '本年上月实际数',  
+  amount_pre decimal(15, 2) comment '本年预算数',
+  amount_month_pre decimal(15, 2) comment '本月预算数'  
+) COMMENT='商品煤销售单价分析';
+*/
+
+truncate table data_center.ads_coal_sale_price_month_2;
+insert into data_center.ads_coal_sale_price_month_2
+select
+      b.org_code,
+      b.org_name,
+      b.level_code,
+      substr(a.date,1,7),
+      a.index_name,
+      a.index_code,
+      a.total_amount_acc,
+      a.total_amount,
+      a.total_amount_acc_lastyear,
+      a.total_amount_lastyear,
+      a.total_amount_lastmonth,
+      a.total_amount_pre,
+      a.total_amount_pre
+      from data_center.ods_coal_produce_hq a
+      left join data_center.ads_orgnization b
+      on a.org_code = b.org_code
+      where index_code in ('107','108');
+
+insert into data_center.ads_coal_sale_price_month_2
+select
+      b.org_code,
+      b.org_name,
+      b.level_code,
+      substr(a.date,1,7),
+      a.index_name,
+      a.index_code,
+      a.total_amount_acc,
+      a.total_amount,
+      a.total_amount_acc_lastyear,
+      a.total_amount_lastyear,
+      a.total_amount_lastmonth,
+      a.total_amount_pre,
+      a.total_amount_pre
+      from data_center.ods_coal_produce_bo a
+      left join data_center.ads_orgnization b
+      on a.org_code = b.org_code
+      where index_code in ('107','108');
+
+-- 包能，运销取结算汇总
+insert into data_center.ads_coal_sale_price_month_2
+select
+      b.org_code,
+      b.org_name,
+      b.level_code,
+      substr(a.date,1,7),
+      '车板价',
+      '173',
+      a.price_taxex_acc,
+      a.price_taxex_month,
+      '0',
+      '0',
+      '0',
+      '0',
+      '0'
+      from data_center.ods_coal_settlement a
+      left join data_center.ads_orgnization b
+      on a.org_code = b.org_code
+      where index_code in ('31','32');
+
+-- 四大煤矿、洗选取0105
+insert into data_center.ads_coal_sale_price_month_2
+select
+      b.org_code,
+      b.org_name,
+      b.level_code,
+      substr(a.date,1,7),
+      '车板价',
+      '173',
+      a.unit_price_acc,
+      a.unit_price,
+      a.unit_price_acc_lastyear,
+      a.unit_price_lastyear,
+      a.unit_price_lastmonth,
+      a.unit_price_pre,
+      '0'
+      from data_center.ods_coal_produce_bo a
+      left join data_center.ads_orgnization b
+      on a.org_code = b.org_code
+      where index_code in ('2')
+      and b.org_name in ('万利一矿','水泉露天矿','李家壕煤矿','神山露天矿','洗选分公司');
+
+
+/*
+-- 二级页面 商品煤营业成本分析
+drop table data_center.ads_coal_operating_cost_month_2;
+CREATE TABLE data_center.ads_coal_operating_cost_month_2 (
+  org_code varchar(64) comment '单位编码',
+  org_name varchar(64) comment '单位名称',
+  level_code varchar(64) comment '权限预留',
+  date varchar(64) comment '日期',
+  index_name varchar(64) comment '指标名称', -- 自产煤固定成本，自产煤变动成本，自产煤完全成本，外购煤主营业务成本
+  index_code varchar(64) comment '指标编码',
+  amount_acc decimal(15, 2) comment '本年累计数',
+  amount_month decimal(15, 2) comment '本月实际数',
+  amount_acc_form decimal(15, 2) comment '去年累计数',
+  amount_month_form decimal(15, 2) comment '去年同月实际数',
+  amount_month_form_hb decimal(15, 2) comment '本年上月实际数',
+  amount_pre decimal(15, 2) comment '本年预算数',
+  amount_month_pre decimal(15, 2) comment '本月预算数'
+) COMMENT='商品煤营业成本分析';
+*/
+
+truncate table data_center.ads_coal_operating_cost_month_2;
+insert into data_center.ads_coal_operating_cost_month_2
+select
+      b.org_code,
+      b.org_name,
+      b.level_code,
+      substr(a.date,1,7),
+      a.index_name,
+      a.index_code,
+      a.total_amount_acc,
+      a.total_amount,
+      a.total_amount_acc_lastyear,
+      a.total_amount_lastyear,
+      a.total_amount_lastmonth,
+      a.total_amount_pre,
+      a.total_amount_pre/12
+      from data_center.ods_coal_produce_hq a
+      left join data_center.ads_orgnization b
+      on a.org_code = b.org_code
+      where index_code in ('83','45','84','85','94','102');
+
+insert into data_center.ads_coal_operating_cost_month_2
+select
+      b.org_code,
+      b.org_name,
+      b.level_code,
+      substr(a.date,1,7),
+      a.index_name,
+      a.index_code,
+      a.total_amount_acc,
+      a.total_amount,
+      a.total_amount_acc_lastyear,
+      a.total_amount_lastyear,
+      a.total_amount_lastmonth,
+      a.total_amount_pre,
+      a.total_amount_pre/12
+      from data_center.ods_coal_produce_bo a
+      left join data_center.ads_orgnization b
+      on a.org_code = b.org_code
+      where index_code in ('83','45','84','85','94','102');
+
+insert into data_center.ads_coal_operating_cost_month_2
+select
+      a.org_code,
+      a.org_name,
+      a.level_code,
+      a.date,
+      '自产煤每吨完全成本',
+      '170',
+      case when coalesce(a.amount_acc,0) = 0 then 0 else coalesce(b.amount_acc,0)/coalesce(a.amount_acc,0) end,
+      case when coalesce(a.amount_month,0) = 0 then 0 else coalesce(b.amount_month,0)/coalesce(a.amount_month,0) end,
+      case when coalesce(a.amount_acc_form,0) = 0 then 0 else coalesce(b.amount_acc_form,0)/coalesce(a.amount_acc_form,0) end,
+      case when coalesce(a.amount_month_form,0) = 0 then 0 else coalesce(b.amount_month_form,0)/coalesce(a.amount_month_form,0) end,
+      '0',
+      case when coalesce(a.amount_pre,0) = 0 then 0 else coalesce(b.amount_pre,0)/coalesce(a.amount_pre,0) end,
+      case when coalesce(a.amount_month_pre,0) = 0 then 0 else coalesce(b.amount_month_pre,0)/coalesce(a.amount_month_pre,0) end   
+      from (select * from data_center.ads_coal_operating_cost_month_2 where index_code = '94') a
+      left join (select * from data_center.ads_coal_operating_cost_month_2 where index_code = '83') b
+      on a.org_code = b.org_code and a.date = b.date
+;
+
+insert into data_center.ads_coal_operating_cost_month_2
+select
+      a.org_code,
+      a.org_name,
+      a.level_code,
+      a.date,
+      '自产煤每吨变动成本',
+      '171',
+      case when coalesce(a.amount_acc,0) = 0 then 0 else coalesce(b.amount_acc,0)/coalesce(a.amount_acc,0) end,
+      case when coalesce(a.amount_month,0) = 0 then 0 else coalesce(b.amount_month,0)/coalesce(a.amount_month,0) end,
+      case when coalesce(a.amount_acc_form,0) = 0 then 0 else coalesce(b.amount_acc_form,0)/coalesce(a.amount_acc_form,0) end,
+      case when coalesce(a.amount_month_form,0) = 0 then 0 else coalesce(b.amount_month_form,0)/coalesce(a.amount_month_form,0) end,
+      '0',
+      case when coalesce(a.amount_pre,0) = 0 then 0 else coalesce(b.amount_pre,0)/coalesce(a.amount_pre,0) end,
+      case when coalesce(a.amount_month_pre,0) = 0 then 0 else coalesce(b.amount_month_pre,0)/coalesce(a.amount_month_pre,0) end   
+      from (select * from data_center.ads_coal_operating_cost_month_2 where index_code = '94') a
+      left join (select * from data_center.ads_coal_operating_cost_month_2 where index_code = '84') b
+      on a.org_code = b.org_code and a.date = b.date
+;
+
+insert into data_center.ads_coal_operating_cost_month_2
+select
+      a.org_code,
+      a.org_name,
+      a.level_code,
+      a.date,
+      '自产煤每吨固定成本',
+      '172',
+      case when coalesce(a.amount_acc,0) = 0 then 0 else coalesce(b.amount_acc,0)/coalesce(a.amount_acc,0) end,
+      case when coalesce(a.amount_month,0) = 0 then 0 else coalesce(b.amount_month,0)/coalesce(a.amount_month,0) end,
+      case when coalesce(a.amount_acc_form,0) = 0 then 0 else coalesce(b.amount_acc_form,0)/coalesce(a.amount_acc_form,0) end,
+      case when coalesce(a.amount_month_form,0) = 0 then 0 else coalesce(b.amount_month_form,0)/coalesce(a.amount_month_form,0) end,
+      '0',
+      case when coalesce(a.amount_pre,0) = 0 then 0 else coalesce(b.amount_pre,0)/coalesce(a.amount_pre,0) end,
+      case when coalesce(a.amount_month_pre,0) = 0 then 0 else coalesce(b.amount_month_pre,0)/coalesce(a.amount_month_pre,0) end   
+      from (select * from data_center.ads_coal_operating_cost_month_2 where index_code = '94') a
+      left join (select * from data_center.ads_coal_operating_cost_month_2 where index_code = '85') b
+      on a.org_code = b.org_code and a.date = b.date
+;
+
+insert into data_center.ads_coal_operating_cost_month_2
+select
+      a.org_code,
+      a.org_name,
+      a.level_code,
+      a.date,
+      '外购煤每吨成本',
+      '173',
+      case when coalesce(a.amount_acc,0) = 0 then 0 else coalesce(b.amount_acc,0)/coalesce(a.amount_acc,0) end,
+      case when coalesce(a.amount_month,0) = 0 then 0 else coalesce(b.amount_month,0)/coalesce(a.amount_month,0) end,
+      case when coalesce(a.amount_acc_form,0) = 0 then 0 else coalesce(b.amount_acc_form,0)/coalesce(a.amount_acc_form,0) end,
+      case when coalesce(a.amount_month_form,0) = 0 then 0 else coalesce(b.amount_month_form,0)/coalesce(a.amount_month_form,0) end,
+      '0',
+      case when coalesce(a.amount_pre,0) = 0 then 0 else coalesce(b.amount_pre,0)/coalesce(a.amount_pre,0) end,
+      case when coalesce(a.amount_month_pre,0) = 0 then 0 else coalesce(b.amount_month_pre,0)/coalesce(a.amount_month_pre,0) end   
+      from (select * from data_center.ads_coal_operating_cost_month_2 where index_code = '102') a
+      left join (select * from data_center.ads_coal_operating_cost_month_2 where index_code = '45') b
+      on a.org_code = b.org_code and a.date = b.date
+;
+
+/*
+-- 二级页面 商品煤利润情况分析
+drop table data_center.ads_coal_profit_month_2;
+CREATE TABLE data_center.ads_coal_profit_month_2 (
+  org_code varchar(64) comment '单位编码',
+  org_name varchar(64) comment '单位名称',
+  level_code varchar(64) comment '权限预留',
+  date varchar(64) comment '日期',
+  index_name varchar(64) comment '指标名称', -- 利润总额，自产煤利润，外购煤利润，净利润
+  index_code varchar(64) comment '指标编码',
+  amount_acc decimal(15, 2) comment '本年累计数',
+  amount_month decimal(15, 2) comment '本月实际数',
+  amount_acc_form decimal(15, 2) comment '去年累计数',
+  amount_month_form decimal(15, 2) comment '去年同月实际数',
+  amount_month_form_hb decimal(15, 2) comment '本年上月实际数',
+  amount_pre decimal(15, 2) comment '本年预算数',
+  amount_month_pre decimal(15, 2) comment '本月预算数'
+) COMMENT='商品煤利润情况分析';
+*/
+
+truncate table data_center.ads_coal_profit_month_2;
+insert into data_center.ads_coal_profit_month_2
+select
+      b.org_code,
+      b.org_name,
+      b.level_code,
+      substr(a.date,1,7),
+      a.index_name,
+      a.index_code,
+      a.total_amount_acc,
+      a.total_amount,
+      a.total_amount_acc_lastyear,
+      a.total_amount_lastyear,
+      a.total_amount_lastmonth,
+      a.total_amount_pre,
+      a.total_amount_pre/12
+      from data_center.ods_coal_produce_hq a
+      left join data_center.ads_orgnization b
+      on a.org_code = b.org_code
+      where index_code in ('75','77','90','91');
+
+insert into data_center.ads_coal_profit_month_2
+select
+      b.org_code,
+      b.org_name,
+      b.level_code,
+      substr(a.date,1,7),
+      a.index_name,
+      a.index_code,
+      a.total_amount_acc,
+      a.total_amount,
+      a.total_amount_acc_lastyear,
+      a.total_amount_lastyear,
+      a.total_amount_lastmonth,
+      a.total_amount_pre,
+      a.total_amount_pre/12
+      from data_center.ods_coal_produce_bo a
+      left join data_center.ads_orgnization b
+      on a.org_code = b.org_code
+      where index_code in ('75','77','90','91');
+
+/*
+-- 二级页面 不同燃值商品煤分析
+drop table data_center.ads_coal_fuel_value_month_2;
+CREATE TABLE data_center.ads_coal_fuel_value_month_2 (
+  org_code varchar(64) comment '单位编码',
+  org_name varchar(64) comment '单位名称',
+  level_code varchar(64) comment '权限预留',
+  date varchar(64) comment '日期',
+  index_name varchar(64) comment '指标名称', -- 5000合计，4500合计，3800合计，煤矸石合计
+  index_code varchar(64) comment '指标编码',
+  amount_month decimal(15, 2) comment '本月结算数量',
+  price_taxex_month decimal(15, 2) comment '本月不含税单价', 
+  income_taxex_month decimal(15, 2) comment '本月不含税销售收入',
+  amount_acc decimal(15, 2) comment '累计结算数量',
+  price_taxex_acc decimal(15, 2) comment '累计不含税单价', 
+  income_taxex_acc decimal(15, 2) comment '累计不含税销售收入'
+) COMMENT='不同燃值商品煤分析';
+*/
+
+truncate table data_center.ads_coal_fuel_value_month_2;
+insert into data_center.ads_coal_fuel_value_month_2
+select
+      b.org_code,
+      b.org_name,
+      b.level_code,
+      substr(a.date,1,7),
+      a.index_name,
+      a.index_code,
+      a.amount_month,
+      a.price_taxex_month,
+      a.income_taxex_month,
+      a.amount_acc,
+      a.price_taxex_acc,
+      a.income_taxex_acc
+      from data_center.ods_coal_settlement a
+      left join data_center.ads_orgnization b
+      on a.org_code = b.org_code
+      where index_code in ('37','38','39','40','41','42','43','44','45','46');
+
+/*
+-- 二级页面 商品煤按区域销售分析
+drop table data_center.ads_coal_sale_area_month_2;
+CREATE TABLE data_center.ads_coal_sale_area_month_2 (
+  org_code varchar(64) comment '单位编码',
+  org_name varchar(64) comment '单位名称',
+  level_code varchar(64) comment '权限预留',
+  date varchar(64) comment '日期',
+  index_name varchar(64) comment '指标名称', -- 区内，区外，神混5000煤种(区外），神混4500煤种(区外），神混4500煤种(区内），神混3800煤种(区内），贫瘦3800煤种（区内）
+  index_code varchar(64) comment '指标编码',
+  amount_month decimal(15, 2) comment '本月结算数量',
+  price_taxex_month decimal(15, 2) comment '本月不含税单价', 
+  income_taxex_month decimal(15, 2) comment '本月不含税销售收入',
+  amount_acc decimal(15, 2) comment '累计结算数量',
+  price_taxex_acc decimal(15, 2) comment '累计不含税单价', 
+  income_taxex_acc decimal(15, 2) comment '累计不含税销售收入'
+) COMMENT='商品煤按区域销售分析';
+*/
+
+truncate table data_center.ads_coal_sale_area_month_2;
+insert into data_center.ads_coal_sale_area_month_2
+select
+      b.org_code,
+      b.org_name,
+      b.level_code,
+      substr(a.date,1,7),
+      a.index_name,
+      a.index_code,
+      a.amount_month,
+      a.price_taxex_month,
+      a.income_taxex_month,
+      a.amount_acc,
+      a.price_taxex_acc,
+      a.income_taxex_acc
+      from data_center.ods_coal_settlement a
+      left join data_center.ads_orgnization b
+      on a.org_code = b.org_code      
+      where index_code in ('35','36','1','4','7','8','10','13','14','16','17','20');
+
+/*
+-- 二级页面 经济增加值
+drop table data_center.ads_eva_month_2;
+CREATE TABLE data_center.ads_eva_month_2 (
+  org_code varchar(64) comment '单位编码',
+  org_name varchar(64) comment '单位名称',
+  level_code varchar(64) comment '权限预留',
+  date varchar(64) comment '日期',
+  index_name varchar(64) comment '指标名称', -- 经济增加值19，税后净营业利润1，平均资本成本率14，调整后资本10，净利润2，平均所有者权益11，利息支出3，研究开发费4，平均带息负债12，平均在建工程13
+  index_code varchar(64) comment '指标编码',
+  amount_pre decimal(15, 2) comment '本年预算',  
+  amount_acc decimal(15, 2) comment '本年累计',
+  amount_acc_pre decimal(15, 2) comment '上年同期累计总额',
+  amount_vs_lastyear decimal(15, 2) comment '同比',
+  amount_vs_pre decimal(15, 2) comment '进度比'
+) COMMENT='经济增加值分析';
+*/
+
+truncate table data_center.ads_eva_month_2;
+insert into data_center.ads_eva_month_2
+select
+      b.org_code,
+      b.org_name,
+      b.level_code,
+      substr(a.date,1,7),
+      a.index_name,
+      a.index_code,
+      a.amount_pre,
+      a.amount_acc,
+      a.amount_acc_pre,
+      a.amount_vs_lastyear,
+      a.amount_vs_pre
+      from data_center.ods_eva_hq a
+      left join data_center.ads_orgnization b
+      on a.org_code = b.org_code      
+      where index_code in ('19','1','14','10','2','11','3','4','12','13');
+
+insert into data_center.ads_eva_month_2
+select
+      b.org_code,
+      b.org_name,
+      b.level_code,
+      substr(a.date,1,7),
+      a.index_name,
+      a.index_code,
+      a.amount_pre,
+      a.amount_acc,
+      a.amount_acc_pre,
+      a.amount_vs_lastyear,
+      a.amount_vs_pre
+      from data_center.ods_eva_bo a
+      left join data_center.ads_orgnization b
+      on a.org_code = b.org_code    
+      where index_code in ('19','1','14','10','2','11','3','4','12','13');
+
+/*
+-- 二级页面 专项储备
+drop table data_center.ads_special_reserve_month_2;
+CREATE TABLE data_center.ads_special_reserve_month_2 (
+  org_code varchar(64) comment '单位编码',
+  org_name varchar(64) comment '单位名称',
+  level_code varchar(64) comment '权限预留',
+  date varchar(64) comment '日期',
+  reserve decimal(15, 2) comment '本年储备结余',  
+  reserve_pre decimal(15, 2) comment '本年储备结余预算',
+  extract_safe decimal(15, 2) comment '本年安全费提取',  
+  extract_safe_pre decimal(15, 2) comment '本年安全费提取预算',
+  use_safe decimal(15, 2) comment '本年安全费使用',  
+  use_safe_pre decimal(15, 2) comment '本年安全费使用预算',
+  extract_maintain decimal(15, 2) comment '本年维简费提取',  
+  extract_maintain_pre decimal(15, 2) comment '本年维简费提取预算',
+  use_maintain decimal(15, 2) comment '本年维简费使用',  
+  use_maintain_pre decimal(15, 2) comment '本年维简费使用预算'
+) COMMENT='专项储备情况--二级页面';
+*/
+
+truncate table data_center.ads_special_reserve_month_2;
+insert into data_center.ads_special_reserve_month_2
+select 
+      org_code,
+      org_name,
+      level_code,
+      date1,
+      sum(reserve),
+      sum(reserve_pre),
+      sum(extract_safe),
+      sum(extract_safe_pre),
+      sum(use_safe),
+      sum(use_safe_pre),
+      sum(extract_maintain),
+      sum(extract_maintain_pre),
+      sum(use_maintain),
+      sum(use_maintain_pre)
+      from
+      (select
+      b.org_code,
+      b.org_name,
+      b.level_code,
+      substr(a.date,1,7) as date1,
+      case when a.index_code = '126' then a.total_amount_acc else '0' end as reserve,
+      case when a.index_code = '126' then a.total_amount_pre else '0' end as reserve_pre,
+      case when a.index_code = '116' then a.total_amount_acc else '0' end as extract_safe,
+      case when a.index_code = '116' then a.total_amount_pre else '0' end as extract_safe_pre,
+      case when a.index_code = '119' then a.total_amount_acc else '0' end as use_safe,
+      case when a.index_code = '119' then a.total_amount_pre else '0' end as use_safe_pre,
+      case when a.index_code = '115' then a.total_amount_acc else '0' end as extract_maintain,
+      case when a.index_code = '115' then a.total_amount_pre else '0' end as extract_maintain_pre,
+      case when a.index_code = '118' then a.total_amount_acc else '0' end as use_maintain,
+      case when a.index_code = '118' then a.total_amount_pre else '0' end as use_maintain_pre
+      from data_center.ods_coal_produce_hq a
+      left join data_center.ads_orgnization b
+      on a.org_code = b.org_code) a
+      group by org_code, org_name, level_code, date1;
+
+
+insert into data_center.ads_special_reserve_month_2   
+select 
+      org_code,
+      org_name,
+      level_code,
+      date1,
+      sum(reserve),
+      sum(reserve_pre),
+      sum(extract_safe),
+      sum(extract_safe_pre),
+      sum(use_safe),
+      sum(use_safe_pre),
+      sum(extract_maintain),
+      sum(extract_maintain_pre),
+      sum(use_maintain),
+      sum(use_maintain_pre)
+      from
+      (select
+      b.org_code,
+      b.org_name,
+      b.level_code,
+      substr(a.date,1,7) as date1,
+      case when a.index_code = '126' then a.total_amount_acc else '0' end as reserve,
+      case when a.index_code = '126' then a.total_amount_pre else '0' end as reserve_pre,
+      case when a.index_code = '116' then a.total_amount_acc else '0' end as extract_safe,
+      case when a.index_code = '116' then a.total_amount_pre else '0' end as extract_safe_pre,
+      case when a.index_code = '119' then a.total_amount_acc else '0' end as use_safe,
+      case when a.index_code = '119' then a.total_amount_pre else '0' end as use_safe_pre,
+      case when a.index_code = '115' then a.total_amount_acc else '0' end as extract_maintain,
+      case when a.index_code = '115' then a.total_amount_pre else '0' end as extract_maintain_pre,
+      case when a.index_code = '118' then a.total_amount_acc else '0' end as use_maintain,
+      case when a.index_code = '118' then a.total_amount_pre else '0' end as use_maintain_pre
+      from data_center.ods_coal_produce_bo a
+      left join data_center.ads_orgnization b
+      on a.org_code = b.org_code) a
+      group by org_code, org_name, level_code, date1;
+
 
   -- DDL语句
   /**
@@ -13294,48 +13294,70 @@ values('GY2F00','包头能源','2024-09-30','区外4500合计','50',9537121.41  
   group by b.org_name, b.org_code, a.date
   ; 
 
-  -- 期末货币资金余额 
+  -- 包头能源合并（管理口径） ： 期末货币资金余额
   insert into data_center.ads_fund_income_expense
-  select 
-   b.org_code,
-   b.org_name,
-   b.level_code,
-   substr(a.date,1,7),
-   '期末货币资金余额' ,
-   'A0002',
-  ifnull(a.end_balance,0) + ifnull((select endofyearbalance_booknetvalue from   data_center.ods_other_amount_due_hq where substr(date,1,7) = substr(a.date,1,7) ),0)
-    as amount_acc,
-   a.amount_acc_form +  ifnull((select endofyearbalance_booknetvalue from   data_center.ods_other_amount_due_hq where substr(date,1,7) = substr(cast(concat(a.date,'-01') as date) + interval '-1' year,1,7) ),0)  
-  as amount_acc_form,
-   0 as plan_amount
-  from  data_center.ods_asset_balance_hq  a
-  left join data_center.ads_orgnization b
-    on a.org_code = b.org_code
-  where a.index_code in ('2')
-  AND substr(a.date,6,7) <= '12';   
-  -- 资产负债表  2- 货币资金  
+  with a as (
+      select
+          org_code,
+          org_name,
+      date,
+      sum(end_balance) as end_balance,
+      sum(amount_acc_form) as amount_acc_form,
+      sum(begin_balance) as begin_balance
+  from data_center.ods_asset_balance_hq
+  where index_code in ('2', '8')
+  group by org_code, org_name, date
+      )
+  select
+      b.org_code,
+      b.org_name,
+      b.level_code,
+      substr(a.date,1,7),
+      '期末货币资金余额' ,
+      'A0002',
+      ifnull(a.end_balance,0) + ifnull((select endofyearbalance_booknetvalue from   data_center.ods_other_amount_due_hq where substr(date,1,7) = substr(a.date,1,7) ),0)
+          as amount_acc,
+      a.amount_acc_form +  ifnull((select endofyearbalance_booknetvalue from   data_center.ods_other_amount_due_hq where substr(date,1,7) = substr(cast(concat(a.date,'-01') as date) + interval '-1' year,1,7) ),0)
+          as amount_acc_form,
+      0 as plan_amount
+  from  a
+            left join data_center.ads_orgnization b
+                      on a.org_code = b.org_code
+  where substr(a.date,6,7) <= '12';
+  ;
+  -- 资产负债表  2- 货币资金  8- 应收票款（2024-12-10： 陈凤林老师新提出的）
   -- 其他应用款项表 18 期末余额-账面净额
 
   -- 期初货币资金余额
-
   insert into data_center.ads_fund_income_expense
-  select 
-   b.org_code,
-   b.org_name,
-   b.level_code,
-   substr(cast(concat(a.date,'-01') as date) + interval '1' month,1,7)  as date ,
+  with a as (
+      select
+          org_code,
+          org_name,
+      date,
+      sum(end_balance) as end_balance,
+      sum(amount_acc_form) as amount_acc_form,
+      sum(begin_balance) as begin_balance
+  from data_center.ods_asset_balance_hq
+  where index_code in ('2', '8')
+  group by org_code, org_name, date
+      )
+  select
+      b.org_code,
+      b.org_name,
+      b.level_code,
+      substr(cast(concat(a.date,'-01') as date) + interval '1' month,1,7)  as date ,
    '期初货币资金余额' ,
    'A0001',
    ifnull(a.end_balance,0) + ifnull((select endofyearbalance_booknetvalue from   data_center.ods_other_amount_due_hq where substr(date,1,7) = substr(a.date,1,7) ),0)
    as amount_acc,
-   a.amount_acc_form +  ifnull((select endofyearbalance_booknetvalue from   data_center.ods_other_amount_due_hq where substr(date,1,7) = substr(cast(concat(a.date,'-01') as date) + interval '-1' year,1,7) ),0)  
+   a.amount_acc_form +  ifnull((select endofyearbalance_booknetvalue from   data_center.ods_other_amount_due_hq where substr(date,1,7) = substr(cast(concat(a.date,'-01') as date) + interval '-1' year,1,7) ),0)
    as amount_acc_form,
    0 as plan_amount
-  from  data_center.ods_asset_balance_hq  a
-  left join data_center.ads_orgnization b
-    on a.org_code = b.org_code
-  where index_code in ('2')
-  AND substr(a.date,6,7) <= '12';
+  from   a
+      left join data_center.ads_orgnization b
+  on a.org_code = b.org_code
+  where substr(a.date,6,7) <= '12';
   -- 资产负债表  2- 货币资金   
   -- 其他应用款项表 18 期末余额-账面净额
 
@@ -13381,47 +13403,69 @@ values('GY2F00','包头能源','2024-09-30','区外4500合计','50',9537121.41  
   group by b.org_name,b.org_code,a.date
   ; 
 
-  -- 期末货币资金余额 
+  -- 下级各单位 ：[期末]货币资金余额
   insert into data_center.ads_fund_income_expense
-  select 
-   b.org_code,
-   b.org_name,
-   b.level_code,
-   substr(a.date,1,7) as date,
+  with a as (
+      select
+          org_code,
+          org_name,
+      date,
+      sum(end_balance) as end_balance,
+      sum(amount_acc_form) as amount_acc_form,
+      sum(begin_balance) as begin_balance
+  from data_center.ods_asset_balance_bo
+  where index_code in ('2', '8')
+  group by org_code, org_name, date
+      )
+  select
+      b.org_code,
+      b.org_name,
+      b.level_code,
+      substr(a.date,1,7) as date,
    '期末货币资金余额' ,
    'A0002',
    ifnull(a.end_balance,0) + ifnull((select endofyearbalance_booknetvalue from   data_center.ods_other_amount_due_bo where substr(date,1,7) = substr(a.date,1,7) and org_code = a.org_code ),0)
    as amount_acc,
-   a.amount_acc_form +  ifnull((select endofyearbalance_booknetvalue from   data_center.ods_other_amount_due_bo where substr(date,1,7) = substr(cast(concat(a.date,'-01') as date) + interval '-1' year,1,7) and org_code = a.org_code),0)  
+   a.amount_acc_form +  ifnull((select endofyearbalance_booknetvalue from   data_center.ods_other_amount_due_bo where substr(date,1,7) = substr(cast(concat(a.date,'-01') as date) + interval '-1' year,1,7) and org_code = a.org_code),0)
    as amount_acc_form,
    0 as plan_amount
-  from  data_center.ods_asset_balance_bo  a
-  left join data_center.ads_orgnization b
-    on a.org_code = b.org_code
-  where a.index_code in ('2');   
+  from   a
+      left join data_center.ads_orgnization b
+  on a.org_code = b.org_code
+  ;
   -- 资产负债表  2- 货币资金  
   -- 其他应用款项表 18 期末余额-账面净额
 
-  -- 期初货币资金余额
-
+  --  下级各单位 ：[期初]货币资金余额
   insert into data_center.ads_fund_income_expense
-  select 
-   b.org_code,
-   b.org_name,
-   b.level_code,
-   substr(cast(concat(a.date,'-01') as date) + interval '1' month,1,7)  as date ,
+  with a as (
+      select
+          org_code,
+          org_name,
+      date,
+      sum(end_balance) as end_balance,
+      sum(amount_acc_form) as amount_acc_form,
+      sum(begin_balance) as begin_balance
+  from data_center.ods_asset_balance_bo
+  where index_code in ('2', '8')
+  group by org_code, org_name, date
+      )
+  select
+      b.org_code,
+      b.org_name,
+      b.level_code,
+      substr(cast(concat(a.date,'-01') as date) + interval '1' month,1,7)  as date ,
    '期初货币资金余额' ,
    'A0001',
     ifnull(end_balance,0) + ifnull((select endofyearbalance_booknetvalue from   data_center.ods_other_amount_due_bo where substr(date,1,7) = substr(a.date,1,7) and org_code = a.org_code ),0)
    as amount_acc,
-   a.amount_acc_form +  ifnull((select endofyearbalance_booknetvalue from   data_center.ods_other_amount_due_bo where substr(date,1,7) = substr(cast(concat(a.date,'-01') as date) + interval '-1' year,1,7) and org_code = a.org_code),0)  
+   a.amount_acc_form +  ifnull((select endofyearbalance_booknetvalue from   data_center.ods_other_amount_due_bo where substr(date,1,7) = substr(cast(concat(a.date,'-01') as date) + interval '-1' year,1,7) and org_code = a.org_code),0)
    as amount_acc_form,
    0 as plan_amount
-  from  data_center.ods_asset_balance_bo  a
-  left join data_center.ads_orgnization b
-    on a.org_code = b.org_code
-  where a.index_code in ('2')
-  AND substr(a.date,6,7) <= '12';
+  from  a
+      left join data_center.ads_orgnization b
+  on a.org_code = b.org_code
+  where substr(a.date,6,7) <= '12';
   -- 资产负债表  2- 货币资金   
   -- 其他应用款项表 18 期末余额-账面净额
 
@@ -15347,14 +15391,16 @@ with ods_dep_and_amo as (
     updated_time varchar(32) comment '更新时间'
   ) COMMENT='资产处置-线下表 HZJ';
 -- 线下表，导入的11月数据 2024-12-03
-INSERT INTO `data_center`.`ods_asset_dispose_offline`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `plan_asset_original_value`, `plan_accumulated_depreciation`, `plan_asset_net_value`, `plan_impairment_provision`, `plan_asset_net_amount`, `act_asset_original_value`, `act_accumulated_depreciation`, `act_asset_net_value`, `act_impairment_provision`, `act_asset_net_amount`) VALUES ('GY2F00', '包头能源', '2024-11', '2024', NULL, NULL, 75789.39, 59665.51, 16123.88, 11396.95, 4726.93, 10065.88, 9830.41, 235.47, NULL, 235.47);
-INSERT INTO `data_center`.`ods_asset_dispose_offline`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `plan_asset_original_value`, `plan_accumulated_depreciation`, `plan_asset_net_value`, `plan_impairment_provision`, `plan_asset_net_amount`, `act_asset_original_value`, `act_accumulated_depreciation`, `act_asset_net_value`, `act_impairment_provision`, `act_asset_net_amount`) VALUES ('2F06', '李家壕', '2024-11', '2024', NULL, NULL, 4069.84, 3046.16, 1023.68, NULL, 1023.68, 1712.14, 1677.49, 34.65, NULL, 34.65);
-INSERT INTO `data_center`.`ods_asset_dispose_offline`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `plan_asset_original_value`, `plan_accumulated_depreciation`, `plan_asset_net_value`, `plan_impairment_provision`, `plan_asset_net_amount`, `act_asset_original_value`, `act_accumulated_depreciation`, `act_asset_net_value`, `act_impairment_provision`, `act_asset_net_amount`) VALUES ('2F02', '万利矿', '2024-11', '2024', NULL, NULL, 59299.16, 51436.16, 7863.00, 5340.79, 2522.21, 6975.61, 6956.29, 19.32, NULL, 19.32);
-INSERT INTO `data_center`.`ods_asset_dispose_offline`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `plan_asset_original_value`, `plan_accumulated_depreciation`, `plan_asset_net_value`, `plan_impairment_provision`, `plan_asset_net_amount`, `act_asset_original_value`, `act_accumulated_depreciation`, `act_asset_net_value`, `act_impairment_provision`, `act_asset_net_amount`) VALUES ('2F08', '神山矿', '2024-11', '2024', NULL, NULL, 1616.54, 1359.41, 257.13, 0.00, 257.13, NULL, 0.00, NULL, NULL, NULL);
-INSERT INTO `data_center`.`ods_asset_dispose_offline`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `plan_asset_original_value`, `plan_accumulated_depreciation`, `plan_asset_net_value`, `plan_impairment_provision`, `plan_asset_net_amount`, `act_asset_original_value`, `act_accumulated_depreciation`, `act_asset_net_value`, `act_impairment_provision`, `act_asset_net_amount`) VALUES ('2F09', '洗选分公司', '2024-11', '2024', NULL, NULL, 669.28, 632.73, 36.55, 0.00, 36.55, 1378.13, 1196.63, 181.50, NULL, 181.50);
-INSERT INTO `data_center`.`ods_asset_dispose_offline`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `plan_asset_original_value`, `plan_accumulated_depreciation`, `plan_asset_net_value`, `plan_impairment_provision`, `plan_asset_net_amount`, `act_asset_original_value`, `act_accumulated_depreciation`, `act_asset_net_value`, `act_impairment_provision`, `act_asset_net_amount`) VALUES ('2F00', '能源公司', '2024-11', '2024', NULL, NULL, 368.10, 333.94, 34.16, 0.00, 34.16, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `data_center`.`ods_asset_dispose_offline`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `plan_asset_original_value`, `plan_accumulated_depreciation`, `plan_asset_net_value`, `plan_impairment_provision`, `plan_asset_net_amount`, `act_asset_original_value`, `act_accumulated_depreciation`, `act_asset_net_value`, `act_impairment_provision`, `act_asset_net_amount`) VALUES ('2F05', '水泉选煤厂', '2024-11', '2024', NULL, NULL, 9766.47, 2857.11, 6909.36, 6056.16, 853.20, NULL, NULL, NULL, NULL, NULL);
-**/
+INSERT INTO `data_center`.`ods_asset_dispose_offline`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `plan_asset_original_value`, `plan_accumulated_depreciation`, `plan_asset_net_value`, `plan_impairment_provision`, `plan_asset_net_amount`, `act_asset_original_value`, `act_accumulated_depreciation`, `act_asset_net_value`, `act_impairment_provision`, `act_asset_net_amount`, `id`, `created_time`, `updated_time`) VALUES ('2F09', '洗选分公司', '2024-11', '2024', NULL, NULL, 669.28, 632.73, 36.55, 0.00, 36.55, 2004.58, 1783.09, 221.49, 0.00, 221.49, '23182df97d4c', '2024-12-11 16:36:44', NULL);
+INSERT INTO `data_center`.`ods_asset_dispose_offline`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `plan_asset_original_value`, `plan_accumulated_depreciation`, `plan_asset_net_value`, `plan_impairment_provision`, `plan_asset_net_amount`, `act_asset_original_value`, `act_accumulated_depreciation`, `act_asset_net_value`, `act_impairment_provision`, `act_asset_net_amount`, `id`, `created_time`, `updated_time`) VALUES ('2F08', '神山矿', '2024-11', '2024', NULL, NULL, 1616.54, 1359.41, 257.13, 0.00, 257.13, 426.12, 421.00, 5.12, 0.00, 5.12, 'e54fe5e3194d', '2024-12-11 16:36:44', NULL);
+INSERT INTO `data_center`.`ods_asset_dispose_offline`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `plan_asset_original_value`, `plan_accumulated_depreciation`, `plan_asset_net_value`, `plan_impairment_provision`, `plan_asset_net_amount`, `act_asset_original_value`, `act_accumulated_depreciation`, `act_asset_net_value`, `act_impairment_provision`, `act_asset_net_amount`, `id`, `created_time`, `updated_time`) VALUES ('2F00', '能源公司本部', '2024-11', '2024', NULL, NULL, 368.10, 333.94, 34.16, 0.00, 34.16, 0.00, 0.00, 0.00, 0.00, 0.00, '8b06bc16a774', '2024-12-11 16:36:44', NULL);
+INSERT INTO `data_center`.`ods_asset_dispose_offline`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `plan_asset_original_value`, `plan_accumulated_depreciation`, `plan_asset_net_value`, `plan_impairment_provision`, `plan_asset_net_amount`, `act_asset_original_value`, `act_accumulated_depreciation`, `act_asset_net_value`, `act_impairment_provision`, `act_asset_net_amount`, `id`, `created_time`, `updated_time`) VALUES ('2F05', '水泉选煤厂', '2024-11', '2024', NULL, NULL, 9766.47, 2857.11, 6909.36, 6056.16, 853.20, 0.00, 0.00, 0.00, 0.00, 0.00, '36a429fb9326', '2024-12-11 16:36:44', NULL);
+INSERT INTO `data_center`.`ods_asset_dispose_offline`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `plan_asset_original_value`, `plan_accumulated_depreciation`, `plan_asset_net_value`, `plan_impairment_provision`, `plan_asset_net_amount`, `act_asset_original_value`, `act_accumulated_depreciation`, `act_asset_net_value`, `act_impairment_provision`, `act_asset_net_amount`, `id`, `created_time`, `updated_time`) VALUES ('2F02', '万利矿', '2024-11', '2024', NULL, NULL, 59299.16, 51436.16, 7863.00, 5340.79, 2522.21, 46452.78, 45025.02, 1427.76, 0.00, 1427.76, 'a7a976e6f08b', '2024-12-11 16:36:44', NULL);
+INSERT INTO `data_center`.`ods_asset_dispose_offline`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `plan_asset_original_value`, `plan_accumulated_depreciation`, `plan_asset_net_value`, `plan_impairment_provision`, `plan_asset_net_amount`, `act_asset_original_value`, `act_accumulated_depreciation`, `act_asset_net_value`, `act_impairment_provision`, `act_asset_net_amount`, `id`, `created_time`, `updated_time`) VALUES ('2F06', '李家壕', '2024-11', '2024', NULL, NULL, 4069.84, 3046.16, 1023.68, 0.00, 1023.68, 11581.07, 10693.86, 887.21, 0.00, 887.21, '42a9c29229e7', '2024-12-11 16:36:44', NULL);
+INSERT INTO `data_center`.`ods_asset_dispose_offline`(`org_code`, `org_name`, `date`, `year`, `index_name`, `index_code`, `plan_asset_original_value`, `plan_accumulated_depreciation`, `plan_asset_net_value`, `plan_impairment_provision`, `plan_asset_net_amount`, `act_asset_original_value`, `act_accumulated_depreciation`, `act_asset_net_value`, `act_impairment_provision`, `act_asset_net_amount`, `id`, `created_time`, `updated_time`) VALUES ('GY2F00', '包头能源', '2024-11', '2024', NULL, NULL, 75789.39, 59665.51, 16123.88, 11396.95, 4726.93, 60464.55, 57922.97, 2541.58, 0.00, 2541.58, 'basfewaef23f', '2024-12-12 11:00:01', '2024-12-12 11:00:01');
+
+
+  **/
 
 /**
 -- 线下的 资产处置表 2024-12-03 HZJ
@@ -16983,9 +17029,11 @@ CREATE TABLE ads_device_info (
     org_main_data_code VARCHAR(50) COMMENT '组织机构主数据编码'  
 ) COMMENT='ads设备信息表' ;
 **/
-delete
-from ads_device_info
-where date = substr(now() + interval '-1' month,1,7);
+-- delete
+-- from ads_device_info
+-- where date = substr(now() + interval '-1' month,1,7)
+truncate table ads_device_info;
+;
 insert into ads_device_info
 select c.org_code,
        c.org_name,
@@ -17085,7 +17133,7 @@ from device_table d
          left join data_center.ads_orgnization c on d.org_code = c.org_code
          left join ads_device_type t on d.asset_catalog_code = t.device_type_no
          left join ads_device_param_value v on 1 = 1
-where d.accum_purchase_value >= v.param_device_value
+-- where d.accum_purchase_value >= v.param_device_value
 ;
 
 
@@ -17252,9 +17300,9 @@ insert into ads_device_purchase_plan_convert
 select b.org_code,
        b.org_name,
        b.level_code,
-       a.date,
-       substr(a.date, 1, 4),
-       substr(a.date, 6, 2),
+       '' as date,-- a.date, -- 年月
+       a.year,  -- 年
+       '' as month,-- substr(a.date, 6, 2),  -- 月
        a.index_name,
        a.index_code,
        a.device_type_no,
@@ -17262,22 +17310,22 @@ select b.org_code,
        a.spec_model,
        a.count,
        'Y',
-       substr(a.date, 1, 4),
+       a.year,
        a.budget_year,
        NOW(),
        NOW()
 from ods_device_purchase_plan a
-         left join ads_orgnization b
-                   on b.org_code = a.org_code
+    left join ads_orgnization b
+on b.org_code = a.org_code
 ;
 
 insert into ads_device_purchase_plan_convert
 select b.org_code,
        b.org_name,
        b.level_code,
-       a.date,
-       substr(a.date, 1, 4),
-       substr(a.date, 6, 2),
+       '' as date,-- a.date, -- 年月
+       a.year,  -- 年
+       concat(a.year,'-01',a.year,'-02',a.year,'-03') as month,-- substr(a.date, 6, 2),  -- 月
        a.index_name,
        a.index_code,
        a.device_type_no,
@@ -17290,17 +17338,17 @@ select b.org_code,
        NOW(),
        NOW()
 from ods_device_purchase_plan a
-         left join ads_orgnization b
-                   on b.org_code = a.org_code
+    left join ads_orgnization b
+on b.org_code = a.org_code
 ;
 
 insert into ads_device_purchase_plan_convert
 select b.org_code,
        b.org_name,
        b.level_code,
-       a.date,
-       substr(a.date, 1, 4),
-       substr(a.date, 6, 2),
+       '' as date,-- a.date, -- 年月
+       a.year,  -- 年
+       concat(a.year,'-04',a.year,'-05',a.year,'-06') as month,-- substr(a.date, 6, 2),  -- 月
        a.index_name,
        a.index_code,
        a.device_type_no,
@@ -17313,16 +17361,16 @@ select b.org_code,
        NOW(),
        NOW()
 from ods_device_purchase_plan a
-         left join ads_orgnization b
-                   on b.org_code = a.org_code
+    left join ads_orgnization b
+on b.org_code = a.org_code
 ;
 insert into ads_device_purchase_plan_convert
 select b.org_code,
        b.org_name,
        b.level_code,
-       a.date,
-       substr(a.date, 1, 4),
-       substr(a.date, 6, 2),
+       '' as date,-- a.date, -- 年月
+       a.year,  -- 年
+       concat(a.year,'-07',a.year,'-08',a.year,'-09') as month,-- substr(a.date, 6, 2),  -- 月
        a.index_name,
        a.index_code,
        a.device_type_no,
@@ -17335,16 +17383,16 @@ select b.org_code,
        NOW(),
        NOW()
 from ods_device_purchase_plan a
-         left join ads_orgnization b
-                   on b.org_code = a.org_code
+    left join ads_orgnization b
+on b.org_code = a.org_code
 ;
 insert into ads_device_purchase_plan_convert
 select b.org_code,
        b.org_name,
        b.level_code,
-       a.date,
-       substr(a.date, 1, 4),
-       substr(a.date, 6, 2),
+       '' as date,-- a.date, -- 年月
+       a.year,  -- 年
+       concat(a.year,'-10',a.year,'-11',a.year,'-12') as month,-- substr(a.date, 6, 2),  -- 月
        a.index_name,
        a.index_code,
        a.device_type_no,
@@ -17357,17 +17405,17 @@ select b.org_code,
        NOW(),
        NOW()
 from ods_device_purchase_plan a
-         left join ads_orgnization b
-                   on b.org_code = a.org_code
+    left join ads_orgnization b
+on b.org_code = a.org_code
 ;
 
 insert into ads_device_purchase_plan_convert
 select b.org_code,
        b.org_name,
        b.level_code,
-       a.date,
-       substr(a.date, 1, 4),
-       substr(a.date, 6, 2),
+       '' as date,-- a.date, -- 年月
+       a.year,  -- 年
+       '' as month,-- substr(a.date, 6, 2),  -- 月
        a.index_name,
        a.index_code,
        a.device_type_no,
@@ -17380,8 +17428,8 @@ select b.org_code,
        NOW(),
        NOW()
 from ods_device_purchase_plan a
-         left join ads_orgnization b
-                   on b.org_code = a.org_code
+    left join ads_orgnization b
+on b.org_code = a.org_code
 ;
 
 
@@ -17389,9 +17437,9 @@ insert into ads_device_purchase_plan_convert
 select b.org_code,
        b.org_name,
        b.level_code,
-       a.date,
-       substr(a.date, 1, 4),
-       substr(a.date, 6, 2),
+       '' as date,-- a.date, -- 年月
+       a.year,  -- 年
+       '' as month,-- substr(a.date, 6, 2),  -- 月
        a.index_name,
        a.index_code,
        a.device_type_no,
@@ -17404,17 +17452,17 @@ select b.org_code,
        NOW(),
        NOW()
 from ods_device_purchase_plan a
-         left join ads_orgnization b
-                   on b.org_code = a.org_code
+    left join ads_orgnization b
+on b.org_code = a.org_code
 ;
 
 insert into ads_device_purchase_plan_convert
 select b.org_code,
        b.org_name,
        b.level_code,
-       a.date,
-       substr(a.date, 1, 4),
-       substr(a.date, 6, 2),
+       '' as date,-- a.date, -- 年月
+       a.year,  -- 年
+       '' as month,-- substr(a.date, 6, 2),  -- 月
        a.index_name,
        a.index_code,
        a.device_type_no,
@@ -17427,17 +17475,17 @@ select b.org_code,
        NOW(),
        NOW()
 from ods_device_purchase_plan a
-         left join ads_orgnization b
-                   on b.org_code = a.org_code
+    left join ads_orgnization b
+on b.org_code = a.org_code
 ;
 
 insert into ads_device_purchase_plan_convert
 select b.org_code,
        b.org_name,
        b.level_code,
-       a.date,
-       substr(a.date, 1, 4),
-       substr(a.date, 6, 2),
+       '' as date,-- a.date, -- 年月
+       a.year,  -- 年
+       '' as month,-- substr(a.date, 6, 2),  -- 月
        a.index_name,
        a.index_code,
        a.device_type_no,
@@ -17450,17 +17498,17 @@ select b.org_code,
        NOW(),
        NOW()
 from ods_device_purchase_plan a
-         left join ads_orgnization b
-                   on b.org_code = a.org_code
+    left join ads_orgnization b
+on b.org_code = a.org_code
 ;
 
 insert into ads_device_purchase_plan_convert
 select b.org_code,
        b.org_name,
        b.level_code,
-       a.date,
-       substr(a.date, 1, 4),
-       substr(a.date, 6, 2),
+       '' as date,-- a.date, -- 年月
+       a.year,  -- 年
+       '' as month,-- substr(a.date, 6, 2),  -- 月
        a.index_name,
        a.index_code,
        a.device_type_no,
@@ -17473,17 +17521,17 @@ select b.org_code,
        NOW(),
        NOW()
 from ods_device_purchase_plan a
-         left join ads_orgnization b
-                   on b.org_code = a.org_code
+    left join ads_orgnization b
+on b.org_code = a.org_code
 ;
 
 insert into ads_device_purchase_plan_convert
 select b.org_code,
        b.org_name,
        b.level_code,
-       a.date,
-       substr(a.date, 1, 4),
-       substr(a.date, 6, 2),
+       '' as date,-- a.date, -- 年月
+       a.year,  -- 年
+       '' as month,-- substr(a.date, 6, 2),  -- 月
        a.index_name,
        a.index_code,
        a.device_type_no,
@@ -17496,17 +17544,17 @@ select b.org_code,
        NOW(),
        NOW()
 from ods_device_purchase_plan a
-         left join ads_orgnization b
-                   on b.org_code = a.org_code
+    left join ads_orgnization b
+on b.org_code = a.org_code
 ;
 
 insert into ads_device_purchase_plan_convert
 select b.org_code,
        b.org_name,
        b.level_code,
-       a.date,
-       substr(a.date, 1, 4),
-       substr(a.date, 6, 2),
+       '' as date,-- a.date, -- 年月
+       a.year,  -- 年
+       '' as month,-- substr(a.date, 6, 2),  -- 月
        a.index_name,
        a.index_code,
        a.device_type_no,
@@ -17519,17 +17567,17 @@ select b.org_code,
        NOW(),
        NOW()
 from ods_device_purchase_plan a
-         left join ads_orgnization b
-                   on b.org_code = a.org_code
+    left join ads_orgnization b
+on b.org_code = a.org_code
 ;
 
 insert into ads_device_purchase_plan_convert
 select b.org_code,
        b.org_name,
        b.level_code,
-       a.date,
-       substr(a.date, 1, 4),
-       substr(a.date, 6, 2),
+       '' as date,-- a.date, -- 年月
+       a.year,  -- 年
+       '' as month,-- substr(a.date, 6, 2),  -- 月
        a.index_name,
        a.index_code,
        a.device_type_no,
@@ -17542,17 +17590,17 @@ select b.org_code,
        NOW(),
        NOW()
 from ods_device_purchase_plan a
-         left join ads_orgnization b
-                   on b.org_code = a.org_code
+    left join ads_orgnization b
+on b.org_code = a.org_code
 ;
 
 insert into ads_device_purchase_plan_convert
 select b.org_code,
        b.org_name,
        b.level_code,
-       a.date,
-       substr(a.date, 1, 4),
-       substr(a.date, 6, 2),
+       '' as date,-- a.date, -- 年月
+       a.year,  -- 年
+       '' as month,-- substr(a.date, 6, 2),  -- 月
        a.index_name,
        a.index_code,
        a.device_type_no,
@@ -17565,17 +17613,17 @@ select b.org_code,
        NOW(),
        NOW()
 from ods_device_purchase_plan a
-         left join ads_orgnization b
-                   on b.org_code = a.org_code
+    left join ads_orgnization b
+on b.org_code = a.org_code
 ;
 
 insert into ads_device_purchase_plan_convert
 select b.org_code,
        b.org_name,
        b.level_code,
-       a.date,
-       substr(a.date, 1, 4),
-       substr(a.date, 6, 2),
+       '' as date,-- a.date, -- 年月
+       a.year,  -- 年
+       '' as month,-- substr(a.date, 6, 2),  -- 月
        a.index_name,
        a.index_code,
        a.device_type_no,
@@ -17588,17 +17636,17 @@ select b.org_code,
        NOW(),
        NOW()
 from ods_device_purchase_plan a
-         left join ads_orgnization b
-                   on b.org_code = a.org_code
+    left join ads_orgnization b
+on b.org_code = a.org_code
 ;
 
 insert into ads_device_purchase_plan_convert
 select b.org_code,
        b.org_name,
        b.level_code,
-       a.date,
-       substr(a.date, 1, 4),
-       substr(a.date, 6, 2),
+       '' as date,-- a.date, -- 年月
+       a.year,  -- 年
+       '' as month,-- substr(a.date, 6, 2),  -- 月
        a.index_name,
        a.index_code,
        a.device_type_no,
@@ -17611,17 +17659,17 @@ select b.org_code,
        NOW(),
        NOW()
 from ods_device_purchase_plan a
-         left join ads_orgnization b
-                   on b.org_code = a.org_code
+    left join ads_orgnization b
+on b.org_code = a.org_code
 ;
 
 insert into ads_device_purchase_plan_convert
 select b.org_code,
        b.org_name,
        b.level_code,
-       a.date,
-       substr(a.date, 1, 4),
-       substr(a.date, 6, 2),
+       '' as date,-- a.date, -- 年月
+       a.year,  -- 年
+       '' as month,-- substr(a.date, 6, 2),  -- 月
        a.index_name,
        a.index_code,
        a.device_type_no,
@@ -17634,8 +17682,8 @@ select b.org_code,
        NOW(),
        NOW()
 from ods_device_purchase_plan a
-         left join ads_orgnization b
-                   on b.org_code = a.org_code
+    left join ads_orgnization b
+on b.org_code = a.org_code
 ;
 
 /**
@@ -17657,15 +17705,9 @@ CREATE TABLE data_center.ods_device_oee (
   updated_time datetime(0) DEFAULT CURRENT_TIMESTAMP comment '更新时间'
 ) COMMENT='oee－ods表';
 truncate table data_center.ods_device_oee;
-INSERT INTO `data_center`.`ods_device_oee`(`org_code`, `org_name`, `date`, `asset_id`, `asset_catalog_code`, `asset_catalog_name`, `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`, `updated_time`) VALUES ('2F06', '李家壕煤矿','2024-10-28',  '140000003886', '1401010001', '采煤机', 10.00, 12.00, 300.00, 320.00, '2024-11-26 11:50:23', '2024-11-26 11:50:23');
-INSERT INTO `data_center`.`ods_device_oee`(`org_code`, `org_name`, `date`, `asset_id`, `asset_catalog_code`, `asset_catalog_name`, `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`, `updated_time`) VALUES ('2F06', '李家壕煤矿', '2024-10-29',  '140000003886', '1401010001', '采煤机', 11.00, 12.00, 301.00, 320.00, '2024-11-26 11:50:23', '2024-11-26 11:50:23');
-INSERT INTO `data_center`.`ods_device_oee`(`org_code`, `org_name`, `date`, `asset_id`, `asset_catalog_code`, `asset_catalog_name`, `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`, `updated_time`) VALUES ('2F06', '李家壕煤矿', '2024-10-30',  '140000003886', '1401010001', '采煤机', 12.00, 12.00, 310.00, 320.00, '2024-11-26 11:50:23', '2024-11-26 11:50:23');
-INSERT INTO `data_center`.`ods_device_oee`(`org_code`, `org_name`, `date`, `asset_id`, `asset_catalog_code`, `asset_catalog_name`, `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`, `updated_time`) VALUES ('2F02', '万利一矿',  '2024-10-28',  '140000000728', '1401010001', '采煤机', 13.00, 19.00, 280.00, 330.00, '2024-11-26 11:50:23', '2024-11-26 11:50:23');
-INSERT INTO `data_center`.`ods_device_oee`(`org_code`, `org_name`, `date`, `asset_id`, `asset_catalog_code`, `asset_catalog_name`, `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`, `updated_time`) VALUES ('2F02', '万利一矿',  '2024-10-29',  '140000000728', '1401010001', '采煤机', 15.00, 18.00, 287.00, 330.00, '2024-11-26 11:50:23', '2024-11-26 11:50:23');
-INSERT INTO `data_center`.`ods_device_oee`(`org_code`, `org_name`, `date`, `asset_id`, `asset_catalog_code`, `asset_catalog_name`, `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`, `updated_time`) VALUES ('2F02', '万利一矿',  '2024-10-30',  '140000000728', '1401010001', '采煤机', 17.00, 19.00, 299.00, 340.00, '2024-11-26 11:50:23', '2024-11-26 11:50:23');
-INSERT INTO `data_center`.`ods_device_oee`(`org_code`, `org_name`, `date`, `asset_id`, `asset_catalog_code`, `asset_catalog_name`, `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`, `updated_time`) VALUES ('2F02', '万利一矿',  '2024-10-28',  '140000001666', '1401010001', '采煤机', 16.00, 22.00, 333.00, 380.00, '2024-11-26 11:50:23', '2024-11-26 11:50:23');
-INSERT INTO `data_center`.`ods_device_oee`(`org_code`, `org_name`, `date`, `asset_id`, `asset_catalog_code`, `asset_catalog_name`, `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`, `updated_time`) VALUES ('2F02', '万利一矿',  '2024-10-29',  '140000001666', '1401010001', '采煤机', 18.00, 22.00, 365.00, 380.00, '2024-11-26 11:50:23', '2024-11-26 11:50:23');
-INSERT INTO `data_center`.`ods_device_oee`(`org_code`, `org_name`, `date`, `asset_id`, `asset_catalog_code`, `asset_catalog_name`, `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`, `updated_time`) VALUES ('2F02', '万利一矿',  '2024-10-30',  '140000001666', '1401010001', '采煤机', 20.00, 22.00, 367.00, 380.00, '2024-11-26 11:50:23', '2024-11-26 11:50:23');
+INSERT INTO `data_center`.`ods_device_oee`(`org_code`, `org_name`, `date`, `index_name`, `index_code`, `asset_id`, `asset_catalog_code`, `asset_catalog_name`, `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`, `updated_time`, `id`) VALUES ('2F02', '万利一矿', '2024-11-30', NULL, NULL, '140000000728', '1401010001', '采煤机', 600.00, 690.00, 601579.00, 600000.00, '2024-12-13 17:52:55', NULL, '5d12a01142f144b3a2c594297665fa99');
+INSERT INTO `data_center`.`ods_device_oee`(`org_code`, `org_name`, `date`, `index_name`, `index_code`, `asset_id`, `asset_catalog_code`, `asset_catalog_name`, `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`, `updated_time`, `id`) VALUES ('2F06', '李家壕', '2024-11-30', NULL, NULL, '140000003886', '1401010001', '采煤机', 5100.00, 5280.00, 5938020.00, 5940000.00, '2024-12-13 17:52:55', NULL, '3afcx0ba2x42bdxb5cax187d98b2755c');
+INSERT INTO `data_center`.`ods_device_oee`(`org_code`, `org_name`, `date`, `index_name`, `index_code`, `asset_id`, `asset_catalog_code`, `asset_catalog_name`, `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`, `updated_time`, `id`) VALUES ('2F02', '万利一矿', '2024-11-30', NULL, NULL, '140000001666', '1401010001', '采煤机', 352.00, 480.00, 596000.00, 704000.00, '2024-12-13 17:52:55', NULL, 'ab6feddc65514d95a5db15d8af7ef2ba');
 
 **/
 
@@ -17699,64 +17741,84 @@ select b.org_code,
        b.level_code,
        a.date,
        substr(a.date, 1, 4) as year,
-  substr(a.date,6,2) as month,
-  substr(a.date,9,2) as day,
-  a.asset_id,
-  d.asset_name,
-  t.device_type_no,
-  t.device_type_name,
-  a.actual_time,
-  a.plan_time,
-  a.actual_amount,
-  a.plan_amount,
-  now(),
-  now()
+      substr(a.date,6,2) as month,
+      substr(a.date,9,2) as day,
+      a.asset_id,
+      d.asset_name,
+      t.device_type_no,
+      t.device_type_name,
+      a.actual_time,
+      a.plan_time,
+      a.actual_amount,
+      a.plan_amount,
+      now(),
+      now()
 from ods_device_oee a
     left join ads_orgnization b
 on b.org_code = a.org_code
     left join ads_device_info d
     on d.asset_id = a.asset_id
     and d.device_type_no = a.asset_catalog_code
+    and d.date = substr(a.date,1,7)
     left join ads_device_type t
     on t.device_type_no = a.asset_catalog_code
 ;
-truncate table data_center.ads_device_oee;
-INSERT INTO `data_center`.`ads_device_oee`(`org_code`, `org_name`, `level_code`, `date`, `year`, `month`, `day`,
-                                           `asset_id`, `asset_name`, `device_type_no`, `device_type_name`,
-                                           `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`,
-                                           `updated_time`)
-VALUES ('2F06', '李家壕煤矿', '10006', '2024-09-30', '2024', '09', '30', '140000003886', '采煤机', '1401010001',
-        '滚筒采煤机', 400.00, 420.00, 560000.00, 570000.00, '2024-12-02 14:28:44', '2024-12-02 14:28:44');
-INSERT INTO `data_center`.`ads_device_oee`(`org_code`, `org_name`, `level_code`, `date`, `year`, `month`, `day`,
-                                           `asset_id`, `asset_name`, `device_type_no`, `device_type_name`,
-                                           `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`,
-                                           `updated_time`)
-VALUES ('2F02', '万利一矿', '10002', '2024-09-30', '2024', '09', '30', '140000000728', '采煤机', '1401010001',
-        '滚筒采煤机', 352.00, 480.00, 596000.00, 704000.00, '2024-12-02 14:28:44', '2024-12-02 14:28:44');
-INSERT INTO `data_center`.`ads_device_oee`(`org_code`, `org_name`, `level_code`, `date`, `year`, `month`, `day`,
-                                           `asset_id`, `asset_name`, `device_type_no`, `device_type_name`,
-                                           `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`,
-                                           `updated_time`)
-VALUES ('2F02', '万利一矿', '10002', '2024-09-30', '2024', '09', '30', '140000001666', '6650采煤机', '1401010001',
-        '滚筒采煤机', 600.00, 690.00, 601579.00, 600000.00, '2024-12-02 14:28:44', '2024-12-02 14:28:44');
-INSERT INTO `data_center`.`ads_device_oee`(`org_code`, `org_name`, `level_code`, `date`, `year`, `month`, `day`,
-                                           `asset_id`, `asset_name`, `device_type_no`, `device_type_name`,
-                                           `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`,
-                                           `updated_time`)
-VALUES ('2F06', '李家壕煤矿', '10006', '2024-10-30', '2024', '10', '30', '140000003886', '采煤机', '1401010001',
-        '滚筒采煤机', 400.00, 420.00, 560000.00, 570000.00, '2024-12-02 14:28:44', '2024-12-02 14:28:44');
-INSERT INTO `data_center`.`ads_device_oee`(`org_code`, `org_name`, `level_code`, `date`, `year`, `month`, `day`,
-                                           `asset_id`, `asset_name`, `device_type_no`, `device_type_name`,
-                                           `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`,
-                                           `updated_time`)
-VALUES ('2F02', '万利一矿', '10002', '2024-10-30', '2024', '10', '30', '140000000728', '采煤机', '1401010001',
-        '滚筒采煤机', 352.00, 480.00, 596000.00, 704000.00, '2024-12-02 14:28:44', '2024-12-02 14:28:44');
-INSERT INTO `data_center`.`ads_device_oee`(`org_code`, `org_name`, `level_code`, `date`, `year`, `month`, `day`,
-                                           `asset_id`, `asset_name`, `device_type_no`, `device_type_name`,
-                                           `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`,
-                                           `updated_time`)
-VALUES ('2F02', '万利一矿', '10002', '2024-10-30', '2024', '10', '30', '140000001666', '6650采煤机', '1401010001',
-        '滚筒采煤机', 600.00, 690.00, 601579.00, 600000.00, '2024-12-02 14:28:44', '2024-12-02 14:28:44');
+-- truncate table data_center.ads_device_oee;
+-- INSERT INTO `data_center`.`ads_device_oee`(`org_code`, `org_name`, `level_code`, `date`, `year`, `month`, `day`,
+--                                            `asset_id`, `asset_name`, `device_type_no`, `device_type_name`,
+--                                            `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`,
+--                                            `updated_time`)
+-- VALUES ('2F06', '李家壕煤矿', '10006', '2024-09-30', '2024', '09', '30', '140000003886', '采煤机', '1401010001',
+--         '滚筒采煤机', 400.00, 420.00, 560000.00, 570000.00, '2024-12-02 14:28:44', '2024-12-02 14:28:44');
+-- INSERT INTO `data_center`.`ads_device_oee`(`org_code`, `org_name`, `level_code`, `date`, `year`, `month`, `day`,
+--                                            `asset_id`, `asset_name`, `device_type_no`, `device_type_name`,
+--                                            `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`,
+--                                            `updated_time`)
+-- VALUES ('2F02', '万利一矿', '10002', '2024-09-30', '2024', '09', '30', '140000000728', '采煤机', '1401010001',
+--         '滚筒采煤机', 352.00, 480.00, 596000.00, 704000.00, '2024-12-02 14:28:44', '2024-12-02 14:28:44');
+-- INSERT INTO `data_center`.`ads_device_oee`(`org_code`, `org_name`, `level_code`, `date`, `year`, `month`, `day`,
+--                                            `asset_id`, `asset_name`, `device_type_no`, `device_type_name`,
+--                                            `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`,
+--                                            `updated_time`)
+-- VALUES ('2F02', '万利一矿', '10002', '2024-09-30', '2024', '09', '30', '140000001666', '6650采煤机', '1401010001',
+--         '滚筒采煤机', 600.00, 690.00, 601579.00, 600000.00, '2024-12-02 14:28:44', '2024-12-02 14:28:44');
+-- INSERT INTO `data_center`.`ads_device_oee`(`org_code`, `org_name`, `level_code`, `date`, `year`, `month`, `day`,
+--                                            `asset_id`, `asset_name`, `device_type_no`, `device_type_name`,
+--                                            `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`,
+--                                            `updated_time`)
+-- VALUES ('2F06', '李家壕煤矿', '10006', '2024-10-30', '2024', '10', '30', '140000003886', '采煤机', '1401010001',
+--         '滚筒采煤机', 5100.00, 5280.00, 5938020.00, 5940000.00, '2024-12-02 14:28:44', '2024-12-02 14:28:44');
+-- INSERT INTO `data_center`.`ads_device_oee`(`org_code`, `org_name`, `level_code`, `date`, `year`, `month`, `day`,
+--                                            `asset_id`, `asset_name`, `device_type_no`, `device_type_name`,
+--                                            `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`,
+--                                            `updated_time`)
+-- VALUES ('2F02', '万利一矿', '10002', '2024-10-30', '2024', '10', '30', '140000000728', '采煤机', '1401010001',
+--         '滚筒采煤机', 352.00, 480.00, 596000.00, 704000.00, '2024-12-02 14:28:44', '2024-12-02 14:28:44');
+-- INSERT INTO `data_center`.`ads_device_oee`(`org_code`, `org_name`, `level_code`, `date`, `year`, `month`, `day`,
+--                                            `asset_id`, `asset_name`, `device_type_no`, `device_type_name`,
+--                                            `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`,
+--                                            `updated_time`)
+-- VALUES ('2F02', '万利一矿', '10002', '2024-10-30', '2024', '10', '30', '140000001666', '6650采煤机', '1401010001',
+--         '滚筒采煤机', 600.00, 690.00, 601579.00, 600000.00, '2024-12-02 14:28:44', '2024-12-02 14:28:44');
+--
+-- INSERT INTO `data_center`.`ads_device_oee`(`org_code`, `org_name`, `level_code`, `date`, `year`, `month`, `day`,
+--                                            `asset_id`, `asset_name`, `device_type_no`, `device_type_name`,
+--                                            `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`,
+--                                            `updated_time`)
+-- VALUES ('2F06', '李家壕煤矿', '10006', '2024-11-30', '2024', '10', '30', '140000003886', '采煤机', '1401010001',
+--         '滚筒采煤机', 5100.00, 5280.00, 5938020.00, 5940000.00, '2024-12-02 14:28:44', '2024-12-02 14:28:44');
+-- INSERT INTO `data_center`.`ads_device_oee`(`org_code`, `org_name`, `level_code`, `date`, `year`, `month`, `day`,
+--                                            `asset_id`, `asset_name`, `device_type_no`, `device_type_name`,
+--                                            `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`,
+--                                            `updated_time`)
+-- VALUES ('2F02', '万利一矿', '10002', '2024-11-30', '2024', '10', '30', '140000000728', '采煤机', '1401010001',
+--         '滚筒采煤机', 352.00, 480.00, 596000.00, 704000.00, '2024-12-02 14:28:44', '2024-12-02 14:28:44');
+-- INSERT INTO `data_center`.`ads_device_oee`(`org_code`, `org_name`, `level_code`, `date`, `year`, `month`, `day`,
+--                                            `asset_id`, `asset_name`, `device_type_no`, `device_type_name`,
+--                                            `actual_time`, `plan_time`, `actual_amount`, `plan_amount`, `created_time`,
+--                                            `updated_time`)
+-- VALUES ('2F02', '万利一矿', '10002', '2024-11-30', '2024', '10', '30', '140000001666', '6650采煤机', '1401010001',
+--         '滚筒采煤机', 600.00, 690.00, 601579.00, 600000.00, '2024-12-02 14:28:44', '2024-12-02 14:28:44');
 -- 宽表
 -- 2024-10-30 周三 预算主题的整体切换ads切换语句
 /**
@@ -19095,7 +19157,7 @@ update ads_budget_broad_chart_1 a
 join ads_index_code_account_ref r
 on a.index_code = r.index_code
 join ods_budget_operating_value b 
-on b.entity = a.org_code
+on b.entity = (case when a.org_code like '00%' then substr(a.org_code,3,4) else a.org_code end)
       and b.years = substr(a.date,1,4) 
       and b.version = a.bbh
       and b.scenario = r.scenario
@@ -19109,7 +19171,7 @@ update ads_budget_broad_chart_1 a
 join ads_index_code_account_ref r
 on a.index_code = r.index_code
 join ods_budget_operating_value b 
-on b.entity = a.org_code
+on b.entity = (case when a.org_code like '00%' then substr(a.org_code,3,4) else a.org_code end)
       and b.years = substr(a.date,1,4) 
       and b.version = a.bbh
       and b.scenario = r.scenario
@@ -19124,7 +19186,7 @@ update ads_budget_broad_chart_1 a
 join ads_index_code_account_ref r
 on a.index_code = r.index_code
 join ods_budget_operating_value b 
-on b.entity = a.org_code
+on b.entity = (case when a.org_code like '00%' then substr(a.org_code,3,4) else a.org_code end)
       and b.years = substr(a.date,1,4) 
       and b.version = a.bbh
       and b.scenario = r.scenario
@@ -19133,7 +19195,6 @@ on b.entity = a.org_code
 set a.amount_month_pre = b.amount , a.amount_pre = b.amount ,
 a.updated_time  = now()
 where r.synthesis = '[None]';
-
 /**
 drop table data_center.ads_index_code_account_ref;
 CREATE TABLE data_center.ads_index_code_account_ref (
@@ -19202,7 +19263,7 @@ insert into ods_budget_operating_value
         and b.scenario = 'Budget' 
         and b.synthesis = 'ZE'
       ),
-    RAND() * 10000000
+    RAND() * 100000000 -- ID
   from ods_budget_operating_value a
   where a.account = 'DJMCB2001'
       and a.scenario = 'Budget' and a.synthesis = 'ZE'
@@ -19225,7 +19286,7 @@ select
     a.bywe,
     a.byws,
     a.amount + case when b.amount is null then 0 else b.amount end,
-    RAND() * 10000000  -- id
+    RAND() * 100000000  -- id
   from 
     (select * from ods_budget_operating_value where account = 'DJMCB08' and scenario = 'Budget' and synthesis = 'DWJE') a   -- 剥离费
   left join 
@@ -19247,7 +19308,7 @@ select
     a.index_name,
     a.index_code,
     a.account,
-    a.scenario,
+    b.scenario,  -- 2024.12.12 : 替换 b.scenario
     a.synthesis,
     a.version_code,
     b.amount,
@@ -19264,7 +19325,7 @@ select
     where t1.account <> '' and (t1.exclude <> '1'  or t1.exclude is null)  and t2.year = '2024' -- 是2024年的，取NCYSS 年初预算数
   )  a
   left join ods_budget_operating_value b
-    on b.entity = a.org_code
+    on b.entity = (case when a.org_code like '00%' then substr(a.org_code,3,4) else a.org_code end)
       and b.years = a.year
       and b.version = a.version_code
       and b.scenario = 'NCYSS'
@@ -19280,7 +19341,7 @@ insert into data_center.ads_budget_broad_chart_2
     a.index_name,
     a.index_code,
     a.account,
-    a.scenario,
+    b.scenario,  -- 2024.12.12 : 替换 b.scenario
     a.synthesis,
     a.version_code,
     b.amount,
@@ -19297,7 +19358,7 @@ insert into data_center.ads_budget_broad_chart_2
     where t1.account <> '' and (t1.exclude <> '1'  or t1.exclude is null)  and t2.year <> '2024'   -- 不是2024年的，取Budget 预算数
   )  a
   left join ods_budget_operating_value b
-    on b.entity = a.org_code
+    on b.entity = (case when a.org_code like '00%' then substr(a.org_code,3,4) else a.org_code end)
       and b.years = a.year
       and b.version = a.version_code
       and b.scenario = 'Budget'
@@ -19315,7 +19376,7 @@ select
     a.index_name,
     a.index_code,
     a.account,
-    a.scenario,
+    b.scenario,
     a.synthesis,
     a.version_code,
     b.amount,
@@ -19332,7 +19393,7 @@ select
     where t1.index_code in ('254','255','256','257','258')  and t2.year = '2024'  -- 不是2024年的，取Budget 预算数
   )  a
   left join ods_budget_operating_value b
-    on b.entity = a.org_code
+    on b.entity = (case when a.org_code like '00%' then substr(a.org_code,3,4) else a.org_code end)
       and b.years = a.year
       and b.version = a.version_code
       and b.scenario = 'Budget'
@@ -19980,869 +20041,922 @@ CREATE TABLE data_center.ads_index_exclude (
 -- 105表剔除数据表
 truncate table ads_index_exclude;
 insert into ads_index_exclude
-select 
-  t1.org_code,
-  t1.org_name,
-  t1.level_code,
-  t1.date,
-  t1.r_index_name,
-  t1.r_index_code,
-  (case when t1.tcz is null then 0 else t1.tcz end ),  --  剔除值
-  t1.tcyy,
-  t1.account,
-  v.years,
-  t1.version_code,
- -- v.VERSION,
-  v.scenario,
-  v.synthesis,
-  v.AMOUNT  / 12 * (IF(substr(t1.date,6,2) REGEXP '^-?[0-9]+$', CAST(substr(t1.date,6,2) AS SIGNED), NULL)),   -- 进度预算数 
-  t1.amount_acc , -- 实际值
-  now() 
-  from 
-(       
-  select
-          m.*,
+select t1.org_code,
+       t1.org_name,
+       t1.level_code,
+       t1.date,
+       t1.r_index_name,
+       t1.r_index_code,
+       (case when t1.tcz is null then 0 else t1.tcz end),                                            --  剔除值
+       t1.tcyy,
+       t1.account,
+       v.years,
+       t1.version_code,
+       -- v.VERSION,
+       v.scenario,
+       v.synthesis,
+       v.AMOUNT / 12 *
+       (IF(substr(t1.date, 6, 2) REGEXP '^-?[0-9]+$', CAST(substr(t1.date, 6, 2) AS SIGNED), NULL)), -- 进度预算数
+       t1.amount_acc,                                                                                -- 实际值
+       now()
+from (select m.*,
 --           b.level_code, 
-          t.tcxm,
-          t.hc,
-          t.tcz,
-          t.tcyy,
-          r.account,
-          r.index_code as r_index_code,
-          r.index_name as r_index_name,
-          ver.version_code
-  from ads_coal_cockpit_month_1 m
-      left join  (select * from ads_index_code_account_ref where table_name  = 'YGL0105' and scenario = 'NCYSS' and synthesis = 'ZE' and exclude = '1') r  
-          on r.origin_index_code  = m.index_code 
-      left join ads_ys_version_info ver 
-          on substr(m.date,1,4) = ver.year
-      left join data_center.ods_tcys t 
-          on t.org_code = m.org_code 
-          and t.date = m.date
-          and t.hc = r.index_code
-      left join data_center.ads_orgnization b 
-          on  b.org_code = t.org_code
-) t1
-left join ods_budget_operating_value v
-on t1.org_code = v.entity 
-  and t1.account = v.ACCOUNT
-  and substr(t1.date,1,4)  = v.YEARS
-  and t1.version_code  = v.VERSION
-  and v.scenario = 'NCYSS'
-  and v.synthesis = 'ZE'
+             t.tcxm,
+             t.hc,
+             t.tcz,
+             t.tcyy,
+             r.account,
+             r.index_code as r_index_code,
+             r.index_name as r_index_name,
+             ver.version_code
+      from ads_coal_cockpit_month_1 m
+               left join (select *
+                          from ads_index_code_account_ref
+                          where table_name = 'YGL0105'
+                            and scenario = 'NCYSS'
+                            and synthesis = 'ZE'
+                            and exclude = '1') r
+                         on r.origin_index_code = m.index_code
+               left join ads_ys_version_info ver
+                         on substr(m.date, 1, 4) = ver.year
+               left join data_center.ods_tcys t
+                         on t.org_code = m.org_code
+                             and t.date = m.date
+                             and t.hc = r.index_code
+               left join data_center.ads_orgnization b
+                         on b.org_code = t.org_code) t1
+         left join ods_budget_operating_value v
+                   on t1.org_code = v.entity
+                       and t1.account = v.ACCOUNT
+                       and substr(t1.date, 1, 4) = v.YEARS
+                       and t1.version_code = v.VERSION
+                       and v.scenario = 'NCYSS'
+                       and v.synthesis = 'ZE'
 ;
 
 
 -- 0102资产负债 表剔除数据表
 insert into ads_index_exclude
-select 
-  t1.org_code,
-  t1.org_name,
-  t1.level_code,
-  t1.date,
-  t1.r_index_name,
-  t1.r_index_code,  -- index_code
-  (case when t1.tcz is null then 0 else t1.tcz end ),  --  剔除值
-  t1.tcyy,
-  t1.account,
-  v.years,
-  t1.version_code,
- -- v.VERSION,
-  v.scenario,
-  v.synthesis,
-  v.AMOUNT  / 12 * (IF(substr(t1.date,6,2) REGEXP '^-?[0-9]+$', CAST(substr(t1.date,6,2) AS SIGNED), NULL)),   -- 进度预算数 
-  t1.amount_acc , -- 实际值
-  now() 
-  from 
-(       
-  select
-          m.*,
+select t1.org_code,
+       t1.org_name,
+       t1.level_code,
+       t1.date,
+       t1.r_index_name,
+       t1.r_index_code,                                                                              -- index_code
+       (case when t1.tcz is null then 0 else t1.tcz end),                                            --  剔除值
+       t1.tcyy,
+       t1.account,
+       v.years,
+       t1.version_code,
+       -- v.VERSION,
+       v.scenario,
+       v.synthesis,
+       v.AMOUNT / 12 *
+       (IF(substr(t1.date, 6, 2) REGEXP '^-?[0-9]+$', CAST(substr(t1.date, 6, 2) AS SIGNED), NULL)), -- 进度预算数
+       t1.amount_acc,                                                                                -- 实际值
+       now()
+from (select m.*,
 --           b.level_code, 
-          t.tcxm,
-          t.hc,
-          t.tcz,
-          t.tcyy,
-          r.index_code as r_index_code,
-          r.index_name as r_index_name,
-          r.account,
-          ver.version_code
-  from ads_asset_core m
-      left join  (select * from ads_index_code_account_ref where table_name  = 'YZB0102' and scenario = 'NCYSS' and synthesis = 'ZE' and exclude = '1') r  
-          on r.origin_index_code  = m.index_code 
-      left join ads_ys_version_info ver 
-          on substr(m.date,1,4) = ver.year
-      left join data_center.ods_tcys t 
-          on t.org_code = m.org_code 
-          and t.date = m.date
-          and t.hc = r.index_code
-      left join data_center.ads_orgnization b 
-          on  b.org_code = t.org_code
-) t1
-left join ods_budget_operating_value v
-on t1.org_code = v.entity 
-  and t1.account = v.ACCOUNT
-  and substr(t1.date,1,4)  = v.YEARS
-  and t1.version_code  = v.VERSION
-  ;
+             t.tcxm,
+             t.hc,
+             t.tcz,
+             t.tcyy,
+             r.index_code as r_index_code,
+             r.index_name as r_index_name,
+             r.account,
+             ver.version_code
+      from ads_asset_core m
+               left join (select *
+                          from ads_index_code_account_ref
+                          where table_name = 'YZB0102'
+                            and scenario = 'NCYSS'
+                            and synthesis = 'ZE'
+                            and exclude = '1') r
+                         on r.origin_index_code = m.index_code
+               left join ads_ys_version_info ver
+                         on substr(m.date, 1, 4) = ver.year
+               left join data_center.ods_tcys t
+                         on t.org_code = m.org_code
+                             and t.date = m.date
+                             and t.hc = r.index_code
+               left join data_center.ads_orgnization b
+                         on b.org_code = t.org_code) t1
+         left join ods_budget_operating_value v
+                   on t1.org_code = v.entity
+                       and t1.account = v.ACCOUNT
+                       and substr(t1.date, 1, 4) = v.YEARS
+                       and t1.version_code = v.VERSION
+;
 
 
 -- 特殊处理 ： 2024-11-12 ， 针对 所有者权益 资产负债表 0102 ， 需要取年初数。405-期初所有者权益
-delete from ads_index_exclude where index_code  = '405';
+delete
+from ads_index_exclude
+where index_code = '405';
 insert into ads_index_exclude
-select 
-  t1.org_code,
-  t1.org_name,
-  t1.level_code,
-  t1.date,
-  t1.r_index_name,
-  t1.r_index_code,
-  (case when t1.tcz is null then 0 else t1.tcz end ),  --  剔除值
-  t1.tcyy,
-  t1.account,
-  v.years,
-  t1.version_code,
- -- v.VERSION,
-  v.scenario,
-  v.synthesis,
-  v.AMOUNT  / 12 * (IF(substr(t1.date,6,2) REGEXP '^-?[0-9]+$', CAST(substr(t1.date,6,2) AS SIGNED), NULL)),   -- 进度预算数  
-  t1.amount_acc_begin , -- 年初实际值
-  now() 
-  from 
-(       
-  select
-          m.*,
+select t1.org_code,
+       t1.org_name,
+       t1.level_code,
+       t1.date,
+       t1.r_index_name,
+       t1.r_index_code,
+       (case when t1.tcz is null then 0 else t1.tcz end),                                            --  剔除值
+       t1.tcyy,
+       t1.account,
+       v.years,
+       t1.version_code,
+       -- v.VERSION,
+       v.scenario,
+       v.synthesis,
+       v.AMOUNT / 12 *
+       (IF(substr(t1.date, 6, 2) REGEXP '^-?[0-9]+$', CAST(substr(t1.date, 6, 2) AS SIGNED), NULL)), -- 进度预算数
+       t1.amount_acc_begin,                                                                          -- 年初实际值
+       now()
+from (select m.*,
 --           b.level_code, 
-          t.tcxm,
-          t.hc,
-          t.tcz,
-          t.tcyy,
-          r.account,
-          r.index_code as r_index_code,
-          r.index_name as r_index_name,
-          ver.version_code
-  from 
-       (select * from ads_asset_core where index_code  = '155') m
-      inner join (select * from data_center.ods_tcys where hc = '405') t 
-          on t.org_code = m.org_code and t.date = m.date
-      left join  (select * from ads_index_code_account_ref where account  = 'WLVYS05' and table_name  = 'YZB0102' and scenario = 'NCYSS' and synthesis = 'ZE' and exclude = '1') r  
-          on r.origin_index_code  = m.index_code 
-      left join data_center.ads_orgnization b 
-          on  b.org_code = t.org_code
-      left join ads_ys_version_info ver 
-          on substr(m.date,1,4) = ver.year
-) t1
-left join ods_budget_operating_value v
-on t1.org_code = v.entity 
-  and t1.account = v.ACCOUNT
-  and substr(t1.date,1,4)  = v.YEARS
-  and t1.version_code  = v.VERSION
-  ;
+             t.tcxm,
+             t.hc,
+             t.tcz,
+             t.tcyy,
+             r.account,
+             r.index_code as r_index_code,
+             r.index_name as r_index_name,
+             ver.version_code
+      from (select * from ads_asset_core where index_code = '155') m
+               inner join (select * from data_center.ods_tcys where hc = '405') t
+                          on t.org_code = m.org_code and t.date = m.date
+               left join (select *
+                          from ads_index_code_account_ref
+                          where account = 'WLVYS05'
+                            and table_name = 'YZB0102'
+                            and scenario = 'NCYSS'
+                            and synthesis = 'ZE'
+                            and exclude = '1') r
+                         on r.origin_index_code = m.index_code
+               left join data_center.ads_orgnization b
+                         on b.org_code = t.org_code
+               left join ads_ys_version_info ver
+                         on substr(m.date, 1, 4) = ver.year) t1
+         left join ods_budget_operating_value v
+                   on t1.org_code = v.entity
+                       and t1.account = v.ACCOUNT
+                       and substr(t1.date, 1, 4) = v.YEARS
+                       and t1.version_code = v.VERSION
+;
 
 -- 特殊处理 ： 2024-11-12 ， 针对 所有者权益 资产负债表 0102 ， 需要取年初数。406-期末所有者权益
-delete from ads_index_exclude where index_code  = '406';
+delete
+from ads_index_exclude
+where index_code = '406';
 insert into ads_index_exclude
-select 
-  t1.org_code,
-  t1.org_name,
-  t1.level_code,
-  t1.date,
-  t1.r_index_name,
-  t1.r_index_code,
-  (case when t1.tcz is null then 0 else t1.tcz end ),  --  剔除值
-  t1.tcyy,
-  t1.account,
-  v.years,
-  t1.version_code,
- -- v.VERSION,
-  v.scenario,
-  v.synthesis,
-  v.AMOUNT  / 12 * (IF(substr(t1.date,6,2) REGEXP '^-?[0-9]+$', CAST(substr(t1.date,6,2) AS SIGNED), NULL)),   -- 进度预算数  
-  t1.amount_acc , -- 年末实际值
-  now() 
-  from 
-(       
-  select
-          m.*,
+select t1.org_code,
+       t1.org_name,
+       t1.level_code,
+       t1.date,
+       t1.r_index_name,
+       t1.r_index_code,
+       (case when t1.tcz is null then 0 else t1.tcz end),                                            --  剔除值
+       t1.tcyy,
+       t1.account,
+       v.years,
+       t1.version_code,
+       -- v.VERSION,
+       v.scenario,
+       v.synthesis,
+       v.AMOUNT / 12 *
+       (IF(substr(t1.date, 6, 2) REGEXP '^-?[0-9]+$', CAST(substr(t1.date, 6, 2) AS SIGNED), NULL)), -- 进度预算数
+       t1.amount_acc,                                                                                -- 年末实际值
+       now()
+from (select m.*,
 --           b.level_code, 
-          t.tcxm,
-          t.hc,
-          t.tcz,
-          t.tcyy,
-          r.account,
-          r.index_code as r_index_code,
-          r.index_name as r_index_name,
-          ver.version_code
-  from 
-       (select * from ads_asset_core where index_code  = '155') m
-      inner join (select * from data_center.ods_tcys where hc = '406') t 
-          on t.org_code = m.org_code and t.date = m.date
-      left join  (select * from ads_index_code_account_ref where account  = 'WLVYS06' and table_name  = 'YZB0102' and scenario = 'NCYSS' and synthesis = 'ZE' and exclude = '1') r  
-          on r.origin_index_code  = m.index_code 
-      left join data_center.ads_orgnization b 
-          on  b.org_code = t.org_code
-      left join ads_ys_version_info ver 
-          on substr(m.date,1,4) = ver.year
-) t1
-left join ods_budget_operating_value v
-on t1.org_code = v.entity 
-  and t1.account = v.ACCOUNT
-  and substr(t1.date,1,4)  = v.YEARS
-  and t1.version_code  = v.VERSION
-  ;
-
+             t.tcxm,
+             t.hc,
+             t.tcz,
+             t.tcyy,
+             r.account,
+             r.index_code as r_index_code,
+             r.index_name as r_index_name,
+             ver.version_code
+      from (select * from ads_asset_core where index_code = '155') m
+               inner join (select * from data_center.ods_tcys where hc = '406') t
+                          on t.org_code = m.org_code and t.date = m.date
+               left join (select *
+                          from ads_index_code_account_ref
+                          where account = 'WLVYS06'
+                            and table_name = 'YZB0102'
+                            and scenario = 'NCYSS'
+                            and synthesis = 'ZE'
+                            and exclude = '1') r
+                         on r.origin_index_code = m.index_code
+               left join data_center.ads_orgnization b
+                         on b.org_code = t.org_code
+               left join ads_ys_version_info ver
+                         on substr(m.date, 1, 4) = ver.year) t1
+         left join ods_budget_operating_value v
+                   on t1.org_code = v.entity
+                       and t1.account = v.ACCOUNT
+                       and substr(t1.date, 1, 4) = v.YEARS
+                       and t1.version_code = v.VERSION
+;
 
 
 -- YGL0072 科技支出 表剔除数据表
 insert into ads_index_exclude
-select 
-  t1.org_code,
-  t1.org_name,
-  t1.level_code,
-  t1.date,
-  t1.r_index_name,
-  t1.r_index_code,
-  (case when t1.tcz is null then 0 else t1.tcz end ),  --  剔除值
-  t1.tcyy,
-  t1.account,
-  v.years,
-  t1.version_code,
- -- v.VERSION,
-  v.scenario,
-  v.synthesis,
-  v.AMOUNT  / 12 * (IF(substr(t1.date,6,2) REGEXP '^-?[0-9]+$', CAST(substr(t1.date,6,2) AS SIGNED), NULL)),   -- 进度预算数 
-  t1.amount_acc , -- 实际值
-  now() 
-  from 
-(       
-  select
-          m.*,
+select t1.org_code,
+       t1.org_name,
+       t1.level_code,
+       t1.date,
+       t1.r_index_name,
+       t1.r_index_code,
+       (case when t1.tcz is null then 0 else t1.tcz end),                                            --  剔除值
+       t1.tcyy,
+       t1.account,
+       v.years,
+       t1.version_code,
+       -- v.VERSION,
+       v.scenario,
+       v.synthesis,
+       v.AMOUNT / 12 *
+       (IF(substr(t1.date, 6, 2) REGEXP '^-?[0-9]+$', CAST(substr(t1.date, 6, 2) AS SIGNED), NULL)), -- 进度预算数
+       t1.amount_acc,                                                                                -- 实际值
+       now()
+from (select m.*,
 --           b.level_code, 
-          t.tcxm,
-          t.hc,
-          t.tcz,
-          t.tcyy,
-          r.account,
-          r.index_code as r_index_code,
-          r.index_name as r_index_name,
-          ver.version_code
-  from ads_report_technology_expense m
-      left join  (select * from ads_index_code_account_ref where table_name  = 'YGL0072' and scenario = 'NCYSS' and synthesis = 'ZE' and exclude = '1') r  
-          on r.origin_index_code  = m.index_code 
-      left join ads_ys_version_info ver 
-          on substr(m.date,1,4) = ver.year
-      left join data_center.ods_tcys t 
-          on t.org_code = m.org_code 
-          and t.date = m.date
-          and t.hc = r.index_code
-      left join data_center.ads_orgnization b 
-          on  b.org_code = t.org_code
-) t1
-left join ods_budget_operating_value v
-on t1.org_code = v.entity 
-  and t1.account = v.ACCOUNT
-  and substr(t1.date,1,4)  = v.YEARS
-  and t1.version_code  = v.VERSION
-  ;
-
+             t.tcxm,
+             t.hc,
+             t.tcz,
+             t.tcyy,
+             r.account,
+             r.index_code as r_index_code,
+             r.index_name as r_index_name,
+             ver.version_code
+      from ads_report_technology_expense m
+               left join (select *
+                          from ads_index_code_account_ref
+                          where table_name = 'YGL0072'
+                            and scenario = 'NCYSS'
+                            and synthesis = 'ZE'
+                            and exclude = '1') r
+                         on r.origin_index_code = m.index_code
+               left join ads_ys_version_info ver
+                         on substr(m.date, 1, 4) = ver.year
+               left join data_center.ods_tcys t
+                         on t.org_code = m.org_code
+                             and t.date = m.date
+                             and t.hc = r.index_code
+               left join data_center.ads_orgnization b
+                         on b.org_code = t.org_code) t1
+         left join ods_budget_operating_value v
+                   on t1.org_code = v.entity
+                       and t1.account = v.ACCOUNT
+                       and substr(t1.date, 1, 4) = v.YEARS
+                       and t1.version_code = v.VERSION
+;
 
 
 -- YZB0003 现金流量 表剔除数据表
 insert into ads_index_exclude
-select 
-  t1.org_code,
-  t1.org_name,
-  t1.level_code,
-  t1.date,
-  t1.r_index_name,
-  t1.r_index_code,
-  (case when t1.tcz is null then 0 else t1.tcz end ),  --  剔除值
-  t1.tcyy,
-  t1.account,
-  v.years,
-  t1.version_code,
- -- v.VERSION,
-  v.scenario,
-  v.synthesis,
-  v.AMOUNT  / 12 * (IF(substr(t1.date,6,2) REGEXP '^-?[0-9]+$', CAST(substr(t1.date,6,2) AS SIGNED), NULL)),   -- 进度预算数  
-  t1.amount_acc , -- 实际值
-  now() 
-  from 
-(       
-  select
-          m.*,
-          b.level_code, 
-          t.tcxm,
-          t.hc,
-          t.tcz,
-          t.tcyy,
-          r.account,
-          r.index_code as r_index_code,
-          r.index_name as r_index_name,
-          ver.version_code
-  from (
-            select * from ods_cash_flow_hq
-              where index_code  = '28'
-            union all 
-            select * from ods_cash_flow_bo
-              where index_code  = '28') m
-      left join  (select * from ads_index_code_account_ref where table_name  = 'YZB0003' and scenario = 'NCYSS' and synthesis = 'ZE' and exclude = '1') r  
-          on r.origin_index_code  = m.index_code 
-      left join ads_ys_version_info ver 
-          on substr(m.date,1,4) = ver.year
-      left join data_center.ods_tcys t 
-          on t.org_code = m.org_code 
-          and t.date = m.date
-          and t.hc = r.index_code
-      left join data_center.ads_orgnization b 
-          on  b.org_code = m.org_code
-) t1
-left join ods_budget_operating_value v
-on t1.org_code = v.entity 
-  and t1.account = v.ACCOUNT
-  and substr(t1.date,1,4)  = v.YEARS
-  and t1.version_code  = v.VERSION;
+select t1.org_code,
+       t1.org_name,
+       t1.level_code,
+       t1.date,
+       t1.r_index_name,
+       t1.r_index_code,
+       (case when t1.tcz is null then 0 else t1.tcz end),                                            --  剔除值
+       t1.tcyy,
+       t1.account,
+       v.years,
+       t1.version_code,
+       -- v.VERSION,
+       v.scenario,
+       v.synthesis,
+       v.AMOUNT / 12 *
+       (IF(substr(t1.date, 6, 2) REGEXP '^-?[0-9]+$', CAST(substr(t1.date, 6, 2) AS SIGNED), NULL)), -- 进度预算数
+       t1.amount_acc,                                                                                -- 实际值
+       now()
+from (select m.*,
+             b.level_code,
+             t.tcxm,
+             t.hc,
+             t.tcz,
+             t.tcyy,
+             r.account,
+             r.index_code as r_index_code,
+             r.index_name as r_index_name,
+             ver.version_code
+      from (select *
+            from ods_cash_flow_hq
+            where index_code = '28'
+            union all
+            select *
+            from ods_cash_flow_bo
+            where index_code = '28') m
+               left join (select *
+                          from ads_index_code_account_ref
+                          where table_name = 'YZB0003'
+                            and scenario = 'NCYSS'
+                            and synthesis = 'ZE'
+                            and exclude = '1') r
+                         on r.origin_index_code = m.index_code
+               left join ads_ys_version_info ver
+                         on substr(m.date, 1, 4) = ver.year
+               left join data_center.ods_tcys t
+                         on t.org_code = m.org_code
+                             and t.date = m.date
+                             and t.hc = r.index_code
+               left join data_center.ads_orgnization b
+                         on b.org_code = m.org_code) t1
+         left join ods_budget_operating_value v
+                   on t1.org_code = v.entity
+                       and t1.account = v.ACCOUNT
+                       and substr(t1.date, 1, 4) = v.YEARS
+                       and t1.version_code = v.VERSION;
 
 -- YGL0078 集团汇总指标 表剔除数据表
 insert into ads_index_exclude
-select 
-  t1.org_code,
-  t1.org_name,
-  t1.level_code,
-  t1.date,
-  t1.r_index_name,
-  t1.r_index_code,
-  (case when t1.tcz is null then 0 else t1.tcz end ),  --  剔除值
-  t1.tcyy,
-  t1.account,
-  v.years,
-  t1.version_code,
- -- v.VERSION,
-  v.scenario,
-  v.synthesis,
-  v.AMOUNT  / 12 * (IF(substr(t1.date,6,2) REGEXP '^-?[0-9]+$', CAST(substr(t1.date,6,2) AS SIGNED), NULL)),   -- 进度预算数 
-  t1.acc_year , -- 实际值
-  now() 
-  from 
-(       
-  select
-          m.*,
-          b.level_code, 
-          t.tcxm,
-          t.hc,
-          t.tcz,
-          t.tcyy,
-          r.account,
-          r.index_code as r_index_code,
-          r.index_name as r_index_name,
-          ver.version_code
-  from (
-         select * from ods_summary_index_hq
-          union all
-          select * from ods_summary_index_bo) m
-      left join (select * from ads_index_code_account_ref 
-                        where  table_name  = 'YGL0078'
+select t1.org_code,
+       t1.org_name,
+       t1.level_code,
+       t1.date,
+       t1.r_index_name,
+       t1.r_index_code,
+       (case when t1.tcz is null then 0 else t1.tcz end),                                            --  剔除值
+       t1.tcyy,
+       t1.account,
+       v.years,
+       t1.version_code,
+       -- v.VERSION,
+       v.scenario,
+       v.synthesis,
+       v.AMOUNT / 12 *
+       (IF(substr(t1.date, 6, 2) REGEXP '^-?[0-9]+$', CAST(substr(t1.date, 6, 2) AS SIGNED), NULL)), -- 进度预算数
+       t1.acc_year,                                                                                  -- 实际值
+       now()
+from (select m.*,
+             b.level_code,
+             t.tcxm,
+             t.hc,
+             t.tcz,
+             t.tcyy,
+             r.account,
+             r.index_code as r_index_code,
+             r.index_name as r_index_name,
+             ver.version_code
+      from (select *
+            from ods_summary_index_hq
+            union all
+            select *
+            from ods_summary_index_bo) m
+               left join (select *
+                          from ads_index_code_account_ref
+                          where table_name = 'YGL0078'
                             and scenario = 'NCYSS'
-                            and synthesis = 'ZE') r  
-          on r.origin_index_code  = m.index_code 
-      left join ads_ys_version_info ver 
-          on substr(m.date,1,4) = ver.year
-      left join data_center.ods_tcys t 
-          on t.org_code = m.org_code 
-          and t.date = m.date
-          and t.hc = r.index_code
-      left join data_center.ads_orgnization b 
-          on  b.org_code = m.org_code
-) t1
-left join ods_budget_operating_value v
-on t1.org_code = v.entity 
-  and t1.account = v.ACCOUNT
-  and substr(t1.date,1,4)  = v.YEARS
-  and t1.version_code  = v.VERSION
+                            and synthesis = 'ZE') r
+                         on r.origin_index_code = m.index_code
+               left join ads_ys_version_info ver
+                         on substr(m.date, 1, 4) = ver.year
+               left join data_center.ods_tcys t
+                         on t.org_code = m.org_code
+                             and t.date = m.date
+                             and t.hc = r.index_code
+               left join data_center.ads_orgnization b
+                         on b.org_code = m.org_code) t1
+         left join ods_budget_operating_value v
+                   on t1.org_code = v.entity
+                       and t1.account = v.ACCOUNT
+                       and substr(t1.date, 1, 4) = v.YEARS
+                       and t1.version_code = v.VERSION
 ;
 
 -- YGL0102 职工福利费明细 表剔除数据表
 insert into ads_index_exclude
-select 
-  t1.org_code,
-  t1.org_name,
-  t1.level_code,
-  t1.date,
-  t1.r_index_name,
-  t1.r_index_code,
-  (case when t1.tcz is null then 0 else t1.tcz end ),  --  剔除值
-  t1.tcyy,
-  t1.account,
-  v.years,
-  t1.version_code,
- -- v.VERSION,
-  v.scenario,
-  v.synthesis,
-  v.AMOUNT  / 12 * (IF(substr(t1.date,6,2) REGEXP '^-?[0-9]+$', CAST(substr(t1.date,6,2) AS SIGNED), NULL)),   -- 进度预算数 
-  t1.amount_acc , -- 实际值
-  now() 
-  from 
-(       
-  select
-          m.*,
+select t1.org_code,
+       t1.org_name,
+       t1.level_code,
+       t1.date,
+       t1.r_index_name,
+       t1.r_index_code,
+       (case when t1.tcz is null then 0 else t1.tcz end),                                            --  剔除值
+       t1.tcyy,
+       t1.account,
+       v.years,
+       t1.version_code,
+       -- v.VERSION,
+       v.scenario,
+       v.synthesis,
+       v.AMOUNT / 12 *
+       (IF(substr(t1.date, 6, 2) REGEXP '^-?[0-9]+$', CAST(substr(t1.date, 6, 2) AS SIGNED), NULL)), -- 进度预算数
+       t1.amount_acc,                                                                                -- 实际值
+       now()
+from (select m.*,
 --           b.level_code, 
-          t.tcxm,
-          t.hc,
-          t.tcz,
-          t.tcyy,
-          r.account,
-          r.index_code as r_index_code,
-          r.index_name as r_index_name,
-          ver.version_code
-  from ads_employee_benefits m
-      left join  (select * from ads_index_code_account_ref where table_name  = 'YGL0102' and scenario = 'NCYSS' and synthesis = 'ZE' and exclude = '1') r  
-          on r.origin_index_code  = m.index_code 
-      left join ads_ys_version_info ver 
-          on substr(m.date,1,4) = ver.year
-      left join data_center.ods_tcys t 
-          on t.org_code = m.org_code 
-          and t.date = m.date
-          and t.hc = r.index_code
-      left join data_center.ads_orgnization b 
-          on  b.org_code = t.org_code
-) t1
-left join ods_budget_operating_value v
-on t1.org_code = v.entity 
-  and t1.account = v.ACCOUNT
-  and substr(t1.date,1,4)  = v.YEARS
-  and t1.version_code  = v.VERSION
+             t.tcxm,
+             t.hc,
+             t.tcz,
+             t.tcyy,
+             r.account,
+             r.index_code as r_index_code,
+             r.index_name as r_index_name,
+             ver.version_code
+      from ads_employee_benefits m
+               left join (select *
+                          from ads_index_code_account_ref
+                          where table_name = 'YGL0102'
+                            and scenario = 'NCYSS'
+                            and synthesis = 'ZE'
+                            and exclude = '1') r
+                         on r.origin_index_code = m.index_code
+               left join ads_ys_version_info ver
+                         on substr(m.date, 1, 4) = ver.year
+               left join data_center.ods_tcys t
+                         on t.org_code = m.org_code
+                             and t.date = m.date
+                             and t.hc = r.index_code
+               left join data_center.ads_orgnization b
+                         on b.org_code = t.org_code) t1
+         left join ods_budget_operating_value v
+                   on t1.org_code = v.entity
+                       and t1.account = v.ACCOUNT
+                       and substr(t1.date, 1, 4) = v.YEARS
+                       and t1.version_code = v.VERSION
 ;
 
-  -- ---  2024.11.12 begin a1  上面是 总额ZE 的 ，下面是单位金额 DWJE  unit_price_acc,目前只有105表里有单位金额的数据需要处理。  ----------
+-- ---  2024.11.12 begin a1  上面是 总额ZE 的 ，下面是单位金额 DWJE  unit_price_acc,目前只有105表里有单位金额的数据需要处理。  ----------
 insert into ads_index_exclude
-select 
-  t1.org_code,
-  t1.org_name,
-  t1.level_code,
-  t1.date,
-  t1.r_index_name,
-  t1.r_index_code,
-  (case when t1.tcz is null then 0 else t1.tcz end ),  --  剔除值
-  t1.tcyy,
-  t1.account,
-  v.years,
-  t1.version_code,
- -- v.VERSION,
-  t1.scenario,
-  t1.synthesis,
-  v.AMOUNT,   -- 进度预算数 
-  t1.unit_price_acc , -- 实际值
-  now() 
-  from 
-(       
-  select
-          m.*,
-          b.level_code, 
-          t.tcxm,
-          t.hc,
-          t.tcz,
-          t.tcyy,
-          r.account,
-          r.index_code as r_index_code,
-          r.index_name as r_index_name,
-          r.scenario,
-          r.synthesis,
-          ver.version_code
-  from (select * from data_center.ods_coal_produce_hq
-          union all
-         select * from data_center.ods_coal_produce_bo
-    ) m
-      left join ads_ys_version_info ver 
-          on substr(m.date,1,4) = ver.year
-      left join (select * from  ads_index_code_account_ref 
-                      where table_name  = 'YGL0105'
-                          and scenario = 'NCYSS'
-                          and synthesis = 'DWJE' )   r  
-          on r.origin_index_code  = m.index_code 
-      left join data_center.ods_tcys t 
-          on t.org_code = m.org_code 
-          and t.date = m.date
-          and t.hc = r.index_code
-      left join data_center.ads_orgnization b 
-          on  b.org_code = m.org_code
-) t1
-left join ods_budget_operating_value v
-on t1.org_code = v.entity 
-  and t1.account = v.ACCOUNT
-  and substr(t1.date,1,4)  = v.YEARS
-  and t1.version_code  = v.VERSION
-  and v.scenario = 'NCYSS'
-  and v.synthesis = 'DWJE'
-  ;
+select t1.org_code,
+       t1.org_name,
+       t1.level_code,
+       t1.date,
+       t1.r_index_name,
+       t1.r_index_code,
+       (case when t1.tcz is null then 0 else t1.tcz end), --  剔除值
+       t1.tcyy,
+       t1.account,
+       v.years,
+       t1.version_code,
+       -- v.VERSION,
+       t1.scenario,
+       t1.synthesis,
+       v.AMOUNT,                                          -- 进度预算数
+       t1.unit_price_acc,                                 -- 实际值
+       now()
+from (select m.*,
+             b.level_code,
+             t.tcxm,
+             t.hc,
+             t.tcz,
+             t.tcyy,
+             r.account,
+             r.index_code as r_index_code,
+             r.index_name as r_index_name,
+             r.scenario,
+             r.synthesis,
+             ver.version_code
+      from (select *
+            from data_center.ods_coal_produce_hq
+            union all
+            select *
+            from data_center.ods_coal_produce_bo) m
+               left join ads_ys_version_info ver
+                         on substr(m.date, 1, 4) = ver.year
+               left join (select *
+                          from ads_index_code_account_ref
+                          where table_name = 'YGL0105'
+                            and scenario = 'NCYSS'
+                            and synthesis = 'DWJE') r
+                         on r.origin_index_code = m.index_code
+               left join data_center.ods_tcys t
+                         on t.org_code = m.org_code
+                             and t.date = m.date
+                             and t.hc = r.index_code
+               left join data_center.ads_orgnization b
+                         on b.org_code = m.org_code) t1
+         left join ods_budget_operating_value v
+                   on t1.org_code = v.entity
+                       and t1.account = v.ACCOUNT
+                       and substr(t1.date, 1, 4) = v.YEARS
+                       and t1.version_code = v.VERSION
+                       and v.scenario = 'NCYSS'
+                       and v.synthesis = 'DWJE'
+;
 
 -- ---   end a1 ---------------------------------------------------
-  
+
 -- 资产负债率index_code  =  441 , 表剔除数据表
 insert into ads_index_exclude
-select 
-  a.org_code,
-  a.org_name,
-  a.level_code ,
-  a.date,
-  '资产负债率_剔除',
-  '441',
-  (a.amount_acc + a.exclude_amount ) / (b.amount_acc + b.exclude_amount),
-  '剔除后',
-  a.account,
-  a.years,
-  a.version_code,
-  a.scenario,
-  a.synthesis,
-  v.amount,
-  (a.amount_acc / b.amount_acc),
-  now()
-from 
-  (
-    select * from ads_index_exclude where index_code  =  '400'   -- 负债总额
-  ) a
-left join 
-  (
-    select * from ads_index_exclude where index_code  =  '401'   -- 资产总额
-  ) b
-on 
-  a.date = b.date 
-  and a.level_code = b.level_code 
-  and a.org_code  =  b.org_code 
-  and a.version_code  = b.version_code 
-left join (select * from ods_budget_operating_value where account  = 'WLVYS03' and scenario = 'Budget' and synthesis = '[None]') v
-on a.org_code  = v.entity and substr(a.date,1,4)  = v.years  and v.version = a.version_code
+select a.org_code,
+       a.org_name,
+       a.level_code,
+       a.date,
+       '资产负债率_剔除',
+       '441',
+       (a.amount_acc + a.exclude_amount) / (b.amount_acc + b.exclude_amount),
+       '剔除后',
+       a.account,
+       a.years,
+       a.version_code,
+       a.scenario,
+       a.synthesis,
+       v.amount,
+       (a.amount_acc / b.amount_acc),
+       now()
+from (select *
+      from ads_index_exclude
+      where index_code = '400' -- 负债总额
+     ) a
+         left join
+     (select *
+      from ads_index_exclude
+      where index_code = '401' -- 资产总额
+     ) b
+     on
+         a.date = b.date
+             and a.level_code = b.level_code
+             and a.org_code = b.org_code
+             and a.version_code = b.version_code
+         left join (select *
+                    from ods_budget_operating_value
+                    where account = 'WLVYS03' and scenario = 'Budget' and synthesis = '[None]') v
+                   on a.org_code = v.entity and substr(a.date, 1, 4) = v.years and v.version = a.version_code
 --   and a.scenario = b.scenario
 --   and a.synthesis = b.synthesis
- ;
+;
 
 -- 研发投入强度index_code  =  442 , 表剔除数据表
 insert into ads_index_exclude
-select 
-  a.org_code,
-  a.org_name,
-  a.level_code ,
-  a.date,
-  '研发投入强度_剔除',
-  '442',
-  ( case when ( b.amount_acc + b.exclude_amount) = 0 then 0 else  (a.amount_acc + a.exclude_amount )  / ((b.amount_acc + b.exclude_amount) * 10000) end  )  , 
-  '剔除后',
-  a.account,
-  a.years,
-  a.version_code,
-  a.scenario,
-  a.synthesis,
-  v.amount,
-  (case when b.amount_acc = 0 then 0 else  a.amount_acc / b.amount_acc  end ) ,
-  now()
-from 
-  (
-    select * from ads_index_exclude where index_code  =  '402'   -- 科技支出_剔除
-  ) a
-left join 
-  (
-    select * from ads_index_exclude where index_code  =  '403'   -- 营业总收入_剔除
-  ) b
-on 
-  a.date = b.date 
-  and a.level_code = b.level_code 
-  and a.org_code  =  b.org_code 
-  and a.version_code  = b.version_code 
-left join (select * from ods_budget_operating_value where account  = 'WLVYS13' and scenario = 'Budget' and synthesis = '[None]') v
-on a.org_code  = v.entity and substr(a.date,1,4)  = v.years  and v.version = a.version_code
+select a.org_code,
+       a.org_name,
+       a.level_code,
+       a.date,
+       '研发投入强度_剔除',
+       '442',
+       (case
+            when (b.amount_acc + b.exclude_amount) = 0 then 0
+            else (a.amount_acc + a.exclude_amount) / ((b.amount_acc + b.exclude_amount) * 10000) end),
+       '剔除后',
+       a.account,
+       a.years,
+       a.version_code,
+       a.scenario,
+       a.synthesis,
+       v.amount,
+       (case when b.amount_acc = 0 then 0 else a.amount_acc / b.amount_acc end),
+       now()
+from (select *
+      from ads_index_exclude
+      where index_code = '402' -- 科技支出_剔除
+     ) a
+         left join
+     (select *
+      from ads_index_exclude
+      where index_code = '403' -- 营业总收入_剔除
+     ) b
+     on
+         a.date = b.date
+             and a.level_code = b.level_code
+             and a.org_code = b.org_code
+             and a.version_code = b.version_code
+         left join (select *
+                    from ods_budget_operating_value
+                    where account = 'WLVYS13' and scenario = 'Budget' and synthesis = '[None]') v
+                   on a.org_code = v.entity and substr(a.date, 1, 4) = v.years and v.version = a.version_code
 --   and a.scenario = b.scenario
 --   and a.synthesis = b.synthesis
- ;
+;
 
 -- 净资产收益率index_code  =  443 , 表剔除数据表
 insert into ads_index_exclude
-select 
-  a.org_code,
-  a.org_name,
-  a.level_code ,
-  a.date,
-  '净资产收益率_剔除',
-  '443',
-     ( case when 
-       ( (case when b.amount_acc is null then 0 else b.amount_acc end ) + (case when b.exclude_amount is null then 0 else b.exclude_amount end )) 
-        + 
-      ((case when c.amount_acc is null then 0 else c.amount_acc end ) + (case when c.exclude_amount is null then 0 else c.exclude_amount end )) = 0 then 0 
-      else 
-          (a.amount_acc + a.exclude_amount ) * 10000 / (( (case when b.amount_acc is null then 0 else b.amount_acc end ) + (case when b.exclude_amount is null then 0 else b.exclude_amount end )) 
-          + 
-          ((case when c.amount_acc is null then 0 else c.amount_acc end ) + (case when c.exclude_amount is null then 0 else c.exclude_amount * 10000 end )) )
-     end )
-      ,
-  '剔除后',
-  a.account,
-  a.years,
-  a.version_code,
-  a.scenario,
-  a.synthesis,
-  v.amount,
-    (case when b.amount_acc is null  then 0 else a.amount_acc * 10000 / (b.amount_acc + c.amount_acc) end ),
-  now()
-from 
-  (
-    select * from ads_index_exclude where index_code  =  '404'   -- 净利润_剔除
-  ) a
-left join 
-  (
-    select * from ads_index_exclude where index_code  =  '405'   -- 期初所有者权益_剔除
-  ) b
-on 
-  a.date = b.date 
-  and a.level_code = b.level_code 
-  and a.org_code  =  b.org_code 
-  and a.version_code  = b.version_code 
-left join (select * from ods_budget_operating_value where account  = 'WLVYS08' and scenario = 'Budget' and synthesis = '[None]') v
-on a.org_code  = v.entity and substr(a.date,1,4)  = v.years  and v.version = a.version_code
-  -- and a.scenario = b.scenario
-  -- and a.synthesis = b.synthesis
-left join 
-  (
-    select * from ads_index_exclude where index_code  =  '406'   -- 期末所者权益_剔除
-  ) c
-on 
-  a.date = c.date 
-  and a.level_code = c.level_code 
-  and a.org_code  =  c.org_code 
-  and a.version_code  = c.version_code   and v.version = a.version_code
+select a.org_code,
+       a.org_name,
+       a.level_code,
+       a.date,
+       '净资产收益率_剔除',
+       '443',
+       (case
+            when
+                ((case when b.amount_acc is null then 0 else b.amount_acc end) +
+                 (case when b.exclude_amount is null then 0 else b.exclude_amount end))
+                    +
+                ((case when c.amount_acc is null then 0 else c.amount_acc end) +
+                 (case when c.exclude_amount is null then 0 else c.exclude_amount end)) = 0 then 0
+            else
+                (a.amount_acc + a.exclude_amount) * 10000 /
+                (((case when b.amount_acc is null then 0 else b.amount_acc end) +
+                  (case when b.exclude_amount is null then 0 else b.exclude_amount end))
+                    +
+                 ((case when c.amount_acc is null then 0 else c.amount_acc end) +
+                  (case when c.exclude_amount is null then 0 else c.exclude_amount * 10000 end)))
+           end)
+        ,
+       '剔除后',
+       a.account,
+       a.years,
+       a.version_code,
+       a.scenario,
+       a.synthesis,
+       v.amount,
+       (case when b.amount_acc is null then 0 else a.amount_acc * 10000 / (b.amount_acc + c.amount_acc) end),
+       now()
+from (select *
+      from ads_index_exclude
+      where index_code = '404' -- 净利润_剔除
+     ) a
+         left join
+     (select *
+      from ads_index_exclude
+      where index_code = '405' -- 期初所有者权益_剔除
+     ) b
+     on
+         a.date = b.date
+             and a.level_code = b.level_code
+             and a.org_code = b.org_code
+             and a.version_code = b.version_code
+         left join (select *
+                    from ods_budget_operating_value
+                    where account = 'WLVYS08' and scenario = 'Budget' and synthesis = '[None]') v
+                   on a.org_code = v.entity and substr(a.date, 1, 4) = v.years and v.version = a.version_code
+    -- and a.scenario = b.scenario
+    -- and a.synthesis = b.synthesis
+         left join
+     (select *
+      from ads_index_exclude
+      where index_code = '406' -- 期末所者权益_剔除
+     ) c
+     on
+         a.date = c.date
+             and a.level_code = c.level_code
+             and a.org_code = c.org_code
+             and a.version_code = c.version_code and v.version = a.version_code
 --   and a.scenario = c.scenario
 --   and a.synthesis = c.synthesis
-  ;
+;
 
 
 -- 营业现金比index_code  =  444 , 表剔除数据表
 insert into ads_index_exclude
-select 
-  a.org_code,
-  a.org_name,
-  a.level_code ,
-  a.date,
-  '营业现金比_剔除',
-  '444',
-  (
-    case when  ((case when b.amount_acc is null then 0 else b.amount_acc end ) + (case when b.exclude_amount is null then 0 else b.exclude_amount end )) = 0 then 0 
-    else (a.amount_acc / 10000 + a.exclude_amount ) / (b.amount_acc + b.exclude_amount) end
-  ),
-  
-  '剔除后',
-  a.account,
-  a.years,
-  a.version_code,
-  a.scenario,
-  a.synthesis,
-  v.amount,
-  (case when b.amount_acc = 0 then 0 else a.amount_acc / b.amount_acc end ),
-  now()
-from 
-  (
-    select * from ads_index_exclude where index_code  =  '407'   -- 现金流_剔除
-  ) a
-left join 
-  (
-    select * from ads_index_exclude where index_code  =  '403'   -- 营业总收入_剔除
-  ) b
-on 
-  a.date = b.date 
-  and a.level_code = b.level_code 
-  and a.org_code  =  b.org_code 
-  and a.version_code  = b.version_code 
-left join (select * from ods_budget_operating_value where account  = 'WLVYS11' and scenario = 'Budget' and synthesis = '[None]') v
-on a.org_code  = v.entity and substr(a.date,1,4)  = v.years  and v.version = a.version_code
+select a.org_code,
+       a.org_name,
+       a.level_code,
+       a.date,
+       '营业现金比_剔除',
+       '444',
+       (
+           case
+               when ((case when b.amount_acc is null then 0 else b.amount_acc end) +
+                     (case when b.exclude_amount is null then 0 else b.exclude_amount end)) = 0 then 0
+               else (a.amount_acc / 10000 + a.exclude_amount) / (b.amount_acc + b.exclude_amount) end
+           ),
+
+       '剔除后',
+       a.account,
+       a.years,
+       a.version_code,
+       a.scenario,
+       a.synthesis,
+       v.amount,
+       (case when b.amount_acc = 0 then 0 else a.amount_acc / b.amount_acc end),
+       now()
+from (select *
+      from ads_index_exclude
+      where index_code = '407' -- 现金流_剔除
+     ) a
+         left join
+     (select *
+      from ads_index_exclude
+      where index_code = '403' -- 营业总收入_剔除
+     ) b
+     on
+         a.date = b.date
+             and a.level_code = b.level_code
+             and a.org_code = b.org_code
+             and a.version_code = b.version_code
+         left join (select *
+                    from ods_budget_operating_value
+                    where account = 'WLVYS11' and scenario = 'Budget' and synthesis = '[None]') v
+                   on a.org_code = v.entity and substr(a.date, 1, 4) = v.years and v.version = a.version_code
 --   and a.scenario = b.scenario
 --   and a.synthesis = b.synthesis
- ;
+;
 
 -- 全员劳动生产率index_code  =  445 , 表剔除数据表
 insert into ads_index_exclude
-select 
-  a.org_code,
-  a.org_name,
-  a.level_code ,
-  a.date,
-  '全员劳动生产率_剔除',
-  '445',
-  (
-      case when ( (case when b.amount_acc is null then 0 else b.amount_acc end ) + (case when b.exclude_amount is null then 0 else b.exclude_amount end )) = 0 then 0 
-      else 
-        (a.amount_acc + (case when a.exclude_amount is null then 0 else  a.exclude_amount end ) ) / (b.amount_acc + b.exclude_amount)
-      end 
-  ),
-  '剔除后',
-  a.account,
-  a.years,
-  a.version_code,
-  a.scenario,
-  a.synthesis,
-  v.amount,
-   (case when b.amount_acc = 0 then 0 else  a.amount_acc / b.amount_acc end ),
-  now()
-from 
-  (
-    select * from ads_index_exclude where index_code  =  '408'   -- 劳动生产总值_剔除
-  ) a
-left join 
-  (
-    select * from ads_index_exclude where index_code  =  '409'   -- 平均职工人数_剔除
-  ) b
-on 
-  a.date = b.date 
-  and a.level_code = b.level_code 
-  and a.org_code  =  b.org_code 
-  and a.version_code  = b.version_code 
-left join (select * from ods_budget_operating_value where account  = 'WLVYS24' and scenario = 'Budget' and synthesis = '[None]') v
-on a.org_code  = v.entity and substr(a.date,1,4)  = v.years  and v.version = a.version_code
+select a.org_code,
+       a.org_name,
+       a.level_code,
+       a.date,
+       '全员劳动生产率_剔除',
+       '445',
+       (
+           case
+               when ((case when b.amount_acc is null then 0 else b.amount_acc end) +
+                     (case when b.exclude_amount is null then 0 else b.exclude_amount end)) = 0 then 0
+               else
+                   (a.amount_acc + (case when a.exclude_amount is null then 0 else a.exclude_amount end)) /
+                   (b.amount_acc + b.exclude_amount)
+               end
+           ),
+       '剔除后',
+       a.account,
+       a.years,
+       a.version_code,
+       a.scenario,
+       a.synthesis,
+       v.amount,
+       (case when b.amount_acc = 0 then 0 else a.amount_acc / b.amount_acc end),
+       now()
+from (select *
+      from ads_index_exclude
+      where index_code = '408' -- 劳动生产总值_剔除
+     ) a
+         left join
+     (select *
+      from ads_index_exclude
+      where index_code = '409' -- 平均职工人数_剔除
+     ) b
+     on
+         a.date = b.date
+             and a.level_code = b.level_code
+             and a.org_code = b.org_code
+             and a.version_code = b.version_code
+         left join (select *
+                    from ods_budget_operating_value
+                    where account = 'WLVYS24' and scenario = 'Budget' and synthesis = '[None]') v
+                   on a.org_code = v.entity and substr(a.date, 1, 4) = v.years and v.version = a.version_code
 --   and a.scenario = b.scenario
 --   and a.synthesis = b.synthesis
- ;
+;
 
 
- --  451  不可控成本  = 完全成本  -  可控成本 
-insert into ads_index_exclude 
-select 
-  a.org_code,
-  a.org_name,
-  a.level_code ,
-  a.date,
-  '不可控成本_单位_剔除',
-  '451',
-  a.exclude_amount - b.exclude_amount,
-  '剔除后',
-  a.account,
-  a.years,
-  a.version_code,
-  a.scenario,
-  a.synthesis,
-  v.amount,
-  a.amount_acc - b.amount_acc,
-  now() from
-  (select * from ads_index_exclude where index_code  = '447') a   -- 447 完全成本
-  left join 
-   (select * from ads_index_exclude where index_code  = '450')  b   -- 450 可控成本
-   on a.org_code  = b.org_code 
-   and a.date = b.date
-   and a.version_code  = b.version_code 
-   -- and a.scenario = b.scenario
-   -- and a.synthesis = b.synthesis
- left join (select * from ods_budget_operating_value 
-            where account  = 'BKCCB' and scenario  = 'NCYSS' and synthesis = 'DWJE') v
- on v.ENTITY = a.org_code 
- and v.years = substr(a.date,1,4) and v.version = a.version_code 
-   ;
+--  451  不可控成本  = 完全成本  -  可控成本
+insert into ads_index_exclude
+select a.org_code,
+       a.org_name,
+       a.level_code,
+       a.date,
+       '不可控成本_单位_剔除',
+       '451',
+       a.exclude_amount - b.exclude_amount,
+       '剔除后',
+       a.account,
+       a.years,
+       a.version_code,
+       a.scenario,
+       a.synthesis,
+       v.amount,
+       a.amount_acc - b.amount_acc,
+       now()
+from (select * from ads_index_exclude where index_code = '447') a -- 447 完全成本
+         left join
+         (select * from ads_index_exclude where index_code = '450') b -- 450 可控成本
+         on a.org_code = b.org_code
+             and a.date = b.date
+             and a.version_code = b.version_code
+         -- and a.scenario = b.scenario
+         -- and a.synthesis = b.synthesis
+         left join (select *
+                    from ods_budget_operating_value
+                    where account = 'BKCCB'
+                      and scenario = 'NCYSS'
+                      and synthesis = 'DWJE') v
+                   on v.ENTITY = a.org_code
+                       and v.years = substr(a.date, 1, 4) and v.version = a.version_code
+;
 
-delete from ads_index_exclude where index_code  = '456';
-insert into ads_index_exclude 
-select 
-  a.org_code,
-  a.org_name,
-  c.level_code ,
-  a.date,
-  '剥离费_单位_剔除',
-  '456',
-  (case when b.tcz is null then 0 else b.tcz end ),  --  剔除值
-  '剔除后',
-  ref.account,
-  v.years,
-  ver.version_code,
-  ref.scenario,
-  ref.synthesis,
-  v.amount,
-  a.unit_price_acc,
-  now() from
-  (select * from ods_coal_produce_hq where index_code  = '28'
-    union all 
-    select * from ods_coal_produce_bo where index_code  = '28') a   -- 28 长期摊销费用
-    left join (select * from ads_index_code_account_ref where index_code = '456') ref
-        on ref.origin_index_code  =  a.index_code
-    left join ads_ys_version_info ver 
-          on substr(a.date,1,4) = ver.year
-     left join (select * from ods_tcys where hc  = '456' ) b
-      on b.org_code = a.org_code
-        and b.date =  a.date
-        and b.hc = ref.index_code
-     left join (select * from ods_budget_operating_value 
-                where account  = 'BOLIFEI' and scenario  = 'Budget' and synthesis = 'DWJE') v
-          on v.ENTITY = a.org_code 
-            and v.years = substr(a.date,1,4)
-            and v.VERSION = ver.version_code
-    left join data_center.ads_orgnization c
-      on a.org_code = c.org_code
+delete
+from ads_index_exclude
+where index_code = '456';
+insert into ads_index_exclude
+select a.org_code,
+       a.org_name,
+       c.level_code,
+       a.date,
+       '剥离费_单位_剔除',
+       '456',
+       (case when b.tcz is null then 0 else b.tcz end), --  剔除值
+       '剔除后',
+       ref.account,
+       v.years,
+       ver.version_code,
+       ref.scenario,
+       ref.synthesis,
+       v.amount,
+       a.unit_price_acc,
+       now()
+from (select *
+      from ods_coal_produce_hq
+      where index_code = '28'
+      union all
+      select *
+      from ods_coal_produce_bo
+      where index_code = '28') a -- 28 长期摊销费用
+         left join (select * from ads_index_code_account_ref where index_code = '456') ref
+                   on ref.origin_index_code = a.index_code
+         left join ads_ys_version_info ver
+                   on substr(a.date, 1, 4) = ver.year
+         left join (select * from ods_tcys where hc = '456') b
+                   on b.org_code = a.org_code
+                       and b.date = a.date
+                       and b.hc = ref.index_code
+         left join (select *
+                    from ods_budget_operating_value
+                    where account = 'BOLIFEI'
+                      and scenario = 'Budget'
+                      and synthesis = 'DWJE') v
+                   on v.ENTITY = a.org_code
+                       and v.years = substr(a.date, 1, 4)
+                       and v.VERSION = ver.version_code
+         left join data_center.ads_orgnization c
+                   on a.org_code = c.org_code
 ;
 
 -- 2024-11-12修理费
-delete from ads_index_exclude where index_code  = '455';
-insert into ads_index_exclude 
-select 
-a.org_code,
-a.org_name,
-c.level_code,
-a.date,
-'修理费_单位_剔除',
-'455',
-(case when b.tcz is null then 0 else b.tcz end ),  --  剔除值
-'剔除后',
-ref.account,
-  v.years,
-  ver.version_code,
-  ref.scenario,
-  ref.synthesis,
-  v.amount,
-  a.unit_price_acc,
-  now()
- from
-  (select * from ods_coal_produce_hq where index_code  = '21' 
-    union all 
-    select * from ods_coal_produce_bo where index_code  = '21') a   -- 21 修理费 实际
-        left join (select * from ads_index_code_account_ref where index_code = '455') ref
-        on ref.origin_index_code  =  a.index_code
-  left join ads_ys_version_info ver 
-          on substr(a.date,1,4) = ver.year
-     left join (select * from ods_tcys where hc  = '455' ) b
-      on b.org_code = a.org_code
-        and b.date =  a.date
-  left join 
-        (select * from ods_budget_operating_value 
-            where account  = 'DJMCB15' and scenario  = 'NCYSS' and synthesis = 'DWJE') v -- DJMCB15 修理费预算
-    on a.org_code = v.entity and v.years = substr(a.date,1,4) and v.version = ver.version_code
-  left join data_center.ads_orgnization c
-      on a.org_code = c.org_code;
+delete
+from ads_index_exclude
+where index_code = '455';
+insert into ads_index_exclude
+select a.org_code,
+       a.org_name,
+       c.level_code,
+       a.date,
+       '修理费_单位_剔除',
+       '455',
+       (case when b.tcz is null then 0 else b.tcz end), --  剔除值
+       '剔除后',
+       ref.account,
+       v.years,
+       ver.version_code,
+       ref.scenario,
+       ref.synthesis,
+       v.amount,
+       a.unit_price_acc,
+       now()
+from (select *
+      from ods_coal_produce_hq
+      where index_code = '21'
+      union all
+      select *
+      from ods_coal_produce_bo
+      where index_code = '21') a -- 21 修理费 实际
+         left join (select * from ads_index_code_account_ref where index_code = '455') ref
+                   on ref.origin_index_code = a.index_code
+         left join ads_ys_version_info ver
+                   on substr(a.date, 1, 4) = ver.year
+         left join (select * from ods_tcys where hc = '455') b
+                   on b.org_code = a.org_code
+                       and b.date = a.date
+         left join
+     (select *
+      from ods_budget_operating_value
+      where account = 'DJMCB15'
+        and scenario = 'NCYSS'
+        and synthesis = 'DWJE') v -- DJMCB15 修理费预算
+     on a.org_code = v.entity and v.years = substr(a.date, 1, 4) and v.version = ver.version_code
+         left join data_center.ads_orgnization c
+                   on a.org_code = c.org_code;
 
 -- 2024-11-12 洗选修理费
-delete from ads_index_exclude where index_code  = '461';
-insert into ads_index_exclude 
-select 
-a.org_code,
-a.org_name,
-c.level_code,
-a.date,
-'洗选修理费_单位_剔除',
-'461',
-(case when b.tcz is null then 0 else b.tcz end ),  --  剔除值
-'剔除后',
-ref.account,
-  v.years,
-  ver.version_code,
-  ref.scenario,
-  ref.synthesis,
-  v.amount,
-  a.unit_price_acc,
-  now()
- from
-  (select * from ods_coal_produce_hq where index_code  = '32' 
-    union all 
-    select * from ods_coal_produce_bo where index_code  = '32') a   -- 32 洗选修理费 实际
-  left join (select * from ads_index_code_account_ref where index_code = '461') ref
-        on ref.origin_index_code  =  a.index_code
-  left join ads_ys_version_info ver 
-          on substr(a.date,1,4) = ver.year
-     left join (select * from ods_tcys where hc  = '461' ) b
-      on b.org_code = a.org_code
-        and b.date =  a.date
-  left join 
-        (select * from ods_budget_operating_value 
-            where account  = 'DJMCB1310' and scenario  = 'NCYSS' and synthesis = 'DWJE') v -- DJMCB1310 洗选修理费预算
-    on a.org_code = v.entity and v.years = substr(a.date,1,4) and v.version = ver.version_code
-  left join data_center.ads_orgnization c
-      on a.org_code = c.org_code
-    --  where a.org_code  = 'GY2F00' and a.date  = '2024-09'
-  ;
+delete
+from ads_index_exclude
+where index_code = '461';
+insert into ads_index_exclude
+select a.org_code,
+       a.org_name,
+       c.level_code,
+       a.date,
+       '洗选修理费_单位_剔除',
+       '461',
+       (case when b.tcz is null then 0 else b.tcz end), --  剔除值
+       '剔除后',
+       ref.account,
+       v.years,
+       ver.version_code,
+       ref.scenario,
+       ref.synthesis,
+       v.amount,
+       a.unit_price_acc,
+       now()
+from (select *
+      from ods_coal_produce_hq
+      where index_code = '32'
+      union all
+      select *
+      from ods_coal_produce_bo
+      where index_code = '32') a -- 32 洗选修理费 实际
+         left join (select * from ads_index_code_account_ref where index_code = '461') ref
+                   on ref.origin_index_code = a.index_code
+         left join ads_ys_version_info ver
+                   on substr(a.date, 1, 4) = ver.year
+         left join (select * from ods_tcys where hc = '461') b
+                   on b.org_code = a.org_code
+                       and b.date = a.date
+         left join
+     (select *
+      from ods_budget_operating_value
+      where account = 'DJMCB1310'
+        and scenario = 'NCYSS'
+        and synthesis = 'DWJE') v -- DJMCB1310 洗选修理费预算
+     on a.org_code = v.entity and v.years = substr(a.date, 1, 4) and v.version = ver.version_code
+         left join data_center.ads_orgnization c
+                   on a.org_code = c.org_code
+--  where a.org_code  = 'GY2F00' and a.date  = '2024-09'
+;

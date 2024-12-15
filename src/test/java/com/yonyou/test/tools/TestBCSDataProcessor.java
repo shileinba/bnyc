@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class BCSDataProcessor {
+public class TestBCSDataProcessor {
 
     /**
      * 2024-12-09 : 获取BCS表中11有重复的数据
