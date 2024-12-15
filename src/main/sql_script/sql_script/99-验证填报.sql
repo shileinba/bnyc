@@ -7,3 +7,4 @@ group by
     date
 having count(*) > 1;
 
+-- 111
