@@ -10,7 +10,7 @@ public class TestMergeSQLFiles {
     public static void main(String args[]) {
         String currentPath = System.getProperty("user.dir");
         System.out.println("当前执行路径: " + currentPath);
-        String parentPath = "./src/main/sql_script/sql_script";  // notice: two script path is right , pom is set.
+        String parentPath = "./src/main/sql_script/sql_script";  // notice: two script path is right .
         String fileName = "mergedFile_";
         String dateStr = DateUtils.formatTime(new Date(),"yyyyMMdd_HHmmss");
         String suffix = ".sql";

@@ -50,7 +50,7 @@ public class SQLController {
     }
 
     private String mergeFile(){
-        String parentPath = "../webapps/bnyc_prd/sql_script";
+        String parentPath = "../webapps/bnyc_prd/sql_script";  // one path 'sql_script' is right , but application is two 'sql_script' path .
         MergeFiles mf = new MergeFiles();
 
         String outputFilePathName = mf.merge(parentPath);
